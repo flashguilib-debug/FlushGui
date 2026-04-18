@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashGui · Documentazione ufficiale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.7;
+        }
+        .docs-container { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: 300px;
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+            z-index: 10;
+        }
+        .sidebar h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1e293b, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .sidebar nav ul { list-style: none; }
+        .sidebar nav li { margin-bottom: 0.25rem; }
+        .sidebar nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: #334155;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .sidebar nav a:hover { background: #f1f5f9; color: #0f172a; }
+        .sidebar nav .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+        }
+        .content {
+            flex: 1;
+            max-width: calc(100% - 300px);
+            padding: 2.5rem 3rem;
+        }
+        .content h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #1e293b, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .content h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1.2rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 1rem 0;
+            color: #1e293b;
+        }
+        .content h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.5rem 0;
+            color: #3b82f6;
+        }
+        .content p { margin-bottom: 1.2rem; color: #334155; }
+        .content pre {
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 1.2rem;
+            border-radius: 16px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .content code {
+            background: #e2e8f0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #0f172a;
+        }
+        .content pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+        .param-table, .method-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .param-table th, .param-table td,
+        .method-table th, .method-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.9rem 1rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .param-table th, .method-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #0f172a;
+        }
+        .badge {
+            background: #3b82f6;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        .note {
+            background: #fef9c3;
+            border-left: 6px solid #eab308;
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            font-weight: 500;
+        }
+        .warning {
+            background: #fee2e2;
+            border-left: 6px solid #ef4444;
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+        .tip {
+            background: #e0f2fe;
+            border-left: 6px solid #0ea5e9;
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+        .license-box {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 1.2rem;
+            border-radius: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .content { max-width: 100%; padding: 1.5rem; }
+        }
+        .intro-highlight {
+            background: linear-gradient(135deg, #dbeafe, #ede9fe);
+            padding: 1.8rem 2rem;
+            border-radius: 24px;
+            margin-bottom: 2rem;
+            border: 1px solid #cbd5e1;
+        }
+        .collapsible {
+            background-color: #f1f5f9;
+            cursor: pointer;
+            padding: 0.75rem;
+            width: 100%;
+            border: none;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
+        .collapsible:hover { background-color: #e2e8f0; }
+        .collapsible-content { padding: 0 1rem; display: none; overflow: hidden; }
+        .example-box {
+            background: #1e293b;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        .example-header {
+            background: #0f172a;
+            padding: 0.5rem 1rem;
+            color: #94a3b8;
+            font-family: monospace;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #334155;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var coll = document.getElementsByClassName("collapsible");
+            for (var i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") content.style.display = "none";
+                    else content.style.display = "block";
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="docs-container">
+    <aside class="sidebar">
+        <h2>📦 FlashGui</h2>
+        <nav>
+            <div class="section-title">Primi passi</div>
+            <ul>
+                <li><a href="#intro">Perché FlashGui?</a></li>
+                <li><a href="#install">Installazione</a></li>
+                <li><a href="#deps">Dipendenze</a></li>
+                <li><a href="#licenses">Licenze ⚠️</a></li>
+            </ul>
+            <div class="section-title">Componenti pronti</div>
+            <ul>
+                <li><a href="#calculator">🧮 CALCULATOR</a></li>
+                <li><a href="#notepad">📝 NOTEPAD</a></li>
+                <li><a href="#paint">🎨 PAINT</a></li>
+                <li><a href="#clock">⏰ CLOCK</a></li>
+                <li><a href="#calendar">📅 CALENDAR</a></li>
+            </ul>
+            <div class="section-title">La tela bianca</div>
+            <ul>
+                <li><a href="#window">🪟 WINDOW</a></li>
+            </ul>
+            <div class="section-title">Filosofia comune</div>
+            <ul>
+                <li><a href="#common">.run(), .Edit(), .Logic()</a></li>
+            </ul>
+            <div class="section-title">Esempi completi</div>
+            <ul>
+                <li><a href="#examples">📚 Galleria di codice</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <div class="intro-highlight">
+            <h1 style="margin-bottom:0.5rem;">FlashGui · Costruisci interfacce desktop con il sorriso</h1>
+            <p style="font-size:1.2rem; margin-bottom:0;">Una libreria Python che avvolge wxPython in un abbraccio moderno: componenti già pronti, layout proporzionale, temi personalizzabili e una sintassi che non ti farà impazzire.</p>
+        </div>
+
+        <h2 id="intro">✨ Perché FlashGui?</h2>
+        <p>Hai presente quando vuoi creare una piccola app desktop in Python e ti scontri con la complessità di Tkinter o la verbosità di wxPython? FlashGui nasce per darti <strong>calcolatrice, blocco note, paint, orologio e calendario</strong> già funzionanti in 3 righe di codice. Ma se vuoi costruire la tua interfaccia da zero, il componente <code>WINDOW</code> ti permette di posizionare qualsiasi widget usando coordinate proporzionali (0.0 → 1.0) e i font si ridimensionano da soli. Tutto con un look pulito, moderno e completamente personalizzabile.</p>
+        <div class="tip">
+            <strong>💡 Idea:</strong> FlashGui è perfetto per prototipi rapidi, tool interni, o per chi si avvicina alla programmazione GUI e vuole risultati immediati senza studiare mille manuali.
+        </div>
+
+        <h2 id="install">📦 Installazione in un soffio</h2>
+        <pre><code>pip install FlashGui</code></pre>
+        <p>wxPython e charset_normalizer verranno installati automaticamente. Nessun'altra dipendenza.</p>
+        <div class="note">
+            <strong>✅ Funziona su:</strong> Windows 10/11, macOS (Intel/Apple Silicon), Linux con wxPython supportato. Richiede Python 3.7 o superiore.
+        </div>
+
+        <h2 id="deps">📚 Dipendenze</h2>
+        <p>FlashGui è costruito sopra <strong>wxPython Phoenix</strong> (wxWidgets) e utilizza <strong>charset_normalizer</strong> per il rilevamento automatico delle codifiche nel blocco note. Entrambe le librerie vengono installate automaticamente con pip.</p>
+
+        <h2 id="licenses">📜 Licenze – Leggi con attenzione</h2>
+        <div class="warning">
+            <strong>⚠️ Obbligo di attribuzione:</strong> Se distribuisci un'applicazione che include FlashGui (anche in forma compilata), devi includere i testi di licenza delle seguenti librerie:
+            <ul style="margin-top: 0.8rem; margin-left: 1.5rem;">
+                <li>La <strong>Licenza MIT</strong> di FlashGui (testo sotto).</li>
+                <li>La <strong>wxWindows Library Licence</strong> di wxPython (LGPL con eccezione).</li>
+                <li>La <strong>Licenza MIT</strong> di <code>charset_normalizer</code>.</li>
+            </ul>
+            Non costa nulla e mantiene il progetto libero.
+        </div>
+        <div class="note">
+            <strong>📂 Dove trovo le licenze?</strong><br>
+            Per evitare confusione, non abbiamo pubblicato testi parziali qui sul sito. Trovi tutti i file legali completi direttamente dentro la cartella della libreria, nel percorso: <br>
+            <code>FlashGUI/licenses/</code>
+        </div>
+
+        <!-- ==================== CALCULATOR ==================== -->
+        <h2 id="calculator">🧮 CALCULATOR – La calcolatrice che puoi vestire a modo tuo</h2>
+        <p>Una calcolatrice completa con display, 20 pulsanti e gestione degli errori. Puoi cambiarne ogni singolo aspetto e agganciare le tue funzioni a ogni tasto.</p>
+
+        <h3>Costruttore</h3>
+        <pre><code>CALCULATOR(title="Calculator", size=(3,2), color=(240,240,240), icon=None, maximized=False, min_size=(5,4), max_size=(1,1))</code></pre>
+        
+        <h3>Metodo <code>.Edit()</code> – Personalizzazione completa</h3>
+        <button class="collapsible">Mostra tutti i parametri di .Edit()</button>
+        <div class="collapsible-content">
+            <table class="param-table">
+                <tr><th>Gruppo</th><th>Parametri</th></tr>
+                <tr><td>Pulsanti numerici (0‑9)</td><td><code>button_0_text, button_0_bg, button_0_fg</code> … fino a <code>button_9_text, button_9_bg, button_9_fg</code></td></tr>
+                <tr><td>Punto decimale</td><td><code>button_dot_text, button_dot_bg, button_dot_fg</code></td></tr>
+                <tr><td>Operatori</td><td><code>button_plus_text/bg/fg, button_minus_text/bg/fg, button_mul_text/bg/fg, button_div_text/bg/fg</code></td></tr>
+                <tr><td>Speciali</td><td><code>button_C_text/bg/fg, button_DEL_text/bg/fg, button_eq_text/bg/fg</code></td></tr>
+                <tr><td>Display</td><td><code>entry_bg_color, entry_text_color</code></td></tr>
+                <tr><td>Messaggio errore</td><td><code>message_error</code></td></tr>
+            </table>
+        </div>
+
+        <h3>Metodo <code>.Logic()</code> – Callback personalizzati</h3>
+        <p>Parametri: <code>button_0_command</code> … <code>button_9_command</code>, <code>button_dot_command</code>, <code>button_plus_command</code>, <code>button_minus_command</code>, <code>button_mul_command</code>, <code>button_div_command</code>, <code>button_eq_command</code>, <code>button_C_command</code>, <code>button_DEL_command</code>.<br>Ogni callback è una funzione senza argomenti o <code>None</code> per usare il comportamento predefinito.</p>
+
+        <h3>Metodi pubblici aggiuntivi</h3>
+        <ul>
+            <li><code>GetText()</code> → restituisce il testo nel display.</li>
+            <li><code>SetText(testo)</code> → imposta il display e l'espressione interna.</li>
+            <li><code>AppendText(testo)</code> → aggiunge testo in coda.</li>
+            <li><code>Clear()</code> → svuota display e memoria.</li>
+        </ul>
+
+        <!-- ==================== NOTEPAD ==================== -->
+        <h2 id="notepad">📝 NOTEPAD – Un editor di testo con i fiocchi</h2>
+        <p>Blocco note completo: apertura/salvataggio con rilevamento automatico della codifica (charset_normalizer), menu personalizzabili, barra di stato, menu contestuale e temi scuri.</p>
+
+        <h3>Costruttore</h3>
+        <p>Stessi parametri di CALCULATOR.</p>
+
+        <h3>Metodo <code>.Edit()</code> – Personalizzazione totale</h3>
+        <button class="collapsible">Mostra tutti i parametri di .Edit() (oltre 50)</button>
+        <div class="collapsible-content">
+            <ul>
+                <li><strong>Testi menu:</strong> <code>file_menu_text, edit_menu_text, help_menu_text</code></li>
+                <li><strong>Voci File:</strong> <code>new_text, open_text, save_text, saveas_text, exit_text</code></li>
+                <li><strong>Voci Edit:</strong> <code>undo_text, redo_text, cut_text, copy_text, paste_text, selectall_text</code></li>
+                <li><strong>Voci Help:</strong> <code>about_text</code></li>
+                <li><strong>Colori area di testo:</strong> <code>text_ctrl_bg, text_ctrl_fg</code></li>
+                <li><strong>Colori menubar:</strong> <code>menubar_bg, menubar_fg, menubar_hover</code></li>
+                <li><strong>Colori menu a tendina:</strong> <code>menu_bg, menu_fg, menu_hover, menu_radius</code></li>
+                <li><strong>Colori status bar:</strong> <code>statusbar_bg, statusbar_fg, statusbar_separator_color</code></li>
+                <li><strong>Etichette status bar:</strong> <code>ln_text, col_text, words_text, chars_text, untitled_text</code></li>
+                <li><strong>Dialoghi:</strong> <code>open_dialog_title, open_dialog_file_type, save_as_dialog_title, save_as_dialog_file_type, maybe_save_dialog_title, maybe_save_dialog_text, messagebox_about_title, messagebox_about_text</code></li>
+                <li><strong>Menu contestuale:</strong> <code>popup_cut_text, popup_copy_text, popup_paste_text, popup_select_all_text</code></li>
+                <li><strong>Sfondo generale:</strong> <code>bg_color</code></li>
+            </ul>
+        </div>
+
+        <h3>Metodo <code>.Logic()</code> – Sostituisci le azioni predefinite</h3>
+        <p><code>menu_new_command, menu_open_command, menu_save_command, menu_save_as_command, menu_exit_command, menu_about_command, menu_undo_command, menu_redo_command, menu_cut_command, menu_copy_command, menu_paste_command, menu_select_all_command, popup_cut_command, popup_copy_command, popup_paste_command, popup_select_all_command</code></p>
+
+        <!-- ==================== PAINT ==================== -->
+        <h2 id="paint">🎨 PAINT – Disegna come su una tela vera</h2>
+        <p>Pennello, gomma, secchiello (riempimento), linea, cerchio, rettangolo. Salva in PNG o JPG.</p>
+
+        <h3>Costruttore</h3>
+        <p>Stessi parametri degli altri componenti.</p>
+
+        <h3>Metodo <code>.Edit()</code></h3>
+        <button class="collapsible">Mostra tutti i parametri</button>
+        <div class="collapsible-content">
+            <ul>
+                <li><strong>Testi pulsanti:</strong> <code>brush_button_text, eraser_button_text, bucket_button_text, line_button_text, circle_button_text, rect_button_text, clear_button_text, save_button_text</code></li>
+                <li><strong>Colori pulsanti:</strong> <code>brush_button_bg/fg, eraser_button_bg/fg, bucket_button_bg/fg, line_button_bg/fg, circle_button_bg/fg, rect_button_bg/fg, clear_button_bg/fg, save_button_bg/fg</code></li>
+                <li><code>toolbar_panel_bg</code> → sfondo barra strumenti</li>
+                <li><code>canvas_bg</code> → colore sfondo area disegno</li>
+                <li><code>width_text</code> → etichetta slider spessore</li>
+                <li><code>title_save_image, text_file_png, text_file_jpg</code> → testi finestra salvataggio</li>
+            </ul>
+        </div>
+
+        <h3>Metodo <code>.Logic()</code></h3>
+        <ul>
+            <li><code>current_tool</code> → stringa: <code>"brush"</code>, <code>"eraser"</code>, <code>"line"</code>, <code>"circle"</code>, <code>"rect"</code>, <code>"bucket"</code></li>
+            <li><code>color_picker_start_color</code> → tupla RGB iniziale</li>
+            <li><code>slider_start_value, slider_from_value, slider_to_value</code> → spessore iniziale e range</li>
+            <li><code>brush_button_command, eraser_button_command, line_button_command, circle_button_command, rect_button_command, bucket_button_command, clear_button_command, save_button_command</code></li>
+        </ul>
+
+        <!-- ==================== CLOCK ==================== -->
+        <h2 id="clock">⏰ CLOCK – Orologio, Timer e Cronometro in un'unica finestra</h2>
+
+        <h3>Costruttore</h3>
+        <p>Stessi parametri standard.</p>
+
+        <h3>Metodo <code>.Edit()</code> – Oltre 50 parametri organizzati per sezione</h3>
+        <button class="collapsible">Mostra tutti i parametri di .Edit()</button>
+        <div class="collapsible-content">
+            <ul>
+                <li><strong>Navigazione:</strong> <code>nav_bg_color, nav_button_bg_color, nav_clock_fg_color, nav_timer_fg_color, nav_stopwatch_fg_color, nav_clock_text, nav_timer_text, nav_stopwatch_text</code></li>
+                <li><strong>Orologio:</strong> <code>clock_bg_color, clock_time_bg_color, clock_time_fg_color, clock_date_bg_color, clock_date_fg_color, clock_time_text, clock_date_text</code></li>
+                <li><strong>Timer:</strong> <code>timer_bg_color, timer_display_bg_color, timer_display_fg_color, timer_spin_h_bg_color, timer_spin_h_fg_color, timer_spin_m_bg_color, timer_spin_m_fg_color, timer_spin_s_bg_color, timer_spin_s_fg_color, timer_lbl_h_bg_color, timer_lbl_h_fg_color, timer_lbl_m_bg_color, timer_lbl_m_fg_color, timer_lbl_s_bg_color, timer_lbl_s_fg_color, timer_btn_start_bg_color, timer_btn_start_fg_color, timer_btn_reset_bg_color, timer_btn_reset_fg_color, timer_display_text, timer_lbl_h_text, timer_lbl_m_text, timer_lbl_s_text, timer_btn_start_text, timer_btn_pause_text, timer_btn_reset_text</code></li>
+                <li><strong>Cronometro:</strong> <code>stopwatch_bg_color, stopwatch_display_bg_color, stopwatch_display_fg_color, stopwatch_btn_start_bg_color, stopwatch_btn_start_fg_color, stopwatch_btn_reset_bg_color, stopwatch_btn_reset_fg_color, stopwatch_display_text, stopwatch_btn_start_text, stopwatch_btn_stop_text, stopwatch_btn_reset_text</code></li>
+            </ul>
+        </div>
+
+        <h3>Metodo <code>.Logic()</code></h3>
+        <ul>
+            <li><code>nav_clock_command, nav_timer_command, nav_stopwatch_command</code></li>
+            <li><code>timer_start_command, timer_reset_command</code></li>
+            <li><code>stopwatch_start_command, stopwatch_reset_command</code></li>
+            <li><code>timer_base_h, timer_base_m, timer_base_s</code> (valori iniziali del timer)</li>
+        </ul>
+
+        <!-- ==================== CALENDAR ==================== -->
+        <h2 id="calendar">📅 CALENDAR – Un calendario interattivo e internazionalizzabile</h2>
+
+        <h3>Costruttore</h3>
+        <p>Parametri standard.</p>
+
+        <h3>Metodo <code>.Edit()</code></h3>
+        <button class="collapsible">Mostra tutti i parametri</button>
+        <div class="collapsible-content">
+            <ul>
+                <li><strong>Nomi mesi:</strong> <code>january_text ... december_text</code></li>
+                <li><strong>Nomi giorni:</strong> <code>monday_text ... sunday_text</code></li>
+                <li><strong>Pulsanti navigazione:</strong> <code>prev_text, today_text, next_text</code></li>
+                <li><code>info_text</code> (footer)</li>
+                <li><code>week_start_monday</code> (bool)</li>
+                <li><code>show_footer</code> (bool)</li>
+                <li><strong>Colori:</strong> <code>bg_color, title_fg_color, nav_bg_color, nav_button_bg_color, nav_button_fg_color, weekday_bg_color, weekday_fg_color, day_bg_color, day_fg_color, day_disabled_bg_color, day_disabled_fg_color, day_today_bg_color, day_today_fg_color, day_selected_bg_color, day_selected_fg_color, footer_bg_color, footer_fg_color</code></li>
+                <li><strong>Colori specifici pulsanti:</strong> <code>prev_button_bg_color, prev_button_fg_color, today_button_bg_color, today_button_fg_color, next_button_bg_color, next_button_fg_color</code></li>
+            </ul>
+        </div>
+
+        <h3>Metodo <code>.Logic()</code></h3>
+        <ul>
+            <li><code>prev_command, next_command, today_command</code> (nessun argomento)</li>
+            <li><code>day_command(d)</code> → riceve <code>datetime.date</code></li>
+            <li><code>month_change_command(year, month)</code></li>
+            <li><code>week_start_monday, show_footer</code> (possono essere impostati anche qui)</li>
+        </ul>
+
+        <h3>Metodi pubblici aggiuntivi</h3>
+        <ul>
+            <li><code>get_selected_date()</code> → <code>datetime.date</code></li>
+            <li><code>go_to_date(d)</code> → sposta la vista a una data</li>
+            <li><code>set_info_text(testo)</code></li>
+        </ul>
+
+        <!-- ==================== WINDOW (corretto) ==================== -->
+        <h2 id="window">🪟 WINDOW – La tua tela bianca proporzionale</h2>
+        <p>Layout proporzionale automatico: coordinate relative (0.0‑1.0) e font scalati. Ogni metodo <code>Add...</code> restituisce l'oggetto widget, che puoi salvare in una variabile per manipolarlo successivamente.</p>
+
+        <h3>Costruttore</h3>
+        <p>Stessi parametri degli altri componenti.</p>
+
+        <h3>Metodi per aggiungere widget (tutti con <code>relx, rely, relwidth, relheight</code>)</h3>
+        <button class="collapsible">Mostra tutti i widget disponibili</button>
+        <div class="collapsible-content">
+            <table class="method-table">
+                <tr><th>Metodo</th><th>Parametri specifici</th><th>Ritorna</th></tr>
+                <tr><td><code>AddLabel</code></td><td><code>text, bold, fg, bg, font_scale, alignment</code></td><td>wx.StaticText</td></tr>
+                <tr><td><code>AddButton</code></td><td><code>text, command, bold, fg, bg, font_scale</code></td><td>wx.Button</td></tr>
+                <tr><td><code>AddInput</code></td><td><code>text, hint, password, readonly, fg, bg, font_scale</code></td><td>wx.TextCtrl</td></tr>
+                <tr><td><code>AddTextArea</code></td><td><code>text, readonly, fg, bg, font_scale</code></td><td>wx.TextCtrl</td></tr>
+                <tr><td><code>AddCounter</code></td><td><code>min_val, max_val, start, step, font_scale</code></td><td>wx.SpinCtrl</td></tr>
+                <tr><td><code>AddCalendar</code></td><td><code>command</code> (riceve wx.DateTime)</td><td>wx.adv.CalendarCtrl</td></tr>
+                <tr><td><code>AddSlider</code></td><td><code>min_val, max_val, start, command, orientation</code></td><td>wx.Slider</td></tr>
+                <tr><td><code>AddColorPicker</code></td><td><code>color, command</code> (riceve stringa esadecimale)</td><td>wx.ColourPickerCtrl</td></tr>
+                <tr><td><code>AddCheckBox</code></td><td><code>label, checked, command, font_scale</code></td><td>wx.CheckBox</td></tr>
+                <tr><td><code>AddRadioButton</code></td><td><code>label, checked, command, font_scale</code></td><td>wx.RadioButton</td></tr>
+                <tr><td><code>AddComboBox</code></td><td><code>choices, value, command, font_scale</code></td><td>wx.ComboBox</td></tr>
+                <tr><td><code>AddListBox</code></td><td><code>choices, command, multiple, font_scale</code></td><td>wx.ListBox</td></tr>
+                <tr><td><code>AddCanvas</code></td><td><code>bg, tooltip, enabled, visible, cursor, parent</code></td><td>wx._CanvasPanel</td></tr>
+                <tr><td><code>AddTabs</code></td><td><code>tooltip, enabled, visible, cursor, parent</code></td><td>wx.Notebook</td></tr>
+                <tr><td><code>AddPage</code></td><td><code>notebook, title</code></td><td>wx.Panel</td></tr>
+            </table>
+        </div>
+
+        <h3>Metodi per manipolare i widget</h3>
+        <p>Poiché ogni metodo <code>Add...</code> restituisce l'oggetto, puoi conservarlo in una variabile e usare i metodi nativi di wxPython. In alternativa, FlashGui offre alcuni helper:</p>
+        <ul>
+            <li><code>EnableWidget(widget, enable=True)</code> → abilita/disabilita un widget</li>
+            <li><code>ShowWidget(widget, show=True)</code> → mostra/nasconde un widget (e ricalcola il layout)</li>
+            <li><code>CanvasSetPen(canvas, color=None, width=None)</code> → imposta colore/spessore per il canvas</li>
+            <li><code>CanvasClear(canvas, color=None)</code> → pulisce il canvas</li>
+        </ul>
+        <div class="tip">
+            <strong>💡 Esempio:</strong> <code>btn = win.AddButton("Cliccami", relx=0.4, rely=0.4, relwidth=0.2, relheight=0.1)</code><br>
+            Poi puoi fare <code>btn.SetLabel("Nuovo testo")</code> o <code>win.EnableWidget(btn, False)</code>.
+        </div>
+
+        <h3>Menu e barra di stato</h3>
+        <ul>
+            <li><code>AddMenuBar()</code> (automatico se si aggiunge un menu)</li>
+            <li><code>AddMenu(title)</code> → restituisce un menu wx.Menu</li>
+            <li><code>AddMenuItem(menu, label, command, shortcut)</code> → aggiunge una voce</li>
+            <li><code>AddStatusBar(testo_iniziale)</code></li>
+            <li><code>SetStatusText(testo, field=0)</code></li>
+        </ul>
+
+        <h3>Utility integrate</h3>
+        <ul>
+            <li><code>AddTimer(ms, command)</code> → esegue la funzione ogni <code>ms</code> millisecondi</li>
+            <li><code>Message(testo, titolo="Notice")</code> → mostra un messaggio</li>
+            <li><code>AskSave(wildcard, default_dir)</code> → restituisce percorso o None</li>
+            <li><code>AskOpen(wildcard, default_dir)</code> → idem</li>
+            <li><code>exit()</code> → chiude l’applicazione</li>
+        </ul>
+
+        <!-- ==================== METODI COMUNI ==================== -->
+        <h2 id="common">🔁 La triade magica: run(), Edit(), Logic()</h2>
+        <p>Ogni componente FlashGui espone questi tre metodi fondamentali:</p>
+        <ul>
+            <li><code>.run()</code> – Avvia il loop principale dell'applicazione (bloccante).</li>
+            <li><code>.Edit(**kwargs)</code> – Modifica l'aspetto: testi, colori, messaggi. Ogni componente ha i suoi parametri specifici (elencati sopra).</li>
+            <li><code>.Logic(**kwargs)</code> – Collega le tue funzioni agli eventi (click pulsanti, selezione voci di menu, ecc.).</li>
+        </ul>
+        <div class="tip">
+            <strong>🧠 Ordine consigliato:</strong> Crea l'oggetto → <code>.Edit(...)</code> → <code>.Logic(...)</code> → <code>.run()</code>.
+        </div>
+
+        <!-- ==================== ESEMPI COMPLETI ==================== -->
+        <h2 id="examples">📚 Esempi pratici – Impara facendo</h2>
+        
+        <h3>1. Calcolatrice con memoria (CALCULATOR)</h3>
+        <div class="example-box">
+            <div class="example-header">calc_memory.py</div>
+            <pre><code>from FlashGui import CALCULATOR
+
+memoria = 0
+
+def memorizza():
+    global memoria
+    try:
+        memoria = float(calc.GetText())
+    except:
+        pass
+
+def richiama():
+    calc.SetText(str(memoria))
+
+calc = CALCULATOR(title="Calc con Memoria", size=(2.5,2))
+calc.Edit(button_0_text="M+", button_1_text="MR")
+calc.Logic(button_0_command=memorizza, button_1_command=richiama)
+calc.run()</code></pre>
+        </div>
+
+        <h3>2. Blocco note minimale (NOTEPAD)</h3>
+        <div class="example-box">
+            <div class="example-header">simple_notepad.py</div>
+            <pre><code>from FlashGui import NOTEPAD
+
+def quando_salvo():
+    print("File salvato!")
+
+note = NOTEPAD(title="Il mio diario", size=(1.5, 1.2))
+note.Edit(
+    text_ctrl_bg=(255, 255, 200),   # sfondo giallo pastello
+    text_ctrl_fg=(50, 50, 150),
+    save_text="Salva 💾"
+)
+note.Logic(menu_save_command=quando_salvo)  # override del salvataggio
+note.run()</code></pre>
+        </div>
+
+        <h3>3. Paint con strumenti personalizzati (PAINT)</h3>
+        <div class="example-box">
+            <div class="example-header">my_paint.py</div>
+            <pre><code>from FlashGui import PAINT
+
+p = PAINT(title="Disegna qualcosa", size=(1.8, 1.5))
+p.Edit(
+    brush_button_text="✏️ Matita",
+    eraser_button_text="🧽 Gomma",
+    clear_button_text="🗑️ Cancella tutto",
+    canvas_bg=(230, 240, 255)       # azzurro chiaro
+)
+p.Logic(current_tool="brush", slider_start_value=8)
+p.run()</code></pre>
+        </div>
+
+        <h3>4. Svezia – Timer con allarme (CLOCK)</h3>
+        <div class="example-box">
+            <div class="example-header">timer_sveglia.py</div>
+            <pre><code>from FlashGui import CLOCK
+
+def fine_timer():
+    win.Message("Il tempo è scaduto!", "Sveglia")
+
+orologio = CLOCK(title="Timer")
+orologio.Logic(timer_start_command=fine_timer, timer_base_m=1)  # 1 minuto
+orologio.run()</code></pre>
+        </div>
+
+        <h3>5. Calendario con eventi (CALENDAR)</h3>
+        <div class="example-box">
+            <div class="example-header">eventi_calendar.py</div>
+            <pre><code>from FlashGui import CALENDAR
+
+def giorno_selezionato(data):
+    win.set_info_text(f"Hai scelto il {data}")
+
+win = CALENDAR(title="Agenda")
+win.Logic(day_command=giorno_selezionato, week_start_monday=True)
+win.run()</code></pre>
+        </div>
+
+        <h3>6. Costruttore di interfacce (WINDOW)</h3>
+        <div class="example-box">
+            <div class="example-header">widget_demo.py</div>
+            <pre><code>from FlashGui import WINDOW
+
+def saluta():
+    nome = campo_input.GetValue()
+    win.Message(f"Ciao {nome}!")
+
+win = WINDOW(title="Demo interattiva", size=(1.5, 1.2))
+
+# Aggiungiamo un'etichetta
+win.AddLabel("Come ti chiami?", relx=0.2, rely=0.2, relwidth=0.6, relheight=0.1)
+
+# Campo di testo
+campo_input = win.AddInput(relx=0.2, rely=0.35, relwidth=0.6, relheight=0.1)
+
+# Pulsante
+win.AddButton("Saluta", command=saluta, relx=0.35, rely=0.6, relwidth=0.3, relheight=0.1)
+
+# Barra di stato
+win.AddStatusBar("Pronto")
+
+win.run()</code></pre>
+        </div>
+
+        <div class="note">
+            <strong>🔍 Nota:</strong> In WINDOW, i widget vengono manipolati tramite le variabili che li referenziano (es. <code>campo_input</code>). Non esistono metodi <code>GetWidget(name)</code>; usa direttamente l'oggetto restituito da <code>Add...</code>.
+        </div>
+
+        <footer>
+            FlashGui · Documentazione completa – tutti i comandi e parametri sono qui.<br/>
+            Ricorda: il software è come un buon caffè ☕ – va condiviso con le giuste attribuzioni.
+        </footer>
+    </main>
+</div>
+</body>
+</html>
