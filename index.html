@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashGui · Documentazione ufficiale</title>
+    <title>FlashGui 0.1.4 · Documentazione completa</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,7 +15,7 @@
         }
         .docs-container { display: flex; min-height: 100vh; }
         .sidebar {
-            width: 300px;
+            width: 320px;
             background: #ffffff;
             border-right: 1px solid #e2e8f0;
             position: sticky;
@@ -28,11 +28,18 @@
         .sidebar h2 {
             font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.25rem;
             background: linear-gradient(135deg, #1e293b, #3b82f6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+        }
+        .sidebar .version {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed #cbd5e1;
+            padding-bottom: 0.75rem;
         }
         .sidebar nav ul { list-style: none; }
         .sidebar nav li { margin-bottom: 0.25rem; }
@@ -57,13 +64,13 @@
         }
         .content {
             flex: 1;
-            max-width: calc(100% - 300px);
+            max-width: calc(100% - 320px);
             padding: 2.5rem 3rem;
         }
         .content h1 {
             font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #1e293b, #3b82f6);
             -webkit-background-clip: text;
             background-clip: text;
@@ -224,6 +231,8 @@
             font-size: 0.8rem;
             border-bottom: 1px solid #334155;
         }
+        .param-list dt { font-weight: 600; margin-top: 0.8rem; }
+        .param-list dd { margin-left: 1.5rem; margin-bottom: 0.5rem; color: #475569; }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -243,6 +252,7 @@
 <div class="docs-container">
     <aside class="sidebar">
         <h2>📦 FlashGui</h2>
+        <div class="version">Versione 0.1.4 · <a href="https://pypi.org/project/FlashGui/" target="_blank" style="color:#3b82f6;">PyPI</a></div>
         <nav>
             <div class="section-title">Primi passi</div>
             <ul>
@@ -276,12 +286,12 @@
 
     <main class="content">
         <div class="intro-highlight">
-            <h1 style="margin-bottom:0.5rem;">FlashGui · Costruisci interfacce desktop con il sorriso</h1>
-            <p style="font-size:1.2rem; margin-bottom:0;">Una libreria Python che avvolge wxPython in un abbraccio moderno: componenti già pronti, layout proporzionale, temi personalizzabili e una sintassi che non ti farà impazzire.</p>
+            <h1 style="margin-bottom:0.5rem;">FlashGui 0.1.4</h1>
+            <p style="font-size:1.2rem; margin-bottom:0;">Costruisci interfacce desktop con il sorriso. Componenti già pronti, layout proporzionale, temi personalizzabili.</p>
         </div>
 
         <h2 id="intro">✨ Perché FlashGui?</h2>
-        <p>Hai presente quando vuoi creare una piccola app desktop in Python e ti scontri con la complessità di Tkinter o la verbosità di wxPython? FlashGui nasce per darti <strong>calcolatrice, blocco note, paint, orologio e calendario</strong> già funzionanti in 3 righe di codice. Ma se vuoi costruire la tua interfaccia da zero, il componente <code>WINDOW</code> ti permette di posizionare qualsiasi widget usando coordinate proporzionali (0.0 → 1.0) e i font si ridimensionano da soli. Tutto con un look pulito, moderno e completamente personalizzabile.</p>
+        <p>Hai presente quando vuoi creare una piccola app desktop in Python e ti scontri con la complessità di Tkinter o la verbosità di wxPython? FlashGui nasce per darti <strong>calcolatrice, blocco note, paint, orologio e calendario</strong> già funzionanti in 3 righe di codice. Se vuoi costruire la tua interfaccia da zero, il componente <code>WINDOW</code> ti permette di posizionare qualsiasi widget usando coordinate proporzionali (0.0 → 1.0) e i font si ridimensionano da soli. Tutto con un look pulito, moderno e completamente personalizzabile.</p>
         <div class="tip">
             <strong>💡 Idea:</strong> FlashGui è perfetto per prototipi rapidi, tool interni, o per chi si avvicina alla programmazione GUI e vuole risultati immediati senza studiare mille manuali.
         </div>
@@ -318,88 +328,195 @@
 
         <h3>Costruttore</h3>
         <pre><code>CALCULATOR(title="Calculator", size=(3,2), color=(240,240,240), icon=None, maximized=False, min_size=(5,4), max_size=(1,1))</code></pre>
-        
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>title</code></td><td>str</td><td>"Calculator"</td><td>Titolo della finestra.</td></tr>
+            <tr><td><code>size</code></td><td>tuple (larghezza, altezza)</td><td>(3,2)</td><td>Dimensioni relative allo schermo. Il valore indica in quante parti dividere lo schermo. Es. (3,2) → larghezza = schermo/3, altezza = schermo/2.</td></tr>
+            <tr><td><code>color</code></td><td>tuple (R,G,B)</td><td>(240,240,240)</td><td>Colore di sfondo della finestra.</td></tr>
+            <tr><td><code>icon</code></td><td>str</td><td>None</td><td>Percorso a un file .png o .ico per l'icona della finestra.</td></tr>
+            <tr><td><code>maximized</code></td><td>bool</td><td>False</td><td>Se True, la finestra parte massimizzata.</td></tr>
+            <tr><td><code>min_size</code></td><td>tuple (larghezza, altezza)</td><td>(5,4)</td><td>Dimensioni minime (divisore dello schermo).</td></tr>
+            <tr><td><code>max_size</code></td><td>tuple (larghezza, altezza)</td><td>(1,1)</td><td>Dimensioni massime (divisore dello schermo). (1,1) = schermo intero.</td></tr>
+        </table>
+
         <h3>Metodo <code>.Edit()</code> – Personalizzazione completa</h3>
-        <button class="collapsible">Mostra tutti i parametri di .Edit()</button>
-        <div class="collapsible-content">
-            <table class="param-table">
-                <tr><th>Gruppo</th><th>Parametri</th></tr>
-                <tr><td>Pulsanti numerici (0‑9)</td><td><code>button_0_text, button_0_bg, button_0_fg</code> … fino a <code>button_9_text, button_9_bg, button_9_fg</code></td></tr>
-                <tr><td>Punto decimale</td><td><code>button_dot_text, button_dot_bg, button_dot_fg</code></td></tr>
-                <tr><td>Operatori</td><td><code>button_plus_text/bg/fg, button_minus_text/bg/fg, button_mul_text/bg/fg, button_div_text/bg/fg</code></td></tr>
-                <tr><td>Speciali</td><td><code>button_C_text/bg/fg, button_DEL_text/bg/fg, button_eq_text/bg/fg</code></td></tr>
-                <tr><td>Display</td><td><code>entry_bg_color, entry_text_color</code></td></tr>
-                <tr><td>Messaggio errore</td><td><code>message_error</code></td></tr>
-            </table>
-        </div>
+        <p>Modifica testi, colori e aspetto di ogni elemento. Tutti i parametri sono opzionali.</p>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>button_0_text ... button_9_text</code></td><td>str</td><td>"0"…"9"</td><td>Etichetta dei pulsanti numerici.</td></tr>
+            <tr><td><code>button_0_bg ... button_9_bg</code></td><td>tuple RGB</td><td>(240,240,240)</td><td>Colore di sfondo dei pulsanti numerici.</td></tr>
+            <tr><td><code>button_0_fg ... button_9_fg</code></td><td>tuple RGB</td><td>(0,0,0)</td><td>Colore del testo dei pulsanti numerici.</td></tr>
+            <tr><td><code>button_dot_text</code></td><td>str</td><td>"."</td><td>Etichetta pulsante punto decimale.</td></tr>
+            <tr><td><code>button_dot_bg</code>, <code>button_dot_fg</code></td><td>tuple RGB</td><td>(240,240,240), (0,0,0)</td><td>Colori pulsante punto.</td></tr>
+            <tr><td><code>button_plus_text</code></td><td>str</td><td>"+"</td><td>Etichetta addizione.</td></tr>
+            <tr><td><code>button_plus_bg</code>, <code>button_plus_fg</code></td><td>tuple RGB</td><td>(240,240,240), (0,0,0)</td><td>Colori pulsante +.</td></tr>
+            <tr><td><code>button_minus_text</code></td><td>str</td><td>"-"</td><td>Etichetta sottrazione.</td></tr>
+            <tr><td><code>button_minus_bg</code>, <code>button_minus_fg</code></td><td>tuple RGB</td><td>(240,240,240), (0,0,0)</td><td>Colori pulsante -.</td></tr>
+            <tr><td><code>button_mul_text</code></td><td>str</td><td>"*"</td><td>Etichetta moltiplicazione.</td></tr>
+            <tr><td><code>button_mul_bg</code>, <code>button_mul_fg</code></td><td>tuple RGB</td><td>(240,240,240), (0,0,0)</td><td>Colori pulsante *.</td></tr>
+            <tr><td><code>button_div_text</code></td><td>str</td><td>"/"</td><td>Etichetta divisione.</td></tr>
+            <tr><td><code>button_div_bg</code>, <code>button_div_fg</code></td><td>tuple RGB</td><td>(240,240,240), (0,0,0)</td><td>Colori pulsante /.</td></tr>
+            <tr><td><code>button_C_text</code></td><td>str</td><td>"C"</td><td>Etichetta pulsante Clear.</td></tr>
+            <tr><td><code>button_C_bg</code>, <code>button_C_fg</code></td><td>tuple RGB</td><td>(240,240,240), (0,0,0)</td><td>Colori pulsante C.</td></tr>
+            <tr><td><code>button_DEL_text</code></td><td>str</td><td>"DEL"</td><td>Etichetta pulsante Canc.</td></tr>
+            <tr><td><code>button_DEL_bg</code>, <code>button_DEL_fg</code></td><td>tuple RGB</td><td>(240,240,240), (0,0,0)</td><td>Colori pulsante DEL.</td></tr>
+            <tr><td><code>button_eq_text</code></td><td>str</td><td>"="</td><td>Etichetta pulsante Uguale.</td></tr>
+            <tr><td><code>button_eq_bg</code></td><td>tuple RGB</td><td>(0,120,215)</td><td>Sfondo del tasto = (blu di default).</td></tr>
+            <tr><td><code>button_eq_fg</code></td><td>tuple RGB</td><td>(255,255,255)</td><td>Colore testo tasto =.</td></tr>
+            <tr><td><code>entry_bg_color</code></td><td>tuple RGB</td><td>(240,240,240)</td><td>Sfondo del display.</td></tr>
+            <tr><td><code>entry_text_color</code></td><td>tuple RGB</td><td>(0,0,0)</td><td>Colore testo display.</td></tr>
+            <tr><td><code>message_error</code></td><td>str</td><td>"Error"</td><td>Messaggio mostrato in caso di errore di valutazione.</td></tr>
+        </table>
 
         <h3>Metodo <code>.Logic()</code> – Callback personalizzati</h3>
-        <p>Parametri: <code>button_0_command</code> … <code>button_9_command</code>, <code>button_dot_command</code>, <code>button_plus_command</code>, <code>button_minus_command</code>, <code>button_mul_command</code>, <code>button_div_command</code>, <code>button_eq_command</code>, <code>button_C_command</code>, <code>button_DEL_command</code>.<br>Ogni callback è una funzione senza argomenti o <code>None</code> per usare il comportamento predefinito.</p>
+        <p>Ogni parametro accetta una funzione senza argomenti (o None per comportamento predefinito).</p>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Descrizione</th></tr>
+            <tr><td><code>button_0_command ... button_9_command</code></td><td>Funzione chiamata alla pressione del tasto numerico.</td></tr>
+            <tr><td><code>button_dot_command</code></td><td>Callback per il tasto punto.</td></tr>
+            <tr><td><code>button_plus_command</code></td><td>Callback per +.</td></tr>
+            <tr><td><code>button_minus_command</code></td><td>Callback per -.</td></tr>
+            <tr><td><code>button_mul_command</code></td><td>Callback per *.</td></tr>
+            <tr><td><code>button_div_command</code></td><td>Callback per /.</td></tr>
+            <tr><td><code>button_eq_command</code></td><td>Callback per = (sostituisce eval).</td></tr>
+            <tr><td><code>button_C_command</code></td><td>Callback per Clear.</td></tr>
+            <tr><td><code>button_DEL_command</code></td><td>Callback per Delete.</td></tr>
+        </table>
 
         <h3>Metodi pubblici aggiuntivi</h3>
         <ul>
-            <li><code>GetText()</code> → restituisce il testo nel display.</li>
+            <li><code>GetText()</code> → str: restituisce il testo nel display.</li>
             <li><code>SetText(testo)</code> → imposta il display e l'espressione interna.</li>
-            <li><code>AppendText(testo)</code> → aggiunge testo in coda.</li>
+            <li><code>AppendText(testo)</code> → aggiunge testo in coda all'espressione.</li>
             <li><code>Clear()</code> → svuota display e memoria.</li>
+            <li><code>AddTimer(ms, command)</code> → avvia un timer che esegue command ogni ms millisecondi.</li>
+            <li><code>run()</code> → avvia il loop principale.</li>
         </ul>
+
+        <h3>📘 Esempio CALCULATOR</h3>
+        <div class="example-box">
+            <div class="example-header">calculator_demo.py</div>
+            <pre><code>from FlashGui import CALCULATOR
+
+def mio_callback():
+    print("Hai premuto un tasto personalizzato!")
+
+calc = CALCULATOR(title="La mia calcolatrice", size=(3,2), color=(50,50,60))
+calc.Edit(
+    button_eq_bg=(200,50,50),
+    button_eq_fg=(255,255,255),
+    entry_bg_color=(30,30,40),
+    entry_text_color=(0,200,0),
+    message_error="ERRORE"
+)
+calc.Logic(button_0_command=mio_callback)
+calc.run()</code></pre>
+        </div>
 
         <!-- ==================== NOTEPAD ==================== -->
         <h2 id="notepad">📝 NOTEPAD – Un editor di testo con i fiocchi</h2>
         <p>Blocco note completo: apertura/salvataggio con rilevamento automatico della codifica (charset_normalizer), menu personalizzabili, barra di stato, menu contestuale e temi scuri.</p>
 
         <h3>Costruttore</h3>
-        <p>Stessi parametri di CALCULATOR.</p>
+        <p>Stessi parametri di CALCULATOR (title, size, color, icon, maximized, min_size, max_size).</p>
 
         <h3>Metodo <code>.Edit()</code> – Personalizzazione totale</h3>
-        <button class="collapsible">Mostra tutti i parametri di .Edit() (oltre 50)</button>
-        <div class="collapsible-content">
-            <ul>
-                <li><strong>Testi menu:</strong> <code>file_menu_text, edit_menu_text, help_menu_text</code></li>
-                <li><strong>Voci File:</strong> <code>new_text, open_text, save_text, saveas_text, exit_text</code></li>
-                <li><strong>Voci Edit:</strong> <code>undo_text, redo_text, cut_text, copy_text, paste_text, selectall_text</code></li>
-                <li><strong>Voci Help:</strong> <code>about_text</code></li>
-                <li><strong>Colori area di testo:</strong> <code>text_ctrl_bg, text_ctrl_fg</code></li>
-                <li><strong>Colori menubar:</strong> <code>menubar_bg, menubar_fg, menubar_hover</code></li>
-                <li><strong>Colori menu a tendina:</strong> <code>menu_bg, menu_fg, menu_hover, menu_radius</code></li>
-                <li><strong>Colori status bar:</strong> <code>statusbar_bg, statusbar_fg, statusbar_separator_color</code></li>
-                <li><strong>Etichette status bar:</strong> <code>ln_text, col_text, words_text, chars_text, untitled_text</code></li>
-                <li><strong>Dialoghi:</strong> <code>open_dialog_title, open_dialog_file_type, save_as_dialog_title, save_as_dialog_file_type, maybe_save_dialog_title, maybe_save_dialog_text, messagebox_about_title, messagebox_about_text</code></li>
-                <li><strong>Menu contestuale:</strong> <code>popup_cut_text, popup_copy_text, popup_paste_text, popup_select_all_text</code></li>
-                <li><strong>Sfondo generale:</strong> <code>bg_color</code></li>
-            </ul>
-        </div>
+        <p>Oltre 50 parametri per personalizzare ogni testo, colore e comportamento.</p>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>file_menu_text</code></td><td>str</td><td>"File"</td><td>Etichetta menu File.</td></tr>
+            <tr><td><code>edit_menu_text</code></td><td>str</td><td>"Edit"</td><td>Etichetta menu Modifica.</td></tr>
+            <tr><td><code>help_menu_text</code></td><td>str</td><td>"Help"</td><td>Etichetta menu Aiuto.</td></tr>
+            <tr><td><code>new_text</code>, <code>open_text</code>, <code>save_text</code>, <code>saveas_text</code>, <code>exit_text</code></td><td>str</td><td>"New", "Open...", "Save", "Save As...", "Exit"</td><td>Testi voci menu File.</td></tr>
+            <tr><td><code>undo_text</code>, <code>redo_text</code>, <code>cut_text</code>, <code>copy_text</code>, <code>paste_text</code>, <code>selectall_text</code></td><td>str</td><td>"Undo","Redo","Cut","Copy","Paste","Select All"</td><td>Testi voci menu Edit.</td></tr>
+            <tr><td><code>about_text</code></td><td>str</td><td>"About"</td><td>Testo voce About.</td></tr>
+            <tr><td><code>bg_color</code>, <code>text_ctrl_bg</code>, <code>text_ctrl_fg</code></td><td>tuple RGB</td><td>(240,240,240), (255,255,255), (0,0,0)</td><td>Colori sfondo finestra, area testo e testo.</td></tr>
+            <tr><td><code>menubar_bg</code>, <code>menubar_fg</code>, <code>menubar_hover</code></td><td>tuple RGB</td><td>(235,235,235), (0,0,0), (200,220,240)</td><td>Colori barra menu.</td></tr>
+            <tr><td><code>menu_bg</code>, <code>menu_fg</code>, <code>menu_hover</code>, <code>menu_radius</code></td><td>tuple RGB / int</td><td>(250,250,250), (0,0,0), (200,220,240), 6</td><td>Colori menu a tendina e raggio bordi.</td></tr>
+            <tr><td><code>statusbar_bg</code>, <code>statusbar_fg</code>, <code>statusbar_separator_color</code></td><td>tuple RGB</td><td>(240,240,240), (0,0,0), (200,200,200)</td><td>Colori barra di stato.</td></tr>
+            <tr><td><code>ln_text</code>, <code>col_text</code>, <code>words_text</code>, <code>chars_text</code>, <code>untitled_text</code></td><td>str</td><td>"Ln","Col","Words","Chars","Untitled"</td><td>Etichette barra di stato.</td></tr>
+            <tr><td><code>open_dialog_title</code>, <code>open_dialog_file_type</code></td><td>str, tuple</td><td>"Open Text file", ("Text Files (*.txt)", "All files (*.*)")</td><td>Titolo e filtro finestra Apri.</td></tr>
+            <tr><td><code>save_as_dialog_title</code>, <code>save_as_dialog_file_type</code></td><td>str, tuple</td><td>"Save Text file", ("Text Files (*.txt)", "All files (*.*)")</td><td>Titolo e filtro Salva con nome.</td></tr>
+            <tr><td><code>maybe_save_dialog_title</code>, <code>maybe_save_dialog_text</code></td><td>str</td><td>"Save changes", "There are unsaved changes..."</td><td>Titolo e testo dialogo salvataggio modifiche.</td></tr>
+            <tr><td><code>messagebox_about_title</code>, <code>messagebox_about_text</code></td><td>str</td><td>"About Notepad", "Notepad created with FastGui.\nVersion 1.0"</td><td>Titolo e testo finestra About.</td></tr>
+            <tr><td><code>popup_cut_text</code>, <code>popup_copy_text</code>, <code>popup_paste_text</code>, <code>popup_select_all_text</code></td><td>str</td><td>"Cut","Copy","Paste","Select All"</td><td>Testi menu contestuale.</td></tr>
+        </table>
 
         <h3>Metodo <code>.Logic()</code> – Sostituisci le azioni predefinite</h3>
-        <p><code>menu_new_command, menu_open_command, menu_save_command, menu_save_as_command, menu_exit_command, menu_about_command, menu_undo_command, menu_redo_command, menu_cut_command, menu_copy_command, menu_paste_command, menu_select_all_command, popup_cut_command, popup_copy_command, popup_paste_command, popup_select_all_command</code></p>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Descrizione</th></tr>
+            <tr><td><code>menu_new_command</code>, <code>menu_open_command</code>, <code>menu_save_command</code>, <code>menu_save_as_command</code>, <code>menu_exit_command</code></td><td>Callback per le voci del menu File.</td></tr>
+            <tr><td><code>menu_undo_command</code>, <code>menu_redo_command</code>, <code>menu_cut_command</code>, <code>menu_copy_command</code>, <code>menu_paste_command</code>, <code>menu_select_all_command</code></td><td>Callback per le voci del menu Edit.</td></tr>
+            <tr><td><code>menu_about_command</code></td><td>Callback per About.</td></tr>
+            <tr><td><code>popup_cut_command</code>, <code>popup_copy_command</code>, <code>popup_paste_command</code>, <code>popup_select_all_command</code></td><td>Callback per menu contestuale.</td></tr>
+        </table>
+
+        <h3>📘 Esempio NOTEPAD</h3>
+        <div class="example-box">
+            <div class="example-header">notepad_demo.py</div>
+            <pre><code>from FlashGui import NOTEPAD
+
+def salva_personalizzato():
+    print("Salvataggio personalizzato!")
+
+nota = NOTEPAD(title="Mio Blocco Note", size=(2,2))
+nota.Edit(
+    file_menu_text="Archivio",
+    edit_menu_text="Modifica",
+    text_ctrl_bg=(40,40,50),
+    text_ctrl_fg=(200,200,100),
+    menubar_bg=(60,60,70),
+    menubar_fg=(255,255,255)
+)
+nota.Logic(menu_save_command=salva_personalizzato)
+nota.run()</code></pre>
+        </div>
 
         <!-- ==================== PAINT ==================== -->
         <h2 id="paint">🎨 PAINT – Disegna come su una tela vera</h2>
         <p>Pennello, gomma, secchiello (riempimento), linea, cerchio, rettangolo. Salva in PNG o JPG.</p>
 
         <h3>Costruttore</h3>
-        <p>Stessi parametri degli altri componenti.</p>
+        <p>Stessi parametri standard.</p>
 
         <h3>Metodo <code>.Edit()</code></h3>
-        <button class="collapsible">Mostra tutti i parametri</button>
-        <div class="collapsible-content">
-            <ul>
-                <li><strong>Testi pulsanti:</strong> <code>brush_button_text, eraser_button_text, bucket_button_text, line_button_text, circle_button_text, rect_button_text, clear_button_text, save_button_text</code></li>
-                <li><strong>Colori pulsanti:</strong> <code>brush_button_bg/fg, eraser_button_bg/fg, bucket_button_bg/fg, line_button_bg/fg, circle_button_bg/fg, rect_button_bg/fg, clear_button_bg/fg, save_button_bg/fg</code></li>
-                <li><code>toolbar_panel_bg</code> → sfondo barra strumenti</li>
-                <li><code>canvas_bg</code> → colore sfondo area disegno</li>
-                <li><code>width_text</code> → etichetta slider spessore</li>
-                <li><code>title_save_image, text_file_png, text_file_jpg</code> → testi finestra salvataggio</li>
-            </ul>
-        </div>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>brush_button_text</code>, <code>eraser_button_text</code>, <code>bucket_button_text</code>, <code>line_button_text</code>, <code>circle_button_text</code>, <code>rect_button_text</code></td><td>str</td><td>"🖌️ Brush","🧽 Eraser","🪣 Bucket","📏 Line","⭕ Circle","⬜ Rectangle"</td><td>Testi pulsanti strumenti.</td></tr>
+            <tr><td><code>brush_button_bg/fg</code>, <code>eraser_button_bg/fg</code>, ecc.</td><td>tuple RGB</td><td>(255,255,255)/(0,0,0)</td><td>Colori pulsanti strumenti.</td></tr>
+            <tr><td><code>clear_button_text</code>, <code>save_button_text</code></td><td>str</td><td>"🧹 Clear","💾 Save"</td><td>Testi pulsanti Clear e Save.</td></tr>
+            <tr><td><code>toolbar_panel_bg</code></td><td>tuple RGB</td><td>(240,240,245)</td><td>Sfondo barra strumenti.</td></tr>
+            <tr><td><code>canvas_bg</code></td><td>tuple RGB</td><td>(255,255,255)</td><td>Sfondo area disegno.</td></tr>
+            <tr><td><code>width_text</code></td><td>str</td><td>"Width"</td><td>Testo etichetta spessore.</td></tr>
+            <tr><td><code>title_save_image</code>, <code>text_file_png</code>, <code>text_file_jpg</code></td><td>str</td><td>"Save Image","PNG files","JPG files"</td><td>Testi dialog salvataggio.</td></tr>
+        </table>
 
         <h3>Metodo <code>.Logic()</code></h3>
-        <ul>
-            <li><code>current_tool</code> → stringa: <code>"brush"</code>, <code>"eraser"</code>, <code>"line"</code>, <code>"circle"</code>, <code>"rect"</code>, <code>"bucket"</code></li>
-            <li><code>color_picker_start_color</code> → tupla RGB iniziale</li>
-            <li><code>slider_start_value, slider_from_value, slider_to_value</code> → spessore iniziale e range</li>
-            <li><code>brush_button_command, eraser_button_command, line_button_command, circle_button_command, rect_button_command, bucket_button_command, clear_button_command, save_button_command</code></li>
-        </ul>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>current_tool</code></td><td>str</td><td>"brush"</td><td>Strumento iniziale: "brush", "eraser", "line", "circle", "rect", "bucket".</td></tr>
+            <tr><td><code>color_picker_start_color</code></td><td>tuple RGB</td><td>(0,0,0)</td><td>Colore iniziale del selettore.</td></tr>
+            <tr><td><code>slider_start_value</code></td><td>int</td><td>5</td><td>Spessore iniziale.</td></tr>
+            <tr><td><code>slider_from_value</code>, <code>slider_to_value</code></td><td>int</td><td>0, 100</td><td>Minimo e massimo slider.</td></tr>
+            <tr><td><code>brush_button_command</code>, <code>eraser_button_command</code>, <code>line_button_command</code>, <code>circle_button_command</code>, <code>rect_button_command</code>, <code>bucket_button_command</code></td><td>callable</td><td>None</td><td>Callback per i pulsanti strumento.</td></tr>
+            <tr><td><code>clear_button_command</code>, <code>save_button_command</code></td><td>callable</td><td>None</td><td>Callback per Clear e Save.</td></tr>
+        </table>
+
+        <h3>📘 Esempio PAINT</h3>
+        <div class="example-box">
+            <div class="example-header">paint_demo.py</div>
+            <pre><code>from FlashGui import PAINT
+
+paint = PAINT(title="Mio Paint", size=(2,2))
+paint.Edit(
+    brush_button_text="Pennello",
+    eraser_button_text="Gomma",
+    canvas_bg=(200,230,200),
+    width_text="Spessore"
+)
+paint.Logic(current_tool="brush", slider_start_value=10)
+paint.run()</code></pre>
+        </div>
 
         <!-- ==================== CLOCK ==================== -->
         <h2 id="clock">⏰ CLOCK – Orologio, Timer e Cronometro in un'unica finestra</h2>
@@ -407,24 +524,62 @@
         <h3>Costruttore</h3>
         <p>Stessi parametri standard.</p>
 
-        <h3>Metodo <code>.Edit()</code> – Oltre 50 parametri organizzati per sezione</h3>
-        <button class="collapsible">Mostra tutti i parametri di .Edit()</button>
-        <div class="collapsible-content">
-            <ul>
-                <li><strong>Navigazione:</strong> <code>nav_bg_color, nav_button_bg_color, nav_clock_fg_color, nav_timer_fg_color, nav_stopwatch_fg_color, nav_clock_text, nav_timer_text, nav_stopwatch_text</code></li>
-                <li><strong>Orologio:</strong> <code>clock_bg_color, clock_time_bg_color, clock_time_fg_color, clock_date_bg_color, clock_date_fg_color, clock_time_text, clock_date_text</code></li>
-                <li><strong>Timer:</strong> <code>timer_bg_color, timer_display_bg_color, timer_display_fg_color, timer_spin_h_bg_color, timer_spin_h_fg_color, timer_spin_m_bg_color, timer_spin_m_fg_color, timer_spin_s_bg_color, timer_spin_s_fg_color, timer_lbl_h_bg_color, timer_lbl_h_fg_color, timer_lbl_m_bg_color, timer_lbl_m_fg_color, timer_lbl_s_bg_color, timer_lbl_s_fg_color, timer_btn_start_bg_color, timer_btn_start_fg_color, timer_btn_reset_bg_color, timer_btn_reset_fg_color, timer_display_text, timer_lbl_h_text, timer_lbl_m_text, timer_lbl_s_text, timer_btn_start_text, timer_btn_pause_text, timer_btn_reset_text</code></li>
-                <li><strong>Cronometro:</strong> <code>stopwatch_bg_color, stopwatch_display_bg_color, stopwatch_display_fg_color, stopwatch_btn_start_bg_color, stopwatch_btn_start_fg_color, stopwatch_btn_reset_bg_color, stopwatch_btn_reset_fg_color, stopwatch_display_text, stopwatch_btn_start_text, stopwatch_btn_stop_text, stopwatch_btn_reset_text</code></li>
-            </ul>
-        </div>
+        <h3>Metodo <code>.Edit()</code> – Oltre 60 parametri organizzati</h3>
+        <p>Ecco i parametri principali raggruppati:</p>
+        <h4>Navigazione (schede)</h4>
+        <ul>
+            <li><code>nav_bg_color</code>, <code>nav_button_bg_color</code></li>
+            <li><code>nav_clock_fg_color</code>, <code>nav_timer_fg_color</code>, <code>nav_stopwatch_fg_color</code></li>
+            <li><code>nav_clock_text</code>, <code>nav_timer_text</code>, <code>nav_stopwatch_text</code></li>
+        </ul>
+        <h4>Pannello Orologio</h4>
+        <ul>
+            <li><code>clock_bg_color</code>, <code>clock_time_bg_color</code>, <code>clock_time_fg_color</code></li>
+            <li><code>clock_date_bg_color</code>, <code>clock_date_fg_color</code></li>
+            <li><code>clock_time_text</code>, <code>clock_date_text</code></li>
+        </ul>
+        <h4>Pannello Timer</h4>
+        <ul>
+            <li><code>timer_bg_color</code>, <code>timer_display_bg_color</code>, <code>timer_display_fg_color</code></li>
+            <li><code>timer_spin_h_bg_color</code>, <code>timer_spin_h_fg_color</code> (e analoghi per m, s)</li>
+            <li><code>timer_lbl_h_text</code>, <code>timer_lbl_m_text</code>, <code>timer_lbl_s_text</code></li>
+            <li><code>timer_btn_start_text</code>, <code>timer_btn_pause_text</code>, <code>timer_btn_reset_text</code></li>
+            <li><code>timer_btn_start_bg_color/fg_color</code>, <code>timer_btn_reset_bg_color/fg_color</code></li>
+        </ul>
+        <h4>Pannello Cronometro</h4>
+        <ul>
+            <li><code>stopwatch_bg_color</code>, <code>stopwatch_display_bg_color</code>, <code>stopwatch_display_fg_color</code></li>
+            <li><code>stopwatch_btn_start_text</code>, <code>stopwatch_btn_stop_text</code>, <code>stopwatch_btn_reset_text</code></li>
+            <li><code>stopwatch_btn_start_bg_color/fg_color</code>, <code>stopwatch_btn_reset_bg_color/fg_color</code></li>
+        </ul>
 
         <h3>Metodo <code>.Logic()</code></h3>
-        <ul>
-            <li><code>nav_clock_command, nav_timer_command, nav_stopwatch_command</code></li>
-            <li><code>timer_start_command, timer_reset_command</code></li>
-            <li><code>stopwatch_start_command, stopwatch_reset_command</code></li>
-            <li><code>timer_base_h, timer_base_m, timer_base_s</code> (valori iniziali del timer)</li>
-        </ul>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Descrizione</th></tr>
+            <tr><td><code>nav_clock_command</code>, <code>nav_timer_command</code>, <code>nav_stopwatch_command</code></td><td>Callback per click schede.</td></tr>
+            <tr><td><code>timer_start_command</code>, <code>timer_reset_command</code></td><td>Callback avvio/reset timer.</td></tr>
+            <tr><td><code>stopwatch_start_command</code>, <code>stopwatch_reset_command</code></td><td>Callback avvio/reset cronometro.</td></tr>
+            <tr><td><code>timer_base_h</code>, <code>timer_base_m</code>, <code>timer_base_s</code></td><td>Valori iniziali timer (int).</td></tr>
+        </table>
+
+        <h3>📘 Esempio CLOCK</h3>
+        <div class="example-box">
+            <div class="example-header">clock_demo.py</div>
+            <pre><code>from FlashGui import CLOCK
+
+clock = CLOCK(title="Orologio multifunzione", size=(2,2))
+clock.Edit(
+    nav_clock_text="OROLOGIO",
+    nav_timer_text="TIMER",
+    nav_stopwatch_text="CRONOMETRO",
+    clock_time_fg_color=(255,100,100),
+    clock_date_fg_color=(100,200,255),
+    timer_btn_start_text="AVVIA",
+    timer_btn_reset_text="RESET"
+)
+clock.Logic(timer_base_h=0, timer_base_m=1, timer_base_s=30)
+clock.run()</code></pre>
+        </div>
 
         <!-- ==================== CALENDAR ==================== -->
         <h2 id="calendar">📅 CALENDAR – Un calendario interattivo e internazionalizzabile</h2>
@@ -433,95 +588,140 @@
         <p>Parametri standard.</p>
 
         <h3>Metodo <code>.Edit()</code></h3>
-        <button class="collapsible">Mostra tutti i parametri</button>
-        <div class="collapsible-content">
-            <ul>
-                <li><strong>Nomi mesi:</strong> <code>january_text ... december_text</code></li>
-                <li><strong>Nomi giorni:</strong> <code>monday_text ... sunday_text</code></li>
-                <li><strong>Pulsanti navigazione:</strong> <code>prev_text, today_text, next_text</code></li>
-                <li><code>info_text</code> (footer)</li>
-                <li><code>week_start_monday</code> (bool)</li>
-                <li><code>show_footer</code> (bool)</li>
-                <li><strong>Colori:</strong> <code>bg_color, title_fg_color, nav_bg_color, nav_button_bg_color, nav_button_fg_color, weekday_bg_color, weekday_fg_color, day_bg_color, day_fg_color, day_disabled_bg_color, day_disabled_fg_color, day_today_bg_color, day_today_fg_color, day_selected_bg_color, day_selected_fg_color, footer_bg_color, footer_fg_color</code></li>
-                <li><strong>Colori specifici pulsanti:</strong> <code>prev_button_bg_color, prev_button_fg_color, today_button_bg_color, today_button_fg_color, next_button_bg_color, next_button_fg_color</code></li>
-            </ul>
-        </div>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>bg_color</code>, <code>title_fg_color</code></td><td>tuple RGB</td><td>(255,255,255), (29,29,31)</td><td>Sfondo principale e colore titolo.</td></tr>
+            <tr><td><code>nav_bg_color</code>, <code>nav_button_bg_color</code>, <code>nav_button_fg_color</code></td><td>tuple RGB</td><td>(245,245,247), (245,245,247), (0,122,255)</td><td>Colori navigazione.</td></tr>
+            <tr><td><code>weekday_bg_color</code>, <code>weekday_fg_color</code></td><td>tuple RGB</td><td>(255,255,255), (142,142,147)</td><td>Intestazioni giorni.</td></tr>
+            <tr><td><code>day_bg_color</code>, <code>day_fg_color</code></td><td>tuple RGB</td><td>(255,255,255), (29,29,31)</td><td>Celle giorni normali.</td></tr>
+            <tr><td><code>day_disabled_bg_color</code>, <code>day_disabled_fg_color</code></td><td>tuple RGB</td><td>(255,255,255), (199,199,204)</td><td>Giorni fuori mese.</td></tr>
+            <tr><td><code>day_today_bg_color</code>, <code>day_today_fg_color</code></td><td>tuple RGB</td><td>(0,122,255), (255,255,255)</td><td>Giorno corrente.</td></tr>
+            <tr><td><code>day_selected_bg_color</code>, <code>day_selected_fg_color</code></td><td>tuple RGB</td><td>(29,29,31), (255,255,255)</td><td>Giorno selezionato.</td></tr>
+            <tr><td><code>footer_bg_color</code>, <code>footer_fg_color</code></td><td>tuple RGB</td><td>(255,255,255), (142,142,147)</td><td>Colori footer.</td></tr>
+            <tr><td><code>january_text</code> … <code>december_text</code></td><td>str</td><td>"JANUARY"…"DECEMBER"</td><td>Nomi mesi.</td></tr>
+            <tr><td><code>monday_text</code> … <code>sunday_text</code></td><td>str</td><td>"MON"…"SUN"</td><td>Nomi giorni abbreviati.</td></tr>
+            <tr><td><code>prev_text</code>, <code>today_text</code>, <code>next_text</code></td><td>str</td><td>"‹", "TODAY", "›"</td><td>Testi pulsanti navigazione.</td></tr>
+            <tr><td><code>info_text</code></td><td>str</td><td>"Calendar created by FastGUI"</td><td>Testo footer.</td></tr>
+            <tr><td><code>week_start_monday</code></td><td>bool</td><td>True</td><td>La settimana inizia lunedì.</td></tr>
+            <tr><td><code>show_footer</code></td><td>bool</td><td>True</td><td>Mostra/nasconde footer.</td></tr>
+        </table>
 
         <h3>Metodo <code>.Logic()</code></h3>
-        <ul>
-            <li><code>prev_command, next_command, today_command</code> (nessun argomento)</li>
-            <li><code>day_command(d)</code> → riceve <code>datetime.date</code></li>
-            <li><code>month_change_command(year, month)</code></li>
-            <li><code>week_start_monday, show_footer</code> (possono essere impostati anche qui)</li>
-        </ul>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Descrizione</th></tr>
+            <tr><td><code>prev_command</code>, <code>next_command</code>, <code>today_command</code></td><td>Callback per pulsanti navigazione.</td></tr>
+            <tr><td><code>day_command(date)</code></td><td>Chiamato quando si seleziona un giorno (riceve datetime.date).</td></tr>
+            <tr><td><code>month_change_command(year, month)</code></td><td>Callback al cambio mese.</td></tr>
+            <tr><td><code>week_start_monday</code>, <code>show_footer</code></td><td>Override delle impostazioni.</td></tr>
+        </table>
 
         <h3>Metodi pubblici aggiuntivi</h3>
         <ul>
-            <li><code>get_selected_date()</code> → <code>datetime.date</code></li>
+            <li><code>get_selected_date()</code> → datetime.date</li>
             <li><code>go_to_date(d)</code> → sposta la vista a una data</li>
-            <li><code>set_info_text(testo)</code></li>
+            <li><code>set_info_text(testo)</code> → aggiorna footer</li>
         </ul>
 
-        <!-- ==================== WINDOW (corretto) ==================== -->
+        <h3>📘 Esempio CALENDAR</h3>
+        <div class="example-box">
+            <div class="example-header">calendar_demo.py</div>
+            <pre><code>from FlashGui import CALENDAR
+from datetime import date
+
+def giorno_selezionato(d):
+    print(f"Hai scelto il {d}")
+
+cal = CALENDAR(title="Calendario Eventi", size=(2,2))
+cal.Edit(
+    week_start_monday=False,
+    monday_text="LUN",
+    tuesday_text="MAR",
+    info_text="Seleziona una data per l'evento",
+    day_today_bg_color=(200,100,50)
+)
+cal.Logic(day_command=giorno_selezionato)
+cal.go_to_date(date(2025, 12, 25))
+cal.run()</code></pre>
+        </div>
+
+        <!-- ==================== WINDOW ==================== -->
         <h2 id="window">🪟 WINDOW – La tua tela bianca proporzionale</h2>
         <p>Layout proporzionale automatico: coordinate relative (0.0‑1.0) e font scalati. Ogni metodo <code>Add...</code> restituisce l'oggetto widget, che puoi salvare in una variabile per manipolarlo successivamente.</p>
 
         <h3>Costruttore</h3>
         <p>Stessi parametri degli altri componenti.</p>
 
-        <h3>Metodi per aggiungere widget (tutti con <code>relx, rely, relwidth, relheight</code>)</h3>
-        <button class="collapsible">Mostra tutti i widget disponibili</button>
-        <div class="collapsible-content">
-            <table class="method-table">
-                <tr><th>Metodo</th><th>Parametri specifici</th><th>Ritorna</th></tr>
-                <tr><td><code>AddLabel</code></td><td><code>text, bold, fg, bg, font_scale, alignment</code></td><td>wx.StaticText</td></tr>
-                <tr><td><code>AddButton</code></td><td><code>text, command, bold, fg, bg, font_scale</code></td><td>wx.Button</td></tr>
-                <tr><td><code>AddInput</code></td><td><code>text, hint, password, readonly, fg, bg, font_scale</code></td><td>wx.TextCtrl</td></tr>
-                <tr><td><code>AddTextArea</code></td><td><code>text, readonly, fg, bg, font_scale</code></td><td>wx.TextCtrl</td></tr>
-                <tr><td><code>AddCounter</code></td><td><code>min_val, max_val, start, step, font_scale</code></td><td>wx.SpinCtrl</td></tr>
-                <tr><td><code>AddCalendar</code></td><td><code>command</code> (riceve wx.DateTime)</td><td>wx.adv.CalendarCtrl</td></tr>
-                <tr><td><code>AddSlider</code></td><td><code>min_val, max_val, start, command, orientation</code></td><td>wx.Slider</td></tr>
-                <tr><td><code>AddColorPicker</code></td><td><code>color, command</code> (riceve stringa esadecimale)</td><td>wx.ColourPickerCtrl</td></tr>
-                <tr><td><code>AddCheckBox</code></td><td><code>label, checked, command, font_scale</code></td><td>wx.CheckBox</td></tr>
-                <tr><td><code>AddRadioButton</code></td><td><code>label, checked, command, font_scale</code></td><td>wx.RadioButton</td></tr>
-                <tr><td><code>AddComboBox</code></td><td><code>choices, value, command, font_scale</code></td><td>wx.ComboBox</td></tr>
-                <tr><td><code>AddListBox</code></td><td><code>choices, command, multiple, font_scale</code></td><td>wx.ListBox</td></tr>
-                <tr><td><code>AddCanvas</code></td><td><code>bg, tooltip, enabled, visible, cursor, parent</code></td><td>wx._CanvasPanel</td></tr>
-                <tr><td><code>AddTabs</code></td><td><code>tooltip, enabled, visible, cursor, parent</code></td><td>wx.Notebook</td></tr>
-                <tr><td><code>AddPage</code></td><td><code>notebook, title</code></td><td>wx.Panel</td></tr>
-            </table>
-        </div>
+        <h3>Metodi per aggiungere widget (tutti con <code>relx, rely, relwidth, relheight</code> float tra 0 e 1)</h3>
+        <table class="method-table">
+            <tr><th>Metodo</th><th>Parametri specifici</th><th>Ritorna</th><th>Descrizione</th></tr>
+            <tr><td><code>AddLabel(text, bold, fg, bg, font_scale, alignment, tooltip, enabled, visible, cursor, parent)</code></td><td>alignment: "left","center","right"</td><td>wx.StaticText</td><td>Etichetta di testo.</td></tr>
+            <tr><td><code>AddButton(text, command, bold, fg, bg, font_scale, tooltip, enabled, visible, cursor, parent)</code></td><td>command: funzione senza argomenti</td><td>wx.Button</td><td>Pulsante.</td></tr>
+            <tr><td><code>AddInput(text, hint, password, readonly, fg, bg, font_scale, tooltip, enabled, visible, cursor, parent)</code></td><td>hint: testo placeholder</td><td>wx.TextCtrl</td><td>Campo input riga singola.</td></tr>
+            <tr><td><code>AddTextArea(text, readonly, fg, bg, font_scale, tooltip, enabled, visible, cursor, parent)</code></td><td>—</td><td>wx.TextCtrl multilinea</td><td>Area di testo.</td></tr>
+            <tr><td><code>AddCounter(min_val, max_val, start, step, font_scale, tooltip, enabled, visible, cursor, parent)</code></td><td>—</td><td>wx.SpinCtrl</td><td>Contatore numerico.</td></tr>
+            <tr><td><code>AddCalendar(command, tooltip, enabled, visible, cursor, parent)</code></td><td>command: riceve wx.DateTime</td><td>wx.adv.CalendarCtrl</td><td>Calendario.</td></tr>
+            <tr><td><code>AddSlider(min_val, max_val, start, command, orientation, tooltip, enabled, visible, cursor, parent)</code></td><td>orientation: "horizontal"/"vertical"</td><td>wx.Slider</td><td>Slider.</td></tr>
+            <tr><td><code>AddColorPicker(color, command, tooltip, enabled, visible, cursor, parent)</code></td><td>command riceve colore esadecimale</td><td>wx.ColourPickerCtrl</td><td>Selettore colore.</td></tr>
+            <tr><td><code>AddCheckBox(label, checked, command, font_scale, tooltip, enabled, visible, cursor, parent)</code></td><td>command riceve bool</td><td>wx.CheckBox</td><td>Checkbox.</td></tr>
+            <tr><td><code>AddRadioButton(label, checked, command, font_scale, tooltip, enabled, visible, cursor, parent)</code></td><td>command riceve bool</td><td>wx.RadioButton</td><td>Radio button (gruppo automatico).</td></tr>
+            <tr><td><code>AddComboBox(choices, value, command, font_scale, tooltip, enabled, visible, cursor, parent)</code></td><td>command riceve valore selezionato</td><td>wx.ComboBox</td><td>Menu a tendina editabile.</td></tr>
+            <tr><td><code>AddListBox(choices, command, multiple, font_scale, tooltip, enabled, visible, cursor, parent)</code></td><td>multiple: bool</td><td>wx.ListBox</td><td>Lista di selezione.</td></tr>
+            <tr><td><code>AddCanvas(bg, tooltip, enabled, visible, cursor, parent)</code></td><td>bg: colore sfondo</td><td>_CanvasPanel</td><td>Area di disegno.</td></tr>
+            <tr><td><code>AddTabs(tooltip, enabled, bg, visible, cursor, parent)</code></td><td>bg: colore sfondo tabs</td><td>_CustomTabs</td><td>Contenitore a schede personalizzato.</td></tr>
+            <tr><td><code>AddPage(notebook, title, color, bg, active_fg, size_text)</code></td><td>—</td><td>wx.Panel</td><td>Aggiunge una pagina a un notebook creato con AddTabs.</td></tr>
+        </table>
 
-        <h3>Metodi per manipolare i widget</h3>
-        <p>Poiché ogni metodo <code>Add...</code> restituisce l'oggetto, puoi conservarlo in una variabile e usare i metodi nativi di wxPython. In alternativa, FlashGui offre alcuni helper:</p>
+        <h3>Manipolazione widget</h3>
         <ul>
-            <li><code>EnableWidget(widget, enable=True)</code> → abilita/disabilita un widget</li>
-            <li><code>ShowWidget(widget, show=True)</code> → mostra/nasconde un widget (e ricalcola il layout)</li>
-            <li><code>CanvasSetPen(canvas, color=None, width=None)</code> → imposta colore/spessore per il canvas</li>
-            <li><code>CanvasClear(canvas, color=None)</code> → pulisce il canvas</li>
+            <li><code>EnableWidget(widget, enable=True)</code> → abilita/disabilita.</li>
+            <li><code>ShowWidget(widget, show=True)</code> → mostra/nasconde (ricalcola layout).</li>
+            <li><code>CanvasSetPen(canvas, color=None, width=None)</code> → imposta colore/spessore per canvas.</li>
+            <li><code>CanvasClear(canvas, bg=None)</code> → pulisce canvas.</li>
         </ul>
-        <div class="tip">
-            <strong>💡 Esempio:</strong> <code>btn = win.AddButton("Cliccami", relx=0.4, rely=0.4, relwidth=0.2, relheight=0.1)</code><br>
-            Poi puoi fare <code>btn.SetLabel("Nuovo testo")</code> o <code>win.EnableWidget(btn, False)</code>.
-        </div>
 
         <h3>Menu e barra di stato</h3>
         <ul>
-            <li><code>AddMenuBar()</code> (automatico se si aggiunge un menu)</li>
-            <li><code>AddMenu(title)</code> → restituisce un menu wx.Menu</li>
-            <li><code>AddMenuItem(menu, label, command, shortcut)</code> → aggiunge una voce</li>
-            <li><code>AddStatusBar(testo_iniziale)</code></li>
-            <li><code>SetStatusText(testo, field=0)</code></li>
+            <li><code>AddMenuBar()</code> → crea barra menu.</li>
+            <li><code>AddMenu(title)</code> → restituisce un wx.Menu.</li>
+            <li><code>AddMenuItem(menu, label, command, shortcut)</code> → aggiunge voce.</li>
+            <li><code>AddStatusBar(testo_iniziale)</code> → crea status bar.</li>
+            <li><code>SetStatusText(testo, field=0)</code> → imposta testo status bar.</li>
         </ul>
 
         <h3>Utility integrate</h3>
         <ul>
-            <li><code>AddTimer(ms, command)</code> → esegue la funzione ogni <code>ms</code> millisecondi</li>
-            <li><code>Message(testo, titolo="Notice")</code> → mostra un messaggio</li>
-            <li><code>AskSave(wildcard, default_dir)</code> → restituisce percorso o None</li>
-            <li><code>AskOpen(wildcard, default_dir)</code> → idem</li>
-            <li><code>exit()</code> → chiude l’applicazione</li>
+            <li><code>Modify(Parametri...)</code> → parametri da modifcare del widget.</li>
+            <li><code>AddTimer(ms, command)</code> → timer periodico.</li>
+            <li><code>Message(testo, titolo="Message")</code> → messaggio informativo.</li>
+            <li><code>AskSave(wildcard, default_dir)</code> → percorso o None.</li>
+            <li><code>AskOpen(wildcard, default_dir)</code> → percorso o None.</li>
+            <li><code>exit()</code> → chiude l'applicazione.</li>
         </ul>
+
+        <h3>📘 Esempi WINDOW</h3>
+        <div class="example-box">
+            <div class="example-header">window_basic.py</div>
+            <pre><code>from FlashGui import WINDOW
+
+win = WINDOW(title="Demo Base", size=(2,2))
+win.AddLabel("Ciao Mondo!", relx=0.3, rely=0.4, relwidth=0.4, relheight=0.1)
+win.AddButton("Click", command=lambda: win.Message("Ciao!"), relx=0.4, rely=0.6, relwidth=0.2, relheight=0.1)
+win.run()</code></pre>
+        </div>
+        <div class="example-box">
+            <div class="example-header">window_form.py</div>
+            <pre><code>from FlashGui import WINDOW
+
+def invia():
+    nome = nome_input.GetValue()
+    win.Message(f"Benvenuto {nome}!")
+
+win = WINDOW(title="Modulo Registrazione", size=(2,1.5))
+win.AddLabel("Nome:", relx=0.1, rely=0.2, relwidth=0.2, relheight=0.1)
+nome_input = win.AddInput(relx=0.35, rely=0.2, relwidth=0.5, relheight=0.1)
+win.AddButton("Invia", command=invia, relx=0.4, rely=0.5, relwidth=0.2, relheight=0.1)
+win.run()</code></pre>
+        </div>
 
         <!-- ==================== METODI COMUNI ==================== -->
         <h2 id="common">🔁 La triade magica: run(), Edit(), Logic()</h2>
@@ -535,124 +735,8 @@
             <strong>🧠 Ordine consigliato:</strong> Crea l'oggetto → <code>.Edit(...)</code> → <code>.Logic(...)</code> → <code>.run()</code>.
         </div>
 
-        <!-- ==================== ESEMPI COMPLETI ==================== -->
-        <h2 id="examples">📚 Esempi pratici – Impara facendo</h2>
-        
-        <h3>1. Calcolatrice con memoria (CALCULATOR)</h3>
-        <div class="example-box">
-            <div class="example-header">calc_memory.py</div>
-            <pre><code>from FlashGui import CALCULATOR
-
-memoria = 0
-
-def memorizza():
-    global memoria
-    try:
-        memoria = float(calc.GetText())
-    except:
-        pass
-
-def richiama():
-    calc.SetText(str(memoria))
-
-calc = CALCULATOR(title="Calc con Memoria", size=(2.5,2))
-calc.Edit(button_0_text="M+", button_1_text="MR")
-calc.Logic(button_0_command=memorizza, button_1_command=richiama)
-calc.run()</code></pre>
-        </div>
-
-        <h3>2. Blocco note minimale (NOTEPAD)</h3>
-        <div class="example-box">
-            <div class="example-header">simple_notepad.py</div>
-            <pre><code>from FlashGui import NOTEPAD
-
-def quando_salvo():
-    print("File salvato!")
-
-note = NOTEPAD(title="Il mio diario", size=(1.5, 1.2))
-note.Edit(
-    text_ctrl_bg=(255, 255, 200),   # sfondo giallo pastello
-    text_ctrl_fg=(50, 50, 150),
-    save_text="Salva 💾"
-)
-note.Logic(menu_save_command=quando_salvo)  # override del salvataggio
-note.run()</code></pre>
-        </div>
-
-        <h3>3. Paint con strumenti personalizzati (PAINT)</h3>
-        <div class="example-box">
-            <div class="example-header">my_paint.py</div>
-            <pre><code>from FlashGui import PAINT
-
-p = PAINT(title="Disegna qualcosa", size=(1.8, 1.5))
-p.Edit(
-    brush_button_text="✏️ Matita",
-    eraser_button_text="🧽 Gomma",
-    clear_button_text="🗑️ Cancella tutto",
-    canvas_bg=(230, 240, 255)       # azzurro chiaro
-)
-p.Logic(current_tool="brush", slider_start_value=8)
-p.run()</code></pre>
-        </div>
-
-        <h3>4. Svezia – Timer con allarme (CLOCK)</h3>
-        <div class="example-box">
-            <div class="example-header">timer_sveglia.py</div>
-            <pre><code>from FlashGui import CLOCK
-
-def fine_timer():
-    win.Message("Il tempo è scaduto!", "Sveglia")
-
-orologio = CLOCK(title="Timer")
-orologio.Logic(timer_start_command=fine_timer, timer_base_m=1)  # 1 minuto
-orologio.run()</code></pre>
-        </div>
-
-        <h3>5. Calendario con eventi (CALENDAR)</h3>
-        <div class="example-box">
-            <div class="example-header">eventi_calendar.py</div>
-            <pre><code>from FlashGui import CALENDAR
-
-def giorno_selezionato(data):
-    win.set_info_text(f"Hai scelto il {data}")
-
-win = CALENDAR(title="Agenda")
-win.Logic(day_command=giorno_selezionato, week_start_monday=True)
-win.run()</code></pre>
-        </div>
-
-        <h3>6. Costruttore di interfacce (WINDOW)</h3>
-        <div class="example-box">
-            <div class="example-header">widget_demo.py</div>
-            <pre><code>from FlashGui import WINDOW
-
-def saluta():
-    nome = campo_input.GetValue()
-    win.Message(f"Ciao {nome}!")
-
-win = WINDOW(title="Demo interattiva", size=(1.5, 1.2))
-
-# Aggiungiamo un'etichetta
-win.AddLabel("Come ti chiami?", relx=0.2, rely=0.2, relwidth=0.6, relheight=0.1)
-
-# Campo di testo
-campo_input = win.AddInput(relx=0.2, rely=0.35, relwidth=0.6, relheight=0.1)
-
-# Pulsante
-win.AddButton("Saluta", command=saluta, relx=0.35, rely=0.6, relwidth=0.3, relheight=0.1)
-
-# Barra di stato
-win.AddStatusBar("Pronto")
-
-win.run()</code></pre>
-        </div>
-
-        <div class="note">
-            <strong>🔍 Nota:</strong> In WINDOW, i widget vengono manipolati tramite le variabili che li referenziano (es. <code>campo_input</code>). Non esistono metodi <code>GetWidget(name)</code>; usa direttamente l'oggetto restituito da <code>Add...</code>.
-        </div>
-
         <footer>
-            FlashGui · Documentazione completa – tutti i comandi e parametri sono qui.<br/>
+            FlashGui 0.1.4 · Documentazione completa – tutti i comandi e parametri sono qui.<br/>
             Ricorda: il software è come un buon caffè ☕ – va condiviso con le giuste attribuzioni.
         </footer>
     </main>
