@@ -1,5 +1,3 @@
-html
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -477,7 +475,6 @@ html
 </head>
 <body>
 <div class="docs-container">
-    <!-- ========== SIDEBAR ========== -->
     <aside class="sidebar">
         <div class="sidebar-brand">
             <h2>⚡ FlashGui</h2>
@@ -517,10 +514,8 @@ html
         </nav>
     </aside>
 
-    <!-- ========== MAIN ========== -->
     <main class="content">
 
-        <!-- HERO -->
         <div class="hero">
             <h1>FlashGui 0.1.6</h1>
             <p class="hero-sub">Costruisci interfacce desktop con il sorriso. Componenti già pronti, layout proporzionale, temi personalizzabili.</p>
@@ -532,26 +527,22 @@ html
             </div>
         </div>
 
-        <!-- ======================== INTRO ======================== -->
         <h2 id="intro">✨ Perché FlashGui?</h2>
-        <p>Hai presente quando vuoi creare una piccola app desktop in Python e ti scontri con la complessità di Tkinter o la verbosità di wxPython? FlashGui nasce per darti <strong>calcolatrice, blocco note, paint, orologio, calendario e un motore di ricerca file</strong> già funzionanti in 3 righe di codice. Se vuoi costruire la tua interfaccia da zero, il componente <code>WINDOW</code> ti permette di posizionare qualsiasi widget usando coordinate proporzionali (0.0 → 1.0) e i font si ridimensionano da soli. Tutto con un look pulito, moderno e completamente personalizzabile.</p>
+        <p>Hai presente quando vuoi creare una piccola app desktop in Python e ti scontri con la complessità di Tkinter o la verbosità di wxPython? FlashGui nasce per darti <strong>calcolatrice, blocco note, paint, orologio, calendario e un motore di ricerca file</strong> già funzionanti in 3 riche di codice. Se vuoi costruire la tua interfaccia da zero, il componente <code>WINDOW</code> ti permette di posizionare qualsiasi widget usando coordinate proporzionali (0.0 → 1.0) e i font si ridimensionano da soli. Tutto con un look pulito, moderno e completamente personalizzabile.</p>
         <div class="tip">
             <strong>💡 Idea:</strong> FlashGui è perfetto per prototipi rapidi, tool interni, o per chi si avvicina alla programmazione GUI e vuole risultati immediati senza studiare mille manuali.
         </div>
 
-        <!-- ======================== INSTALL ======================== -->
         <h2 id="install">📦 Installazione</h2>
         <pre><code>pip install FlashGui</code></pre>
         <p>wxPython e charset_normalizer vengono installati automaticamente. Nessun'altra dipendenza manuale.</p>
         <div class="note">
-            <strong>✅ Compatibile con:</strong> Windows 10/11, macOS (Intel e Apple Silicon), Linux con wxPython supportato. Richiede Python 3.7 o superiore.
+            <strong>✅ Compatibile con:</strong> Windows 10/11, macOS (Intel e Apple Silicon), Linux con wxPython supportato. Richiega Python 3.7 o superiore.
         </div>
 
-        <!-- ======================== DEPS ======================== -->
         <h2 id="deps">📚 Dipendenze</h2>
         <p>FlashGui è costruito sopra <strong>wxPython Phoenix</strong> (wxWidgets) e utilizza <strong>charset_normalizer</strong> per il rilevamento automatico delle codifiche nel blocco note. Entrambe vengono installate automaticamente con pip. Per <code>SEARCHER</code>, le richieste HTTP usano la libreria standard <code>urllib</code> — nessun pacchetto aggiuntivo necessario.</p>
 
-        <!-- ======================== LICENZE ======================== -->
         <h2 id="licenses">📜 Licenze — Leggi con attenzione</h2>
         <div class="warning">
             <strong>⚠️ Obbligo di attribuzione:</strong> Se distribuisci un'applicazione che include FlashGui (anche in forma compilata, es. con PyInstaller o cx_Freeze), devi includere i testi di licenza delle seguenti librerie. Non costa nulla e mantiene il progetto libero e credibile.
@@ -567,7 +558,6 @@ html
             I file <code>LICENSE</code> completi e aggiornati si trovano sempre nella cartella della libreria installata, sotto <code>FlashGui/licenses/</code>. I testi qui sotto sono riprodotti per comodità di consultazione.
         </div>
 
-        <!-- ======================== CALCULATOR ======================== -->
         <h2 id="calculator">🧮 CALCULATOR</h2>
         <p>Una calcolatrice completa con display, 20 pulsanti e gestione degli errori. Puoi cambiarne ogni singolo aspetto e agganciare le tue funzioni a ogni tasto.</p>
 
@@ -659,7 +649,6 @@ calc.Logic(button_0_command=mio_callback)
 calc.run()</code></pre>
         </div>
 
-        <!-- ======================== NOTEPAD ======================== -->
         <h2 id="notepad">📝 NOTEPAD</h2>
         <p>Blocco note completo: apertura/salvataggio con rilevamento automatico della codifica (charset_normalizer), menu personalizzabili, barra di stato, menu contestuale e temi scuri.</p>
 
@@ -682,4 +671,213 @@ calc.run()</code></pre>
             <tr><td><code>menubar_bg</code>, <code>menubar_fg</code>, <code>menubar_hover</code></td><td>tuple RGB</td><td><code>(235,235,235)</code>, <code>(0,0,0)</code>, <code>(200,220,240)</code></td><td>Colori barra menu: sfondo, testo e hover.</td></tr>
             <tr><td><code>menu_bg</code>, <code>menu_fg</code>, <code>menu_hover</code></td><td>tuple RGB</td><td><code>(250,250,250)</code>, <code>(0,0,0)</code>, <code>(200,220,240)</code></td><td>Colori menu a tendina aperto.</td></tr>
             <tr><td><code>menu_radius</code></td><td>int</td><td><code>6</code></td><td>Raggio bordi arrotondati del menu a tendina.</td></tr>
-            <tr><td><code>statusbar_bg</code>, <code>statusbar_fg</code>, <code>statusbar_separator_color</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code>, <code
+            <tr><td><code>statusbar_bg</code>, <code>statusbar_fg</code>, <code>statusbar_separator_color</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code>, <code>(210,210,210)</code></td><td>Colori della barra di stato inferiore.</td></tr>
+            <tr><td><code>font_size</code></td><td>int</td><td><code>11</code></td><td>Dimensione iniziale del carattere di testo.</td></tr>
+        </table>
+
+        <h3>Metodo <code>.Logic()</code></h3>
+        <p>Permette di agganciare logiche personalizzate agli eventi principali del Blocco Note.</p>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Descrizione</th></tr>
+            <tr><td><code>on_open_command</code></td><td>Callback eseguito subito dopo l'apertura riuscita di un file. Riceve il percorso file come argomento.</td></tr>
+            <tr><td><code>on_save_command</code></td><td>Callback eseguito dopo il salvataggio del file attuale.</td></tr>
+            <tr><td><code>on_text_change_command</code></td><td>Eseguito ad ogni carattere digitato o modifica dell'area di testo.</td></tr>
+        </table>
+
+        <h3>Metodi pubblici</h3>
+        <ul class="std-list">
+            <li><code>GetText()</code> → <em>str</em> — Restituisce l'intero contenuto testuale.</li>
+            <li><code>SetText(text)</code> — Sovrascrive il contenuto dell'editor.</li>
+            <li><code>GetFilePath()</code> → <em>str/None</em> — Restituisce il percorso del file attualmente aperto.</li>
+            <li><code>LoadFile(path)</code> — Forza l'apertura e la decodifica automatica di un file specifico.</li>
+        </ul>
+
+        <h3>📘 Esempio</h3>
+        <div class="example-box">
+            <div class="example-header">notepad_demo.py</div>
+            <pre><code>from FlashGui import NOTEPAD
+
+note = NOTEPAD(title="Editor Avanzato", style="dark")
+note.Edit(font_size=13)
+note.Logic(on_text_change_command=lambda: print("Testo modificato!"))
+note.run()</code></pre>
+        </div>
+
+        <h2 id="paint">🎨 PAINT</h2>
+        <p>Una mini applicazione di disegno bitmap vettoriale e raster. Offre una tela interattiva su cui disegnare a mano libera, scegliere colori, regolare lo spessore del pennello e salvare il risultato in formato PNG.</p>
+
+        <h3>Costruttore</h3>
+        <pre><code>PAINT(title="Paint", size=(2,1.5), color=(255,255,255), icon=None, maximized=False, style="light")</code></pre>
+
+        <h3>Metodo <code>.Edit()</code></h3>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>default_brush_color</code></td><td>tuple RGB</td><td><code>(0,0,0)</code></td><td>Colore iniziale del pennello.</td></tr>
+            <tr><td><code>default_brush_size</code></td><td>int</td><td><code>5</code></td><td>Spessore iniziale della linea (in pixel).</td></tr>
+            <tr><td><code>canvas_bg_color</code></td><td>tuple RGB</td><td><code>(255,255,255)</code></td><td>Colore di sfondo della tela di disegno.</td></tr>
+            <tr><td><code>toolbar_bg</code></td><td>tuple RGB</td><td><code>(230,230,230)</code></td><td>Colore di sfondo della barra degli strumenti laterale/superiore.</td></tr>
+        </table>
+
+        <h3>Metodo <code>.Logic()</code></h3>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Descrizione</th></tr>
+            <tr><td><code>on_clear_command</code></td><td>Callback invocato quando l'utente ripulisce la tela.</td></tr>
+            <tr><td><code>on_save_canvas_command</code></td><td>Callback invocato all'esportazione del file immagine.</td></tr>
+        </table>
+
+        <h3>Metodi pubblici</h3>
+        <ul class="std-list">
+            <li><code>ClearCanvas()</code> — Svuota completamente l'area di disegno ripristinando il colore di sfondo.</li>
+            <li><code>GetBitmap()</code> → <em>wx.Bitmap</em> — Restituisce l'oggetto bitmap interno del disegno corrente.</li>
+            <li><code>SaveToFile(path)</code> — Esporta direttamente il disegno su disco in formato immagine.</li>
+        </ul>
+
+        <h2 id="clock">⏰ CLOCK</h2>
+        <p>Componente orologio con supporto nativo per visualizzazione digitale, analogica (con lancette renderizzate in tempo reale antialiased) e cronometro integrato.</p>
+
+        <h3>Costruttore</h3>
+        <pre><code>CLOCK(title="Clock", size=(4,4), style="light")</code></pre>
+
+        <h3>Metodo <code>.Edit()</code></h3>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>clock_type</code></td><td>str</td><td><code>"digital"</code></td><td>Tipo di visualizzazione: <code>"digital"</code> o <code>"analog"</code>.</td></tr>
+            <tr><td><code>time_format</code></td><td>str</td><td><code>"%H:%M:%S"</code></td><td>Stringa di formattazione dell'orario (usata nel tipo digital).</td></tr>
+            <tr><td><code>text_color</code></td><td>tuple RGB</td><td><code>(0,0,0)</code></td><td>Colore del testo dell'orologio digitale o dei numeri dell'analogico.</td></tr>
+            <tr><td><code>hand_seconds_color</code></td><td>tuple RGB</td><td><code>(200,50,50)</code></td><td>Colore della lancetta dei secondi nell'orologio analogico.</td></tr>
+        </table>
+
+        <h3>Metodo <code>.Logic()</code></h3>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Descrizione</th></tr>
+            <tr><td><code>on_tick_command</code></td><td>Funzione richiamata ad ogni secondo (ogni tick dell'orologio). Riceve una stringa con l'orario corrente.</td></tr>
+        </table>
+
+        <h2 id="calendar">📅 CALENDAR</h2>
+        <p>Un widget calendario completo e autonomo per la selezione delle date, il tracciamento dei giorni della settimana e l'evidenziazione di scadenze o eventi specifici.</p>
+
+        <h3>Metodo <code>.Edit()</code></h3>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
+            <tr><td><code>highlight_weekends</code></td><td>bool</td><td><code>True</code></td><td>Se <code>True</code>, colora le scritte di Sabato e Domenica in modo differente.</td></tr>
+            <tr><td><code>header_bg_color</code></td><td>tuple RGB</td><td><code>(230,230,230)</code></td><td>Colore dell'intestazione dei mesi.</td></tr>
+            <tr><td><code>selected_day_bg</code></td><td>tuple RGB</td><td><code>(25,118,210)</code></td><td>Sfondo del giorno correntemente selezionato.</td></tr>
+        </table>
+
+        <h3>Metodo <code>.Logic()</code></h3>
+        <table class="param-table">
+            <tr><th>Parametro</th><th>Descrizione</th></tr>
+            <tr><td><code>on_date_changed</code></td><td>Invocato quando l'utente clicca o si sposta su una data differente. Riceve un oggetto datetime in input.</td></tr>
+        </table>
+
+        <h3>Metodi pubblici</h3>
+        <ul class="std-list">
+            <li><code>GetSelectedDate()</code> → <em>str</em> — Restituisce la data in formato <code>YYYY-MM-DD</code>.</li>
+            <li><code>SetSelectedDate(year, month, day)</code> — Forza la selezione visiva su una data specifica.</li>
+        </ul>
+
+        <h2 id="searcher">🔍 SEARCHER</h2>
+        <p>Un potente motore di scansione ed indicizzazione locale per file e cartelle, combinato con un modulo client leggero che sfrutta <code>urllib</code> per interrogare endpoint e API remote senza dipendenze di terze parti.</p>
+
+        <h3>Costruttore</h3>
+        <pre><code>SEARCHER(title="Searcher", size=(2,1.8), style="light")</code></pre>
+
+        <h3>Metodi pubblici</h3>
+        <ul class="std-list">
+            <li><code>SearchLocalFiles(directory, extension=None)</code> — Esegue una scansione ricorsiva all'interno della directory indicata, filtrando opzionalmente per estensione (es. <code>.py</code>).</li>
+            <li><code>QueryRemoteAPI(url, params=None)</code> — Sfrutta <code>urllib.request</code> per inviare una richiesta HTTP GET sincrona e popola la vista risultati interna con i dati JSON o testuali ricevuti.</li>
+            <li><code>GetFoundItems()</code> → <em>list</em> — Restituisce l'elenco dei percorsi o delle stringhe trovate nell'ultima sessione di ricerca.</li>
+        </ul>
+
+        <h2 id="window">🪟 WINDOW (La tela bianca)</h2>
+        <p>Se i moduli pronti all'uso non bastano, <code>WINDOW</code> ti mette a disposizione una finestra vuota dotata di un <strong>sistema di coordinate proporzionali</strong>.</p> 
+        <p>Invece di impazzire con i pixel o con i complessi Sizer nidificati di wxPython, puoi posizionare i tuoi componenti indicando valori decimali compresi nell'intervallo $0.0 \le x, y \le 1.0$. I font e i widget stessi si ridimensioneranno proporzionalmente al variare delle dimensioni della finestra, mantenendo sempre intatto il layout matematico stabilito originariamente.</p>
+
+        <h3>Costruttore</h3>
+        <pre><code>WINDOW(title="Custom Grid", size=(2,2), color=(245,245,240), icon=None, maximized=False, style="light")</code></pre>
+
+        <h2 id="window-methods">➕ Metodi Add…</h2>
+        <p>Ogni metodo <code>Add</code> inserisce un elemento grafico all'interno del motore a coordinate proporzionali. Restituiscono un identificatore univoco (stringa intera o istanza) utilizzato per manipolare l'elemento in un secondo momento.</p>
+
+        <div class="method-group">
+            <div class="method-card">
+                <strong>AddButton(text, pos, size, command=None)</strong>
+                Crea un pulsante cliccabile. <code>pos=(x, y)</code> e <code>size=(w, h)</code> usano float proporzionali.
+            </div>
+            <div class="method-card">
+                <strong>AddText(text, pos, size, font_bold=False)</strong>
+                Visualizza una stringa di testo statico (Label) con font auto-scalante.
+            </div>
+            <div class="method-card">
+                <strong>AddInput(pos, size, placeholder="", multiline=False)</strong>
+                Inserisce un campo di testo per l'input dell'utente (singola linea o area di testo multilinea).
+            </div>
+            <div class="method-card">
+                <strong>AddCheckbox(text, pos, size, command=None)</strong>
+                Crea una casella di spunta booleana.
+            </div>
+        </div>
+
+        <table class="param-table" style="margin-top:0.5rem;">
+            <tr><th>Metodo Add speciale</th><th>Argomenti principali</th><th>Descrizione</th></tr>
+            <tr><td><code>AddListbox(items, pos, size, command=None)</code></td><td><code>items (list of str)</code></td><td>Genera una lista di elementi selezionabili con barra di scorrimento verticale.</td></tr>
+            <tr><td><code>AddImage(image_path, pos, size)</code></td><td><code>image_path (str)</code></td><td>Carica un file PNG/JPG e lo scala proporzionalmente al contenitore.</td></tr>
+        </table>
+
+        <h2 id="window-utils">🛠️ Utility e Modifica dei Widget Dinamici</h2>
+        <p>Puoi alterare lo stato dei controlli inseriti all'interno dell'istanza <code>WINDOW</code> in qualsiasi momento dell'esecuzione del programma tramite i seguenti metodi di istanza dedicati:</p>
+
+        <ul class="std-list">
+            <li><code>GetWidgetValue(widget_id)</code> → Restituisce il valore corrente contenuto nell'elemento (il testo inserito in un <code>Input</code>, lo stato booleano di un <code>Checkbox</code>, la riga selezionata in un <code>Listbox</code>).</li>
+            <li><code>SetWidgetValue(widget_id, new_value)</code> → Modifica dinamicamente il valore o la stringa visualizzata dal componente specificato.</li>
+            <li><code>SetWidgetColor(widget_id, bg_color=None, fg_color=None)</code> → Applica combinazioni RGB personalizzate locali a un singolo widget della griglia.</li>
+            <li><code>RemoveWidget(widget_id)</code> → Distrugge l'elemento grafico e lo rimuove immediatamente dallo schermo e dall'albero di rendering proporzionale.</li>
+        </ul>
+
+        <h3>📘 Esempio Pratico Completo con WINDOW</h3>
+        <div class="example-box">
+            <div class="example-header">custom_dashboard.py</div>
+            <pre><code>from FlashGui import WINDOW
+
+def saluta():
+    nome = app.GetWidgetValue(input_id)
+    app.SetWidgetValue(label_id, f"Ciao, {nome}! Benvenuto in FlashGui.")
+
+app = WINDOW(title="Pannello Personalizzato", size=(2,1.8))
+
+# Posizionamento ad assi frazionari (0.0 -> 1.0)
+app.AddText("Inserisci il tuo nome completo:", pos=(0.1, 0.1), size=(0.8, 0.08))
+input_id = app.AddInput(pos=(0.1, 0.2), size=(0.8, 0.1), placeholder="Scrivi qui...")
+
+btn_id = app.AddButton("Genera Saluto", pos=(0.3, 0.4), size=(0.4, 0.12), command=saluta)
+label_id = app.AddText("", pos=(0.1, 0.6), size=(0.8, 0.1))
+
+app.SetWidgetColor(btn_id, bg_color=(26, 107, 201), fg_color=(255, 255, 255))
+app.run()</code></pre>
+        </div>
+
+        <h2 id="common">🔄 Filosofia Comune: .run() · .Edit() · .Logic()</h2>
+        <p>Tutti i moduli nativi presenti nella suite software FlashGui ereditano la medesima struttura logica di interazione sequenziale, divisa rigorosamente in tre fasi:</p>
+
+        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; line-height: 2; color:#3d3830;">
+            <li><strong>Inizializzazione Configurazione:</strong> Definizione dei vincoli fisici e del titolo nel costruttore principale.</li>
+            <li><strong>Fase <code>.Edit()</code> (Aspetto):</strong> Configurazione opzionale dello stile visivo, palette di colori e traduzioni dei componenti testuali.</li>
+            <li><strong>Fase <code>.Logic()</code> (Comportamento):</strong> Aggancio delle funzioni callback scritte in Python puro agli eventi di interfaccia dell'applicazione.</li>
+            <li><strong>Esecuzione <code>.run()</code>:</strong> Apertura della finestra e avvio del ciclo principale di gestione degli eventi (Main Event Loop). Questo metodo è bloccante.</li>
+        </ol>
+
+        <h2 id="timer-common">⏱️ Gestione dei Timer Asincroni</h2>
+        <p>Tutti i componenti mettono a disposizione il metodo di istanza <code>AddTimer(ms, command)</code>. Questo genera un timer asincrono non bloccante che esegue la funzione passata come parametro dopo l'intervallo di tempo indicato (espresso in millisecondi).</p>
+        <div class="note">
+            Poiché i callback dei timer vengono eseguiti all'interno del thread principale della GUI gestito da wxPython, è possibile modificare in totale sicurezza lo stato e i testi di qualsiasi widget senza incorrere in crash di thread-safety.
+        </div>
+
+        <footer>
+            FlashGui 0.1.6 · Documentazione Distribuita sotto Licenza MIT · Sviluppato su wxPython Phoenix.<br>
+            <a href="https://pypi.org/project/FlashGui/" target="_blank">Repository Ufficiale PyPI</a>
+        </footer>
+
+    </main>
+</div>
+</body>
+</html>
