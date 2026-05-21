@@ -4,880 +4,1435 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlashGui 0.1.6 · Documentazione completa</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f4f3ef;
-            --surface: #ffffff;
-            --border: #e2ddd5;
-            --text: #1a1814;
-            --text-muted: #6b6660;
-            --text-light: #9a938d;
-            --accent: #c94a1a;
-            --accent-soft: #fde8df;
-            --accent2: #1a6bc9;
-            --accent2-soft: #ddeeff;
-            --new-badge: #059669;
-            --new-badge-soft: #d1fae5;
-            --sidebar-w: 290px;
-            --mono: 'JetBrains Mono', monospace;
-            --sans: 'DM Sans', sans-serif;
-            --serif: 'DM Serif Display', serif;
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface2: #21262d;
+            --border: #30363d;
+            --accent: #2f81f7;
+            --accent2: #3fb950;
+            --accent3: #d2a8ff;
+            --accent4: #ffa657;
+            --accent5: #ff7b72;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --text-dim: #6e7681;
+            --radius: 8px;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        html { scroll-behavior: smooth; }
         body {
-            font-family: var(--sans);
+            font-family: 'Outfit', sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.75;
+            line-height: 1.7;
         }
-
-        /* ── SCROLLBAR ── */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-        /* ── LAYOUT ── */
-        .docs-container { display: flex; min-height: 100vh; }
-
         /* ── SIDEBAR ── */
+        .docs-container { display: flex; min-height: 100vh; }
         .sidebar {
-            width: var(--sidebar-w);
+            width: 280px;
             background: var(--surface);
             border-right: 1px solid var(--border);
             position: sticky;
             top: 0;
             height: 100vh;
             overflow-y: auto;
-            padding: 1.75rem 1.25rem;
+            padding: 1.5rem 1rem;
             flex-shrink: 0;
-            z-index: 10;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
         }
-        .sidebar-brand {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-            margin-bottom: 0.3rem;
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        .logo-area { padding: 0 0.5rem 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+        .logo-area h2 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.5px;
         }
-        .sidebar-brand h2 {
-            font-family: var(--serif);
-            font-size: 1.55rem;
-            font-weight: 400;
-            color: var(--text);
-            letter-spacing: -0.01em;
-        }
-        .sidebar .version-line {
+        .logo-area .version {
             font-size: 0.78rem;
             color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
+            margin-top: 0.2rem;
         }
-        .version-line a { color: var(--accent2); text-decoration: none; }
-        .version-line a:hover { text-decoration: underline; }
-        .version-pill {
-            background: var(--accent);
-            color: white;
-            font-size: 0.68rem;
-            font-weight: 600;
-            padding: 0.15rem 0.5rem;
+        .logo-area .badge-new {
+            display: inline-block;
+            background: var(--accent2);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 1px 6px;
             border-radius: 20px;
-            letter-spacing: 0.03em;
-        }
-
-        .sidebar nav .section-title {
-            font-size: 0.68rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-light);
-            margin: 1.4rem 0 0.4rem 0.5rem;
-            font-weight: 600;
+            margin-left: 6px;
+            vertical-align: middle;
         }
         .sidebar nav ul { list-style: none; }
-        .sidebar nav li { margin-bottom: 1px; }
+        .sidebar nav li { margin-bottom: 2px; }
         .sidebar nav a {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.42rem 0.65rem;
+            gap: 8px;
+            padding: 0.42rem 0.6rem;
             color: var(--text-muted);
             text-decoration: none;
-            border-radius: 7px;
-            font-size: 0.875rem;
+            border-radius: 6px;
+            font-size: 0.88rem;
             font-weight: 500;
-            transition: background 0.15s, color 0.15s;
+            transition: all 0.15s;
         }
-        .sidebar nav a:hover { background: var(--bg); color: var(--text); }
-        .sidebar nav a.active { background: var(--accent-soft); color: var(--accent); }
-
-        /* ── MAIN CONTENT ── */
+        .sidebar nav a:hover { background: var(--surface2); color: var(--text); }
+        .sidebar nav a.active { background: rgba(47,129,247,0.12); color: var(--accent); }
+        .section-title {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            margin: 1.2rem 0 0.4rem 0.6rem;
+            font-weight: 600;
+        }
+        /* ── CONTENT ── */
         .content {
             flex: 1;
-            min-width: 0;
-            padding: 2.5rem 3.5rem 4rem 3.5rem;
-            max-width: 960px;
+            max-width: calc(100% - 280px);
+            padding: 2.5rem 3rem 5rem;
+            overflow-x: hidden;
         }
-
-        /* ── HERO ── */
-        .hero {
-            background: var(--text);
-            color: white;
-            border-radius: 20px;
-            padding: 2.5rem 2.8rem;
-            margin-bottom: 2.5rem;
-            position: relative;
-            overflow: hidden;
+        .content h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text);
+            margin-bottom: 0.3rem;
         }
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: -40px; right: -40px;
-            width: 220px; height: 220px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(201,74,26,0.35) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero::after {
-            content: "";
-            position: absolute;
-            bottom: -60px; left: -30px;
-            width: 260px; height: 180px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(26,107,201,0.25) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero h1 {
-            font-family: var(--serif);
-            font-size: 2.8rem;
-            font-weight: 400;
-            margin-bottom: 0.4rem;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-        .hero-sub {
-            font-size: 1.05rem;
-            color: #c8c3bc;
-            max-width: 520px;
-        }
-        .hero-badges {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 1.2rem;
-        }
-        .hero-badge {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            letter-spacing: 0.04em;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: rgba(255,255,255,0.75);
-            background: rgba(255,255,255,0.07);
-        }
-
-        /* ── HEADINGS ── */
+        .content h1 span { color: var(--accent); }
         .content h2 {
-            font-family: var(--serif);
-            font-size: 1.9rem;
-            font-weight: 400;
-            margin: 3rem 0 1rem 0;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 3rem 0 1rem;
             padding-bottom: 0.6rem;
-            border-bottom: 2px solid var(--border);
-            letter-spacing: -0.01em;
+            border-bottom: 1px solid var(--border);
             color: var(--text);
         }
         .content h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin: 2rem 0 0.8rem 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 0.8rem;
             color: var(--text);
-            letter-spacing: -0.01em;
         }
         .content h4 {
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin: 1.4rem 0 0.5rem 0;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.5rem;
             color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
         }
-        .content p { margin-bottom: 1.1rem; color: #3d3830; }
-
+        .content p { margin-bottom: 1rem; color: #c9d1d9; font-size: 0.97rem; }
         /* ── CODE ── */
-        .content pre {
-            background: #1c1917;
-            color: #e7e3de;
-            padding: 1.3rem 1.5rem;
-            border-radius: 12px;
+        pre {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.5rem;
             overflow-x: auto;
-            font-family: var(--mono);
-            font-size: 0.855rem;
-            margin: 1.4rem 0;
+            margin: 1rem 0;
+            position: relative;
+        }
+        pre code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.84rem;
+            color: #e6edf3;
             line-height: 1.65;
-            border: 1px solid #2d2926;
         }
-        .content code {
-            background: #ede9e3;
-            padding: 0.15rem 0.45rem;
-            border-radius: 5px;
-            font-family: var(--mono);
-            font-size: 0.84em;
-            color: var(--accent);
-            border: 1px solid #ddd8d0;
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            background: var(--surface2);
+            color: var(--accent3);
+            padding: 1px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
         }
-        .content pre code {
-            background: transparent;
-            padding: 0;
-            border: none;
-            color: inherit;
-            font-size: inherit;
-        }
-
+        pre code { background: none; border: none; padding: 0; color: inherit; }
+        /* syntax colors */
+        .kw { color: #ff7b72; }
+        .fn { color: #d2a8ff; }
+        .st { color: #a5d6ff; }
+        .cm { color: #8b949e; font-style: italic; }
+        .nm { color: #ffa657; }
+        .op { color: #e6edf3; }
+        .nb { color: #79c0ff; }
         /* ── TABLES ── */
-        .param-table, .method-table {
+        .table-wrap { overflow-x: auto; margin: 1rem 0 1.5rem; }
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1.3rem 0;
-            font-size: 0.875rem;
+            font-size: 0.88rem;
             background: var(--surface);
-            border-radius: 12px;
+            border-radius: var(--radius);
             overflow: hidden;
             border: 1px solid var(--border);
         }
-        .param-table th, .param-table td,
-        .method-table th, .method-table td {
-            padding: 0.75rem 1rem;
+        thead tr { background: var(--surface2); }
+        th {
             text-align: left;
-            vertical-align: top;
-            border-bottom: 1px solid var(--border);
-            border-right: 1px solid var(--border);
-        }
-        .param-table tr:last-child td,
-        .method-table tr:last-child td {
-            border-bottom: none;
-        }
-        .param-table th, .method-table th {
-            background: #f0ece5;
-            font-weight: 700;
-            font-size: 0.78rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-        }
-        .param-table tr:hover td,
-        .method-table tr:hover td {
-            background: #faf8f5;
-        }
-
-        /* ── BADGES ── */
-        .badge-new {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            background: var(--new-badge-soft);
-            color: var(--new-badge);
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 0.18rem 0.55rem;
-            border-radius: 20px;
-            letter-spacing: 0.05em;
-            vertical-align: middle;
-            margin-left: 0.35rem;
-            border: 1px solid #a7f3d0;
-        }
-        .badge-new::before { content: "✦"; font-size: 0.55rem; }
-
-        .badge-req {
-            display: inline-block;
-            background: #fff3cd;
-            color: #856404;
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 0.15rem 0.5rem;
-            border-radius: 20px;
-            letter-spacing: 0.05em;
-            vertical-align: middle;
-            margin-left: 0.3rem;
-            border: 1px solid #ffd966;
-        }
-
-        /* ── CALLOUTS ── */
-        .note, .warning, .tip {
-            padding: 1.1rem 1.4rem;
-            border-radius: 10px;
-            margin: 1.4rem 0;
-            font-size: 0.9rem;
-        }
-        .note {
-            background: #fffbea;
-            border-left: 4px solid #f59e0b;
-            color: #78350f;
-        }
-        .warning {
-            background: #fff1f0;
-            border-left: 4px solid var(--accent);
-            color: #7f1d1d;
-        }
-        .tip {
-            background: #eff8ff;
-            border-left: 4px solid var(--accent2);
-            color: #1e3a5f;
-        }
-
-        /* ── EXAMPLE BOXES ── */
-        .example-box {
-            background: #1c1917;
-            border-radius: 12px;
-            margin: 1.4rem 0;
-            overflow: hidden;
-            border: 1px solid #2d2926;
-        }
-        .example-header {
-            background: #141210;
-            padding: 0.5rem 1rem;
-            color: #7a7068;
-            font-family: var(--mono);
-            font-size: 0.78rem;
-            border-bottom: 1px solid #2d2926;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .example-header::before { content: "●"; color: var(--accent); font-size: 0.65rem; }
-        .example-box pre {
-            margin: 0;
-            border: none;
-            border-radius: 0;
-            background: transparent;
-        }
-
-        /* ── LICENSE BOX ── */
-        .license-block {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-        .license-block-header {
-            background: #f0ece5;
-            padding: 0.6rem 1rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .license-block-header span {
-            font-family: var(--mono);
-            font-weight: 400;
+            padding: 0.65rem 1rem;
             font-size: 0.75rem;
-            color: var(--text-light);
-            letter-spacing: 0;
-            text-transform: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
         }
-        .license-text {
-            padding: 1.1rem 1.2rem;
-            font-family: var(--mono);
-            font-size: 0.8rem;
-            line-height: 1.7;
-            color: #4a4540;
-            white-space: pre-wrap;
-            word-break: break-word;
-            max-height: 280px;
-            overflow-y: auto;
-            background: #fdfcfa;
+        td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
         }
-
-        /* ── COLLAPSIBLE ── */
-        .collapsible {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            padding: 0.75rem 1rem;
-            width: 100%;
-            text-align: left;
-            font-size: 0.9rem;
-            font-weight: 600;
-            font-family: var(--sans);
-            border-radius: 9px;
-            margin: 0.5rem 0;
-            color: var(--text);
-            transition: background 0.15s;
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(47,129,247,0.04); }
+        td:first-child code { color: var(--accent); }
+        /* ── CARDS / CALLOUTS ── */
+        .callout {
+            border-radius: var(--radius);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-left: 3px solid;
+            font-size: 0.92rem;
+        }
+        .callout.info { background: rgba(47,129,247,0.1); border-color: var(--accent); }
+        .callout.tip { background: rgba(63,185,80,0.1); border-color: var(--accent2); }
+        .callout.new { background: rgba(210,168,255,0.1); border-color: var(--accent3); }
+        .callout.warn { background: rgba(255,166,87,0.08); border-color: var(--accent4); }
+        /* ── BADGES ── */
+        .badge {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-family: 'Outfit', sans-serif;
+            margin-left: 6px;
+            vertical-align: middle;
+            letter-spacing: 0.3px;
+        }
+        .badge-new { background: rgba(63,185,80,0.2); color: #3fb950; border: 1px solid #3fb950; }
+        .badge-updated { background: rgba(47,129,247,0.2); color: #79c0ff; border: 1px solid #79c0ff; }
+        .badge-common { background: rgba(210,168,255,0.15); color: #d2a8ff; border: 1px solid #d2a8ff; }
+        /* ── MODULE HEADER ── */
+        .module-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-        .collapsible::after { content: "▾"; margin-left: auto; color: var(--text-light); }
-        .collapsible.active::after { content: "▴"; }
-        .collapsible:hover { background: var(--bg); }
-        .collapsible-content { padding: 0 0.5rem; display: none; overflow: hidden; }
-
-        /* ── INTRO SECTION ── */
-        .intro-highlight {
-            background: linear-gradient(135deg, #fde8df 0%, #ddeeff 100%);
-            border: 1px solid #e8d8d0;
-            padding: 1.6rem 2rem;
-            border-radius: 14px;
-            margin-bottom: 2rem;
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            margin-top: 4rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--text-light);
-            text-align: center;
-        }
-        footer a { color: var(--accent2); text-decoration: none; }
-
-        /* ── UTILITY ── */
-        ul.std-list {
-            margin: 0.5rem 0 1rem 1.4rem;
-            color: #3d3830;
-        }
-        ul.std-list li { margin-bottom: 0.35rem; }
-        ul.std-list code { font-size: 0.85em; }
-
-        .method-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-            margin: 1rem 0;
-        }
-        .method-card {
+            gap: 1rem;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 0.9rem 1rem;
-            font-size: 0.875rem;
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0 1.5rem;
         }
-        .method-card strong { display: block; font-size: 0.82rem; color: var(--accent); font-family: var(--mono); margin-bottom: 0.3rem; }
-
+        .module-icon { font-size: 2.2rem; }
+        .module-title { font-size: 1.5rem; font-weight: 700; }
+        .module-desc { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.2rem; }
+        /* ── HERO ── */
+        .hero-section {
+            background: linear-gradient(135deg, var(--surface) 0%, #0d1117 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .hero-section .subtitle { color: var(--text-muted); font-size: 1.05rem; margin-top: 0.5rem; }
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .hero-stats .stat { text-align: center; }
+        .hero-stats .stat .number { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+        .hero-stats .stat .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+        /* ── INSTALL ── */
+        .install-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 0.85rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+        .install-box span { color: var(--accent2); }
+        /* ── CHANGELOG CARD ── */
+        .changelog {
+            background: var(--surface);
+            border: 1px solid var(--accent3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .changelog h3 { color: var(--accent3); margin-top: 0; }
+        .changelog ul { list-style: none; margin-top: 0.75rem; }
+        .changelog ul li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: #c9d1d9;
+        }
+        .changelog ul li::before { content: "→"; color: var(--accent3); flex-shrink: 0; }
+        /* scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        /* ── RESPONSIVE ── */
         @media (max-width: 900px) {
             .sidebar { display: none; }
             .content { max-width: 100%; padding: 1.5rem; }
-            .method-group { grid-template-columns: 1fr; }
+        }
+        /* ── METHOD GRID ── */
+        .method-list { display: flex; flex-direction: column; gap: 0; }
+        .method-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+        }
+        .method-item:first-child { border-radius: 8px 8px 0 0; }
+        .method-item:last-child { border-radius: 0 0 8px 8px; border-bottom: none; }
+        .method-sig { font-family: 'JetBrains Mono', monospace; font-size: 0.83rem; color: var(--accent3); }
+        .method-desc { font-size: 0.88rem; color: var(--text-muted); margin-top: 0.25rem; }
+        /* footer */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-dim);
         }
     </style>
 </head>
 <body>
 <div class="docs-container">
-    <aside class="sidebar">
-        <div class="sidebar-brand">
-            <h2>⚡ FlashGui</h2>
-        </div>
-        <div class="version-line">
-            <span class="version-pill">0.1.6</span>
-            <a href="https://pypi.org/project/FlashGui/" target="_blank">PyPI →</a>
-        </div>
-        <nav>
-            <div class="section-title">Primi passi</div>
-            <ul>
-                <li><a href="#intro">✨ Perché FlashGui?</a></li>
-                <li><a href="#install">📦 Installazione</a></li>
-                <li><a href="#deps">📚 Dipendenze</a></li>
-                <li><a href="#licenses">📜 Licenze</a></li>
-            </ul>
-            <div class="section-title">Componenti pronti</div>
-            <ul>
-                <li><a href="#calculator">🧮 CALCULATOR</a></li>
-                <li><a href="#notepad">📝 NOTEPAD</a></li>
-                <li><a href="#paint">🎨 PAINT</a></li>
-                <li><a href="#clock">⏰ CLOCK</a></li>
-                <li><a href="#calendar">📅 CALENDAR</a></li>
-                <li><a href="#searcher">🔍 SEARCHER</a></li>
-            </ul>
-            <div class="section-title">La tela bianca</div>
-            <ul>
-                <li><a href="#window">🪟 WINDOW</a></li>
-                <li><a href="#window-methods">➕ Metodi Add…</a></li>
-                <li><a href="#window-utils">🛠️ Utility e Modifica</a></li>
-            </ul>
-            <div class="section-title">Filosofia comune</div>
-            <ul>
-                <li><a href="#common">.run() · .Edit() · .Logic()</a></li>
-                <li><a href="#timer-common">Timer</a></li>
-            </ul>
-        </nav>
-    </aside>
 
-    <main class="content">
+<!-- ════════════════ SIDEBAR ════════════════ -->
+<aside class="sidebar">
+    <div class="logo-area">
+        <h2>⚡ FlashGui</h2>
+        <div class="version">Versione 0.1.6 · <a href="https://pypi.org/project/FlashGui/" target="_blank" style="color:var(--accent)">PyPI</a></div>
+    </div>
+    <nav>
+        <div class="section-title">Primi passi</div>
+        <ul>
+            <li><a href="#intro">Introduzione</a></li>
+            <li><a href="#install">Installazione</a></li>
+            <li><a href="#changelog">Novità 0.1.6</a></li>
+        </ul>
+        <div class="section-title">Componenti pronti</div>
+        <ul>
+            <li><a href="#calculator">🧮 CALCULATOR</a></li>
+            <li><a href="#notepad">📝 NOTEPAD</a></li>
+            <li><a href="#paint">🎨 PAINT</a></li>
+            <li><a href="#clock">⏰ CLOCK</a></li>
+            <li><a href="#calendar">📅 CALENDAR</a></li>
+            <li><a href="#searcher">🔍 SEARCHER <span class="badge-new">NEW</span></a></li>
+        </ul>
+        <div class="section-title">Tela bianca</div>
+        <ul>
+            <li><a href="#window">🪟 WINDOW</a></li>
+            <li><a href="#window-widgets">Widgets disponibili</a></li>
+            <li><a href="#window-dialog">Dialogs &amp; file</a></li>
+            <li><a href="#window-canvas">FGCanvas</a></li>
+            <li><a href="#window-statusbar">FGStatusBar</a></li>
+            <li><a href="#window-keys">BindKey</a></li>
+        </ul>
+        <div class="section-title">API Comuni</div>
+        <ul>
+            <li><a href="#common-api">Metodi condivisi</a></li>
+            <li><a href="#timers">AddTimer / RepeatTimer</a></li>
+            <li><a href="#clipboard">Clipboard</a></li>
+            <li><a href="#http">HTTP asincrono</a></li>
+        </ul>
+        <div class="section-title">Filosofia</div>
+        <ul>
+            <li><a href="#params">Parametri costruttore</a></li>
+            <li><a href="#logic">Metodo Logic()</a></li>
+            <li><a href="#edit">Metodo Edit()</a></li>
+        </ul>
+    </nav>
+</aside>
 
-        <div class="hero">
-            <h1>FlashGui 0.1.6</h1>
-            <p class="hero-sub">Costruisci interfacce desktop con il sorriso. Componenti già pronti, layout proporzionale, temi personalizzabili.</p>
-            <div class="hero-badges">
-                <span class="hero-badge">Python 3.7+</span>
-                <span class="hero-badge">wxPython Phoenix</span>
-                <span class="hero-badge">Windows · macOS · Linux</span>
-                <span class="hero-badge">MIT License</span>
+<!-- ════════════════ CONTENT ════════════════ -->
+<main class="content">
+
+    <!-- HERO -->
+    <section id="intro">
+        <div class="hero-section">
+            <h1>FlashGui <span>0.1.6</span></h1>
+            <p class="subtitle">App desktop Python in 3 righe. Componenti pronti, finestra personalizzabile, API uniforme.</p>
+            <div class="hero-stats">
+                <div class="stat"><div class="number">7</div><div class="label">Moduli</div></div>
+                <div class="stat"><div class="number">20+</div><div class="label">Widget WINDOW</div></div>
+                <div class="stat"><div class="number">2</div><div class="label">Dipendenze Totali</div></div>
             </div>
         </div>
 
-        <h2 id="intro">✨ Perché FlashGui?</h2>
-        <p>Hai presente quando vuoi creare una piccola app desktop in Python e ti scontri con la complessità di Tkinter o la verbosità di wxPython? FlashGui nasce per darti <strong>calcolatrice, blocco note, paint, orologio, calendario e un motore di ricerca file</strong> già funzionanti in 3 riche di codice. Se vuoi costruire la tua interfaccia da zero, il componente <code>WINDOW</code> ti permette di posizionare qualsiasi widget usando coordinate proporzionali (0.0 → 1.0) e i font si ridimensionano da soli. Tutto con un look pulito, moderno e completamente personalizzabile.</p>
-        <div class="tip">
-            <strong>💡 Idea:</strong> FlashGui è perfetto per prototipi rapidi, tool interni, o per chi si avvicina alla programmazione GUI e vuole risultati immediati senza studiare mille manuali.
-        </div>
+        <p>FlashGui è una libreria Python che ti offre <strong>calcolatrice, blocco note, paint, orologio, calendario, ricerca file</strong> già funzionanti con una riga di codice, più un componente <code>WINDOW</code> ad alto livello per costruire qualsiasi interfaccia usando coordinate proporzionali (0.0 → 1.0) e font che si ridimensionano automaticamente. Ogni modulo supporta temi <code>light</code> e <code>dark</code>, personalizzazione completa via <code>Edit()</code>, logica iniettabile via <code>Logic()</code> e un set di API comuni (timer, clipboard, HTTP asincrono).</p>
+    </section>
 
-        <h2 id="install">📦 Installazione</h2>
-        <pre><code>pip install FlashGui</code></pre>
-        <p>wxPython e charset_normalizer vengono installati automaticamente. Nessun'altra dipendenza manuale.</p>
-        <div class="note">
-            <strong>✅ Compatibile con:</strong> Windows 10/11, macOS (Intel e Apple Silicon), Linux con wxPython supportato. Richiega Python 3.7 o superiore.
-        </div>
+    <!-- INSTALL -->
+    <section id="install">
+        <h2>Installazione</h2>
+        <div class="install-box"><span>$</span> pip install FlashGui</div>
+        <div class="callout info">Richiede Python 3.9+ e wxPython 4.2+. Installa anche <code>charset-normalizer</code> (usato da NOTEPAD e WINDOW per aprire file con encoding automatico).</div>
+    </section>
 
-        <h2 id="deps">📚 Dipendenze</h2>
-        <p>FlashGui è costruito sopra <strong>wxPython Phoenix</strong> (wxWidgets) e utilizza <strong>charset_normalizer</strong> per il rilevamento automatico delle codifiche nel blocco note. Entrambe vengono installate automaticamente con pip. Per <code>SEARCHER</code>, le richieste HTTP usano la libreria standard <code>urllib</code> — nessun pacchetto aggiuntivo necessario.</p>
-
-        <h2 id="licenses">📜 Licenze — Leggi con attenzione</h2>
-        <div class="warning">
-            <strong>⚠️ Obbligo di attribuzione:</strong> Se distribuisci un'applicazione che include FlashGui (anche in forma compilata, es. con PyInstaller o cx_Freeze), devi includere i testi di licenza delle seguenti librerie. Non costa nulla e mantiene il progetto libero e credibile.
-            <ul style="margin-top:0.7rem; margin-left:1.2rem; line-height:2;">
-                <li>Licenza <strong>MIT</strong> di FlashGui (testo sotto)</li>
-                <li>Licenza <strong>wxWindows Library Licence</strong> di wxPython (LGPL con eccezione speciale)</li>
-                <li>Licenza <strong>MIT</strong> di <code>charset_normalizer</code></li>
+    <!-- CHANGELOG -->
+    <section id="changelog">
+        <h2>Novità in 0.1.6</h2>
+        <div class="changelog">
+            <h3>✦ Changelog 0.1.6</h3>
+            <ul>
+                <li><strong>SEARCHER</strong> — nuovo modulo per cercare file e cartelle in modo ricorsivo, con UI completa, filtri tipo e stato in tempo reale.</li>
+                <li><strong>API comuni su tutti i moduli</strong> — <code>AddRepeatTimer</code>, <code>DelTimer</code>, <code>CopyToClipboard</code>, <code>GetClipboardText</code>, <code>SendRequest</code> (HTTP asincrono) ora disponibili su CALCULATOR, NOTEPAD, PAINT, CLOCK, CALENDAR, WINDOW.</li>
+                <li><strong>CALCULATOR</strong> — aggiunto <code>Evaluate()</code>, <code>SetText()</code>, <code>AppendText()</code>, <code>GetText()</code>, <code>Clear()</code>.</li>
+                <li><strong>CLOCK</strong> — aggiunto <code>ShowClock()</code>, <code>ShowTimer()</code>, <code>ShowStopwatch()</code>, <code>GetTime()</code>, <code>GetDate()</code>, <code>GetElapsed()</code>.</li>
+                <li><strong>CALENDAR</strong> — aggiunto <code>NextMonth()</code>, <code>PrevMonth()</code>, <code>GoToToday()</code>, <code>get_selected_date()</code>, <code>go_to_date()</code>, <code>set_info_text()</code>.</li>
+                <li><strong>NOTEPAD</strong> — aggiunto <code>GetText()</code>, <code>SetText()</code>, <code>AppendText()</code>, <code>GetSelectedText()</code>, <code>SetFont()</code>.</li>
+                <li><strong>PAINT</strong> — aggiunto <code>GetCurrentColor()</code>, <code>SetCurrentColor()</code>, <code>GetCurrentWidth()</code>, <code>SetCurrentWidth()</code>, <code>LoadImage()</code>, <code>GetSnapshot()</code>.</li>
+                <li><strong>WINDOW</strong> — aggiunto <code>add_combobox</code>, <code>add_spinctrl</code>, <code>add_separator</code>, <code>add_image</code>, <code>add_menu</code>, dialogs (<code>ShowInputDialog</code>, <code>ShowYesNoDialog</code>, <code>OpenFolderDialog</code>), file helpers (<code>LoadTextFromFile</code>, <code>SaveTextToFile</code>), <code>BindKey</code>, gestione finestra (<code>SetTitle</code>, <code>Minimize</code>, <code>Maximize</code>, <code>Restore</code>, <code>SetOpacity</code>, <code>SetIcon</code>), <code>SetCloseHandler</code>, <code>exit()</code>.</li>
             </ul>
         </div>
+    </section>
 
-        <div class="tip">
-            <strong>📂 Dove trovo i file originali?</strong><br>
-            I file <code>LICENSE</code> completi e aggiornati si trovano sempre nella cartella della libreria installata, sotto <code>FlashGui/licenses/</code>. I testi qui sotto sono riprodotti per comodità di consultazione.
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- PARAMETRI COSTRUTTORE COMUNI -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="params">
+        <h2>Parametri del costruttore (tutti i moduli)</h2>
+        <p>Tutti i moduli ad eccezione di <code>WINDOW</code> condividono gli stessi parametri di inizializzazione:</p>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>title</code></td><td>str</td><td>"…"</td><td>Titolo della finestra OS</td></tr>
+                <tr><td><code>size</code></td><td>tuple(float,float)</td><td>(2,2)</td><td>Divisore della risoluzione schermo: <code>screen_w/size[0] × screen_h/size[1]</code></td></tr>
+                <tr><td><code>color</code></td><td>tuple(R,G,B)</td><td>(240,240,240)</td><td>Colore di sfondo della finestra. Ignorato se <code>style="dark"</code></td></tr>
+                <tr><td><code>icon</code></td><td>str|None</td><td>None</td><td>Percorso a icona <code>.png</code> o <code>.ico</code></td></tr>
+                <tr><td><code>maximized</code></td><td>bool</td><td>False</td><td>Avvia la finestra massimizzata</td></tr>
+                <tr><td><code>min_size</code></td><td>tuple</td><td>(5,4)</td><td>Dimensione minima come divisore di schermo</td></tr>
+                <tr><td><code>max_size</code></td><td>tuple</td><td>(1,1)</td><td>Dimensione massima. (1,1) = full screen</td></tr>
+                <tr><td><code>style</code></td><td>str</td><td>"light"</td><td><code>"light"</code> o <code>"dark"</code> — applica il tema globale</td></tr>
+            </tbody>
+        </table>
+        </div>
+        <p>WINDOW usa invece <code>size=(800,600)</code> in pixel assoluti e <code>min_size</code>/<code>max_size</code> come pixel o float 0→1.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- CALCULATOR -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="calculator">
+        <div class="module-header">
+            <span class="module-icon">🧮</span>
+            <div>
+                <div class="module-title">CALCULATOR</div>
+                <div class="module-desc">Calcolatrice completa con display, griglia numerica e operatori, tema chiaro/scuro, ogni pulsante personalizzabile.</div>
+            </div>
         </div>
 
-        <h2 id="calculator">🧮 CALCULATOR</h2>
-        <p>Una calcolatrice completa con display, 20 pulsanti e gestione degli errori. Puoi cambiarne ogni singolo aspetto e agganciare le tue funzioni a ogni tasto.</p>
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> CALCULATOR
 
-        <h3>Costruttore</h3>
-        <pre><code>CALCULATOR(title="Calculator", size=(3,2), color=(240,240,240), icon=None, maximized=False, min_size=(5,4), max_size=(1,1), style="light")</code></pre>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
-            <tr><td><code>title</code></td><td>str</td><td><code>"Calculator"</code></td><td>Titolo della finestra.</td></tr>
-            <tr><td><code>size</code></td><td>tuple (w, h)</td><td><code>(3, 2)</code></td><td>Dimensioni relative allo schermo: il valore indica in quante parti dividere lo schermo. Es. <code>(3,2)</code> → larghezza = schermo÷3, altezza = schermo÷2.</td></tr>
-            <tr><td><code>color</code></td><td>tuple RGB</td><td><code>(240,240,240)</code></td><td>Colore di sfondo della finestra. Ignorato se <code>style="dark"</code> e non modificato.</td></tr>
-            <tr><td><code>icon</code></td><td>str</td><td><code>None</code></td><td>Percorso a un file <code>.png</code> o <code>.ico</code> da usare come icona della finestra.</td></tr>
-            <tr><td><code>maximized</code></td><td>bool</td><td><code>False</code></td><td>Se <code>True</code>, la finestra parte massimizzata.</td></tr>
-            <tr><td><code>min_size</code></td><td>tuple (w, h)</td><td><code>(5, 4)</code></td><td>Dimensioni minime espresse come divisore dello schermo.</td></tr>
-            <tr><td><code>max_size</code></td><td>tuple (w, h)</td><td><code>(1, 1)</code></td><td>Dimensioni massime. <code>(1,1)</code> = schermo intero senza limiti.</td></tr>
-            <tr><td><code>style</code></td><td>str</td><td><code>"light"</code></td><td>Tema predefinito: <code>"light"</code> o <code>"dark"</code>.</td></tr>
-        </table>
-
-        <h3>Metodo <code>.Edit()</code></h3>
-        <p>Modifica testi, colori e aspetto di ogni elemento. Tutti i parametri sono opzionali.</p>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
-            <tr><td><code>button_0_text</code> … <code>button_9_text</code></td><td>str</td><td><code>"0"</code>…<code>"9"</code></td><td>Etichetta dei pulsanti numerici (uno per cifra).</td></tr>
-            <tr><td><code>button_0_bg</code> … <code>button_9_bg</code></td><td>tuple RGB</td><td><code>(240,240,240)</code></td><td>Colore di sfondo dei pulsanti numerici.</td></tr>
-            <tr><td><code>button_0_fg</code> … <code>button_9_fg</code></td><td>tuple RGB</td><td><code>(0,0,0)</code></td><td>Colore testo dei pulsanti numerici.</td></tr>
-            <tr><td><code>button_dot_text</code></td><td>str</td><td><code>"."</code></td><td>Etichetta pulsante punto decimale.</td></tr>
-            <tr><td><code>button_dot_bg</code>, <code>button_dot_fg</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code></td><td>Colori sfondo e testo per il pulsante punto.</td></tr>
-            <tr><td><code>button_plus_text</code></td><td>str</td><td><code>"+"</code></td><td>Etichetta addizione.</td></tr>
-            <tr><td><code>button_plus_bg</code>, <code>button_plus_fg</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code></td><td>Colori pulsante +.</td></tr>
-            <tr><td><code>button_minus_text</code></td><td>str</td><td><code>"-"</code></td><td>Etichetta sottrazione.</td></tr>
-            <tr><td><code>button_minus_bg</code>, <code>button_minus_fg</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code></td><td>Colori pulsante −.</td></tr>
-            <tr><td><code>button_mul_text</code></td><td>str</td><td><code>"*"</code></td><td>Etichetta moltiplicazione.</td></tr>
-            <tr><td><code>button_mul_bg</code>, <code>button_mul_fg</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code></td><td>Colori pulsante ×.</td></tr>
-            <tr><td><code>button_div_text</code></td><td>str</td><td><code>"/"</code></td><td>Etichetta divisione.</td></tr>
-            <tr><td><code>button_div_bg</code>, <code>button_div_fg</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code></td><td>Colori pulsante ÷.</td></tr>
-            <tr><td><code>button_C_text</code></td><td>str</td><td><code>"C"</code></td><td>Etichetta pulsante Clear.</td></tr>
-            <tr><td><code>button_C_bg</code>, <code>button_C_fg</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code></td><td>Colori pulsante C.</td></tr>
-            <tr><td><code>button_DEL_text</code></td><td>str</td><td><code>"DEL"</code></td><td>Etichetta pulsante Cancella.</td></tr>
-            <tr><td><code>button_DEL_bg</code>, <code>button_DEL_fg</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code></td><td>Colori pulsante DEL.</td></tr>
-            <tr><td><code>button_eq_text</code></td><td>str</td><td><code>"="</code></td><td>Etichetta pulsante Uguale.</td></tr>
-            <tr><td><code>button_eq_bg</code></td><td>tuple RGB</td><td><code>(0,120,215)</code></td><td>Sfondo tasto = (blu di default).</td></tr>
-            <tr><td><code>button_eq_fg</code></td><td>tuple RGB</td><td><code>(255,255,255)</code></td><td>Colore testo tasto =.</td></tr>
-            <tr><td><code>entry_bg_color</code></td><td>tuple RGB</td><td><code>(240,240,240)</code></td><td>Sfondo del display.</td></tr>
-            <tr><td><code>entry_text_color</code></td><td>tuple RGB</td><td><code>(0,0,0)</code></td><td>Colore testo display.</td></tr>
-            <tr><td><code>message_error</code></td><td>str</td><td><code>"Error"</code></td><td>Messaggio mostrato in caso di errore di valutazione dell'espressione.</td></tr>
-        </table>
-
-        <h3>Metodo <code>.Logic()</code></h3>
-        <p>Ogni parametro accetta una funzione senza argomenti (o <code>None</code> per comportamento predefinito).</p>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Descrizione</th></tr>
-            <tr><td><code>button_0_command</code> … <code>button_9_command</code></td><td>Funzione chiamata alla pressione del tasto numerico corrispondente.</td></tr>
-            <tr><td><code>button_dot_command</code></td><td>Callback per il tasto punto decimale.</td></tr>
-            <tr><td><code>button_plus_command</code></td><td>Callback per +.</td></tr>
-            <tr><td><code>button_minus_command</code></td><td>Callback per −.</td></tr>
-            <tr><td><code>button_mul_command</code></td><td>Callback per ×.</td></tr>
-            <tr><td><code>button_div_command</code></td><td>Callback per ÷.</td></tr>
-            <tr><td><code>button_eq_command</code></td><td>Callback per = (sostituisce completamente il comportamento eval predefinito).</td></tr>
-            <tr><td><code>button_C_command</code></td><td>Callback per Clear.</td></tr>
-            <tr><td><code>button_DEL_command</code></td><td>Callback per Delete.</td></tr>
-        </table>
-
-        <h3>Metodi pubblici</h3>
-        <ul class="std-list">
-            <li><code>GetText()</code> → <em>str</em> — restituisce il testo attuale nel display.</li>
-            <li><code>SetText(testo)</code> — imposta il display e l'espressione interna.</li>
-            <li><code>AppendText(testo)</code> — aggiunge testo in coda all'espressione corrente.</li>
-            <li><code>Clear()</code> — svuota display e memoria.</li>
-            <li><code>AddTimer(ms, command)</code> — avvia un timer one-shot che esegue <code>command</code> dopo <em>ms</em> millisecondi.</li>
-            <li><code>run()</code> — avvia il loop principale dell'applicazione (bloccante).</li>
-        </ul>
-
-        <h3>📘 Esempio</h3>
-        <div class="example-box">
-            <div class="example-header">calculator_demo.py</div>
-            <pre><code>from FlashGui import CALCULATOR
-
-def mio_callback():
-    print("Hai premuto un tasto personalizzato!")
-
-calc = CALCULATOR(title="La mia calcolatrice", size=(3,2), color=(50,50,60), style="dark")
-calc.Edit(
-    button_eq_bg=(200,50,50),
-    button_eq_fg=(255,255,255),
-    entry_bg_color=(30,30,40),
-    entry_text_color=(0,200,0),
-    message_error="ERRORE"
+calc = CALCULATOR(
+    title=<span class="st">"Calculator"</span>,
+    size=(3, 2),
+    color=(240, 240, 240),
+    icon=<span class="nb">None</span>,
+    maximized=<span class="nb">False</span>,
+    min_size=(5, 4),
+    max_size=(1, 1),
+    style=<span class="st">"light"</span>  <span class="cm"># oppure "dark"</span>
 )
-calc.Logic(button_0_command=mio_callback)
 calc.run()</code></pre>
+
+        <h3>Metodo <code>Logic()</code></h3>
+        <p>Permette di iniettare callback personalizzati per ogni pulsante. Se un callback è <code>None</code> il pulsante usa il comportamento default (calcolo, cancella, backspace).</p>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Attivato da</th></tr></thead>
+            <tbody>
+                <tr><td><code>button_0_command … button_9_command</code></td><td>callable|None</td><td>None</td><td>Pulsanti 0–9</td></tr>
+                <tr><td><code>button_dot_command</code></td><td>callable|None</td><td>None</td><td>Pulsante <code>.</code></td></tr>
+                <tr><td><code>button_plus_command</code></td><td>callable|None</td><td>None</td><td><code>+</code></td></tr>
+                <tr><td><code>button_minus_command</code></td><td>callable|None</td><td>None</td><td><code>-</code></td></tr>
+                <tr><td><code>button_mul_command</code></td><td>callable|None</td><td>None</td><td><code>*</code></td></tr>
+                <tr><td><code>button_div_command</code></td><td>callable|None</td><td>None</td><td><code>/</code></td></tr>
+                <tr><td><code>button_eq_command</code></td><td>callable|None</td><td>None</td><td><code>=</code> (default: eval)</td></tr>
+                <tr><td><code>button_C_command</code></td><td>callable|None</td><td>None</td><td><code>C</code> (default: clear)</td></tr>
+                <tr><td><code>button_DEL_command</code></td><td>callable|None</td><td>None</td><td><code>DEL</code> (default: backspace)</td></tr>
+            </tbody>
+        </table>
         </div>
 
-        <h2 id="notepad">📝 NOTEPAD</h2>
-        <p>Blocco note completo: apertura/salvataggio con rilevamento automatico della codifica (charset_normalizer), menu personalizzabili, barra di stato, menu contestuale e temi scuri.</p>
-
-        <h3>Costruttore</h3>
-        <p>Stessi parametri di CALCULATOR: <code>title, size, color, icon, maximized, min_size, max_size, style</code>.</p>
-
-        <h3>Metodo <code>.Edit()</code></h3>
-        <p>Oltre 50 parametri per personalizzare ogni testo, colore e comportamento.</p>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
-            <tr><td><code>file_menu_text</code></td><td>str</td><td><code>"File"</code></td><td>Etichetta menu File.</td></tr>
-            <tr><td><code>edit_menu_text</code></td><td>str</td><td><code>"Edit"</code></td><td>Etichetta menu Modifica.</td></tr>
-            <tr><td><code>help_menu_text</code></td><td>str</td><td><code>"Help"</code></td><td>Etichetta menu Aiuto.</td></tr>
-            <tr><td><code>new_text</code>, <code>open_text</code>, <code>save_text</code>, <code>saveas_text</code>, <code>exit_text</code></td><td>str</td><td><code>"New"</code>, <code>"Open..."</code>, <code>"Save"</code>, <code>"Save As..."</code>, <code>"Exit"</code></td><td>Testi voci menu File.</td></tr>
-            <tr><td><code>undo_text</code>, <code>redo_text</code>, <code>cut_text</code>, <code>copy_text</code>, <code>paste_text</code>, <code>selectall_text</code></td><td>str</td><td><code>"Undo"</code>, <code>"Redo"</code>, <code>"Cut"</code>, <code>"Copy"</code>, <code>"Paste"</code>, <code>"Select All"</code></td><td>Testi voci menu Edit.</td></tr>
-            <tr><td><code>about_text</code></td><td>str</td><td><code>"About"</code></td><td>Testo voce About.</td></tr>
-            <tr><td><code>bg_color</code></td><td>tuple RGB</td><td><code>(240,240,240)</code></td><td>Colore sfondo finestra principale.</td></tr>
-            <tr><td><code>text_ctrl_bg</code></td><td>tuple RGB</td><td><code>(255,255,255)</code></td><td>Sfondo dell'area di testo.</td></tr>
-            <tr><td><code>text_ctrl_fg</code></td><td>tuple RGB</td><td><code>(0,0,0)</code></td><td>Colore testo nell'area di scrittura.</td></tr>
-            <tr><td><code>menubar_bg</code>, <code>menubar_fg</code>, <code>menubar_hover</code></td><td>tuple RGB</td><td><code>(235,235,235)</code>, <code>(0,0,0)</code>, <code>(200,220,240)</code></td><td>Colori barra menu: sfondo, testo e hover.</td></tr>
-            <tr><td><code>menu_bg</code>, <code>menu_fg</code>, <code>menu_hover</code></td><td>tuple RGB</td><td><code>(250,250,250)</code>, <code>(0,0,0)</code>, <code>(200,220,240)</code></td><td>Colori menu a tendina aperto.</td></tr>
-            <tr><td><code>menu_radius</code></td><td>int</td><td><code>6</code></td><td>Raggio bordi arrotondati del menu a tendina.</td></tr>
-            <tr><td><code>statusbar_bg</code>, <code>statusbar_fg</code>, <code>statusbar_separator_color</code></td><td>tuple RGB</td><td><code>(240,240,240)</code>, <code>(0,0,0)</code>, <code>(210,210,210)</code></td><td>Colori della barra di stato inferiore.</td></tr>
-            <tr><td><code>font_size</code></td><td>int</td><td><code>11</code></td><td>Dimensione iniziale del carattere di testo.</td></tr>
+        <h3>Metodo <code>Edit()</code></h3>
+        <p>Personalizza colori, testi e stile di tutti i pulsanti e del display.</p>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Default</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>button_N_bg / button_N_fg</code></td><td>(240,240,240) / (0,0,0)</td><td>Colori sfondo/testo pulsanti 0–9, dot, +, -, *, /</td></tr>
+                <tr><td><code>button_N_text</code></td><td>"N"</td><td>Etichetta del pulsante N</td></tr>
+                <tr><td><code>button_C_bg / button_C_fg / button_C_text</code></td><td>(240,240,240)/(0,0,0)/"C"</td><td>Pulsante Clear</td></tr>
+                <tr><td><code>button_DEL_bg / button_DEL_fg / button_DEL_text</code></td><td>–/"DEL"</td><td>Pulsante Backspace</td></tr>
+                <tr><td><code>button_eq_bg / button_eq_fg / button_eq_text</code></td><td>(0,120,215)/(255,255,255)/"="</td><td>Pulsante uguale</td></tr>
+                <tr><td><code>entry_bg_color / entry_text_color</code></td><td>(240,240,240)/(0,0,0)</td><td>Colori del display</td></tr>
+                <tr><td><code>message_error</code></td><td>"Error"</td><td>Testo mostrato in caso di errore nel calcolo</td></tr>
+            </tbody>
         </table>
+        </div>
 
-        <h3>Metodo <code>.Logic()</code></h3>
-        <p>Permette di agganciare logiche personalizzate agli eventi principali del Blocco Note.</p>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Descrizione</th></tr>
-            <tr><td><code>on_open_command</code></td><td>Callback eseguito subito dopo l'apertura riuscita di un file. Riceve il percorso file come argomento.</td></tr>
-            <tr><td><code>on_save_command</code></td><td>Callback eseguito dopo il salvataggio del file attuale.</td></tr>
-            <tr><td><code>on_text_change_command</code></td><td>Eseguito ad ogni carattere digitato o modifica dell'area di testo.</td></tr>
-        </table>
-
-        <h3>Metodi pubblici</h3>
-        <ul class="std-list">
-            <li><code>GetText()</code> → <em>str</em> — Restituisce l'intero contenuto testuale.</li>
-            <li><code>SetText(text)</code> — Sovrascrive il contenuto dell'editor.</li>
-            <li><code>GetFilePath()</code> → <em>str/None</em> — Restituisce il percorso del file attualmente aperto.</li>
-            <li><code>LoadFile(path)</code> — Forza l'apertura e la decodifica automatica di un file specifico.</li>
-        </ul>
+        <h3>Metodi di testo <span class="badge badge-updated">AGGIORNATO</span></h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">GetText() → str</div>
+                <div class="method-desc">Restituisce il valore attuale del display.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetText(text="")</div>
+                <div class="method-desc">Imposta il display e l'espressione interna al valore specificato.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">AppendText(text="")</div>
+                <div class="method-desc">Aggiunge testo in coda al display e all'espressione interna.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">Clear()</div>
+                <div class="method-desc">Svuota display ed espressione.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">Evaluate(expr=None) → str|None</div>
+                <div class="method-desc">Valuta <code>expr</code> (o l'espressione corrente) con <code>eval()</code>, mostra il risultato nel display e lo restituisce. In caso di errore restituisce <code>None</code> e mostra <code>message_error</code>.</div>
+            </div>
+        </div>
 
         <h3>📘 Esempio</h3>
-        <div class="example-box">
-            <div class="example-header">notepad_demo.py</div>
-            <pre><code>from FlashGui import NOTEPAD
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> CALCULATOR
 
-note = NOTEPAD(title="Editor Avanzato", style="dark")
-note.Edit(font_size=13)
-note.Logic(on_text_change_command=lambda: print("Testo modificato!"))
-note.run()</code></pre>
-        </div>
+calc = CALCULATOR(title=<span class="st">"Calcolatrice personalizzata"</span>, style=<span class="st">"dark"</span>)
+calc.Edit(button_eq_bg=(0,200,100), button_eq_fg=(0,0,0), message_error=<span class="st">"Errore!"</span>)
 
-        <h2 id="paint">🎨 PAINT</h2>
-        <p>Una mini applicazione di disegno bitmap vettoriale e raster. Offre una tela interattiva su cui disegnare a mano libera, scegliere colori, regolare lo spessore del pennello e salvare il risultato in formato PNG.</p>
+<span class="kw">def</span> <span class="fn">on_equal</span>():
+    result = calc.Evaluate()
+    calc.CopyToClipboard(result)  <span class="cm"># copia il risultato negli appunti</span>
 
-        <h3>Costruttore</h3>
-        <pre><code>PAINT(title="Paint", size=(2,1.5), color=(255,255,255), icon=None, maximized=False, style="light")</code></pre>
+calc.Logic(button_eq_command=on_equal)
+calc.run()</code></pre>
+    </section>
 
-        <h3>Metodo <code>.Edit()</code></h3>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
-            <tr><td><code>default_brush_color</code></td><td>tuple RGB</td><td><code>(0,0,0)</code></td><td>Colore iniziale del pennello.</td></tr>
-            <tr><td><code>default_brush_size</code></td><td>int</td><td><code>5</code></td><td>Spessore iniziale della linea (in pixel).</td></tr>
-            <tr><td><code>canvas_bg_color</code></td><td>tuple RGB</td><td><code>(255,255,255)</code></td><td>Colore di sfondo della tela di disegno.</td></tr>
-            <tr><td><code>toolbar_bg</code></td><td>tuple RGB</td><td><code>(230,230,230)</code></td><td>Colore di sfondo della barra degli strumenti laterale/superiore.</td></tr>
-        </table>
-
-        <h3>Metodo <code>.Logic()</code></h3>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Descrizione</th></tr>
-            <tr><td><code>on_clear_command</code></td><td>Callback invocato quando l'utente ripulisce la tela.</td></tr>
-            <tr><td><code>on_save_canvas_command</code></td><td>Callback invocato all'esportazione del file immagine.</td></tr>
-        </table>
-
-        <h3>Metodi pubblici</h3>
-        <ul class="std-list">
-            <li><code>ClearCanvas()</code> — Svuota completamente l'area di disegno ripristinando il colore di sfondo.</li>
-            <li><code>GetBitmap()</code> → <em>wx.Bitmap</em> — Restituisce l'oggetto bitmap interno del disegno corrente.</li>
-            <li><code>SaveToFile(path)</code> — Esporta direttamente il disegno su disco in formato immagine.</li>
-        </ul>
-
-        <h2 id="clock">⏰ CLOCK</h2>
-        <p>Componente orologio con supporto nativo per visualizzazione digitale, analogica (con lancette renderizzate in tempo reale antialiased) e cronometro integrato.</p>
-
-        <h3>Costruttore</h3>
-        <pre><code>CLOCK(title="Clock", size=(4,4), style="light")</code></pre>
-
-        <h3>Metodo <code>.Edit()</code></h3>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
-            <tr><td><code>clock_type</code></td><td>str</td><td><code>"digital"</code></td><td>Tipo di visualizzazione: <code>"digital"</code> o <code>"analog"</code>.</td></tr>
-            <tr><td><code>time_format</code></td><td>str</td><td><code>"%H:%M:%S"</code></td><td>Stringa di formattazione dell'orario (usata nel tipo digital).</td></tr>
-            <tr><td><code>text_color</code></td><td>tuple RGB</td><td><code>(0,0,0)</code></td><td>Colore del testo dell'orologio digitale o dei numeri dell'analogico.</td></tr>
-            <tr><td><code>hand_seconds_color</code></td><td>tuple RGB</td><td><code>(200,50,50)</code></td><td>Colore della lancetta dei secondi nell'orologio analogico.</td></tr>
-        </table>
-
-        <h3>Metodo <code>.Logic()</code></h3>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Descrizione</th></tr>
-            <tr><td><code>on_tick_command</code></td><td>Funzione richiamata ad ogni secondo (ogni tick dell'orologio). Riceve una stringa con l'orario corrente.</td></tr>
-        </table>
-
-        <h2 id="calendar">📅 CALENDAR</h2>
-        <p>Un widget calendario completo e autonomo per la selezione delle date, il tracciamento dei giorni della settimana e l'evidenziazione di scadenze o eventi specifici.</p>
-
-        <h3>Metodo <code>.Edit()</code></h3>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Tipo</th><th>Default</th><th>Descrizione</th></tr>
-            <tr><td><code>highlight_weekends</code></td><td>bool</td><td><code>True</code></td><td>Se <code>True</code>, colora le scritte di Sabato e Domenica in modo differente.</td></tr>
-            <tr><td><code>header_bg_color</code></td><td>tuple RGB</td><td><code>(230,230,230)</code></td><td>Colore dell'intestazione dei mesi.</td></tr>
-            <tr><td><code>selected_day_bg</code></td><td>tuple RGB</td><td><code>(25,118,210)</code></td><td>Sfondo del giorno correntemente selezionato.</td></tr>
-        </table>
-
-        <h3>Metodo <code>.Logic()</code></h3>
-        <table class="param-table">
-            <tr><th>Parametro</th><th>Descrizione</th></tr>
-            <tr><td><code>on_date_changed</code></td><td>Invocato quando l'utente clicca o si sposta su una data differente. Riceve un oggetto datetime in input.</td></tr>
-        </table>
-
-        <h3>Metodi pubblici</h3>
-        <ul class="std-list">
-            <li><code>GetSelectedDate()</code> → <em>str</em> — Restituisce la data in formato <code>YYYY-MM-DD</code>.</li>
-            <li><code>SetSelectedDate(year, month, day)</code> — Forza la selezione visiva su una data specifica.</li>
-        </ul>
-
-        <h2 id="searcher">🔍 SEARCHER</h2>
-        <p>Un potente motore di scansione ed indicizzazione locale per file e cartelle, combinato con un modulo client leggero che sfrutta <code>urllib</code> per interrogare endpoint e API remote senza dipendenze di terze parti.</p>
-
-        <h3>Costruttore</h3>
-        <pre><code>SEARCHER(title="Searcher", size=(2,1.8), style="light")</code></pre>
-
-        <h3>Metodi pubblici</h3>
-        <ul class="std-list">
-            <li><code>SearchLocalFiles(directory, extension=None)</code> — Esegue una scansione ricorsiva all'interno della directory indicata, filtrando opzionalmente per estensione (es. <code>.py</code>).</li>
-            <li><code>QueryRemoteAPI(url, params=None)</code> — Sfrutta <code>urllib.request</code> per inviare una richiesta HTTP GET sincrona e popola la vista risultati interna con i dati JSON o testuali ricevuti.</li>
-            <li><code>GetFoundItems()</code> → <em>list</em> — Restituisce l'elenco dei percorsi o delle stringhe trovate nell'ultima sessione di ricerca.</li>
-        </ul>
-
-        <h2 id="window">🪟 WINDOW (La tela bianca)</h2>
-        <p>Se i moduli pronti all'uso non bastano, <code>WINDOW</code> ti mette a disposizione una finestra vuota dotata di un <strong>sistema di coordinate proporzionali</strong>.</p> 
-        <p>Invece di impazzire con i pixel o con i complessi Sizer nidificati di wxPython, puoi posizionare i tuoi componenti indicando valori decimali compresi nell'intervallo $0.0 \le x, y \le 1.0$. I font e i widget stessi si ridimensioneranno proporzionalmente al variare delle dimensioni della finestra, mantenendo sempre intatto il layout matematico stabilito originariamente.</p>
-
-        <h3>Costruttore</h3>
-        <pre><code>WINDOW(title="Custom Grid", size=(2,2), color=(245,245,240), icon=None, maximized=False, style="light")</code></pre>
-
-        <h2 id="window-methods">➕ Metodi Add…</h2>
-        <p>Ogni metodo <code>Add</code> inserisce un elemento grafico all'interno del motore a coordinate proporzionali. Restituiscono un identificatore univoco (stringa intera o istanza) utilizzato per manipolare l'elemento in un secondo momento.</p>
-
-        <div class="method-group">
-            <div class="method-card">
-                <strong>AddButton(text, pos, size, command=None)</strong>
-                Crea un pulsante cliccabile. <code>pos=(x, y)</code> e <code>size=(w, h)</code> usano float proporzionali.
-            </div>
-            <div class="method-card">
-                <strong>AddText(text, pos, size, font_bold=False)</strong>
-                Visualizza una stringa di testo statico (Label) con font auto-scalante.
-            </div>
-            <div class="method-card">
-                <strong>AddInput(pos, size, placeholder="", multiline=False)</strong>
-                Inserisce un campo di testo per l'input dell'utente (singola linea o area di testo multilinea).
-            </div>
-            <div class="method-card">
-                <strong>AddCheckbox(text, pos, size, command=None)</strong>
-                Crea una casella di spunta booleana.
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- NOTEPAD -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="notepad">
+        <div class="module-header">
+            <span class="module-icon">📝</span>
+            <div>
+                <div class="module-title">NOTEPAD</div>
+                <div class="module-desc">Editor di testo completo con menu personalizzato, status bar, apertura/salvataggio file con auto-rilevamento encoding.</div>
             </div>
         </div>
 
-        <table class="param-table" style="margin-top:0.5rem;">
-            <tr><th>Metodo Add speciale</th><th>Argomenti principali</th><th>Descrizione</th></tr>
-            <tr><td><code>AddListbox(items, pos, size, command=None)</code></td><td><code>items (list of str)</code></td><td>Genera una lista di elementi selezionabili con barra di scorrimento verticale.</td></tr>
-            <tr><td><code>AddImage(image_path, pos, size)</code></td><td><code>image_path (str)</code></td><td>Carica un file PNG/JPG e lo scala proporzionalmente al contenitore.</td></tr>
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> NOTEPAD
+
+nota = NOTEPAD(title=<span class="st">"Mio Blocco Note"</span>, size=(2,2), style=<span class="st">"dark"</span>)
+nota.run()</code></pre>
+
+        <h3>Metodo <code>Logic()</code></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>menu_new_command</code></td><td>Override File → Nuovo (default: svuota editor)</td></tr>
+                <tr><td><code>menu_open_command</code></td><td>Override File → Apri (default: dialog apertura file)</td></tr>
+                <tr><td><code>menu_save_command</code></td><td>Override File → Salva</td></tr>
+                <tr><td><code>menu_save_as_command</code></td><td>Override File → Salva come</td></tr>
+                <tr><td><code>menu_exit_command</code></td><td>Override File → Esci</td></tr>
+                <tr><td><code>menu_about_command</code></td><td>Override Aiuto → Informazioni</td></tr>
+                <tr><td><code>menu_undo_command</code></td><td>Override Modifica → Annulla</td></tr>
+                <tr><td><code>menu_redo_command</code></td><td>Override Modifica → Ripristina</td></tr>
+                <tr><td><code>menu_cut_command</code></td><td>Override Modifica → Taglia</td></tr>
+                <tr><td><code>menu_copy_command</code></td><td>Override Modifica → Copia</td></tr>
+                <tr><td><code>menu_paste_command</code></td><td>Override Modifica → Incolla</td></tr>
+                <tr><td><code>menu_select_all_command</code></td><td>Override Modifica → Seleziona tutto</td></tr>
+                <tr><td><code>popup_cut/copy/paste/select_all_command</code></td><td>Override stesso comportamento nel menu contestuale (tasto destro)</td></tr>
+            </tbody>
         </table>
+        </div>
 
-        <h2 id="window-utils">🛠️ Utility e Modifica dei Widget Dinamici</h2>
-        <p>Puoi alterare lo stato dei controlli inseriti all'interno dell'istanza <code>WINDOW</code> in qualsiasi momento dell'esecuzione del programma tramite i seguenti metodi di istanza dedicati:</p>
+        <h3>Metodo <code>Edit()</code> — principali parametri</h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>new_text, open_text, save_text, saveas_text, exit_text, about_text</code></td><td>Etichette voci di menu File/Help</td></tr>
+                <tr><td><code>undo_text, redo_text, cut_text, copy_text, paste_text, selectall_text</code></td><td>Etichette voci menu Modifica</td></tr>
+                <tr><td><code>file_menu_text, edit_menu_text, help_menu_text</code></td><td>Intestazioni menu bar</td></tr>
+                <tr><td><code>bg_color, text_ctrl_bg, text_ctrl_fg</code></td><td>Colori area testo</td></tr>
+                <tr><td><code>menubar_bg, menubar_fg, menubar_hover</code></td><td>Colori menu bar</td></tr>
+                <tr><td><code>menu_bg, menu_fg, menu_hover, menu_radius</code></td><td>Colori popup menu a tendina</td></tr>
+                <tr><td><code>statusbar_bg, statusbar_fg, statusbar_separator_color</code></td><td>Colori status bar</td></tr>
+                <tr><td><code>open_dialog_title / open_dialog_file_type</code></td><td>Titolo e tipi file del dialog di apertura</td></tr>
+                <tr><td><code>save_as_dialog_title / save_as_dialog_file_type</code></td><td>Titolo e tipi del dialog Salva come</td></tr>
+                <tr><td><code>messagebox_about_title / messagebox_about_text</code></td><td>Finestra Informazioni</td></tr>
+                <tr><td><code>maybe_save_dialog_title / maybe_save_dialog_text</code></td><td>Messaggio "vuoi salvare prima di uscire?"</td></tr>
+                <tr><td><code>popup_cut_text, popup_copy_text, popup_paste_text, popup_select_all_text</code></td><td>Voci menu contestuale</td></tr>
+                <tr><td><code>ln_text, col_text, words_text, chars_text</code></td><td>Etichette status bar (riga, colonna, parole, caratteri)</td></tr>
+                <tr><td><code>untitled_text</code></td><td>Testo del titolo quando il file non ha nome</td></tr>
+            </tbody>
+        </table>
+        </div>
 
-        <ul class="std-list">
-            <li><code>GetWidgetValue(widget_id)</code> → Restituisce il valore corrente contenuto nell'elemento (il testo inserito in un <code>Input</code>, lo stato booleano di un <code>Checkbox</code>, la riga selezionata in un <code>Listbox</code>).</li>
-            <li><code>SetWidgetValue(widget_id, new_value)</code> → Modifica dinamicamente il valore o la stringa visualizzata dal componente specificato.</li>
-            <li><code>SetWidgetColor(widget_id, bg_color=None, fg_color=None)</code> → Applica combinazioni RGB personalizzate locali a un singolo widget della griglia.</li>
-            <li><code>RemoveWidget(widget_id)</code> → Distrugge l'elemento grafico e lo rimuove immediatamente dallo schermo e dall'albero di rendering proporzionale.</li>
+        <h3>Metodi testo <span class="badge badge-updated">AGGIORNATO</span></h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">GetText() → str</div>
+                <div class="method-desc">Restituisce l'intero contenuto dell'editor.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetText(text="")</div>
+                <div class="method-desc">Sostituisce il contenuto dell'editor con <code>text</code>.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">AppendText(text="")</div>
+                <div class="method-desc">Aggiunge testo in fondo all'editor.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetSelectedText() → str</div>
+                <div class="method-desc">Restituisce il testo attualmente selezionato (stringa vuota se nulla è selezionato).</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetFont(size=12, family="teletype", bold=False)</div>
+                <div class="method-desc">Cambia il font dell'editor. <code>family</code>: <code>"teletype"</code>, <code>"default"</code>, <code>"swiss"</code>, <code>"roman"</code>, <code>"modern"</code>.</div>
+            </div>
+        </div>
+
+        <h3>📘 Esempio</h3>
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> NOTEPAD
+
+nota = NOTEPAD(title=<span class="st">"Editor Markdown"</span>, size=(2,2), style=<span class="st">"dark"</span>)
+nota.Edit(
+    file_menu_text=<span class="st">"File"</span>, edit_menu_text=<span class="st">"Modifica"</span>, help_menu_text=<span class="st">"Aiuto"</span>,
+    text_ctrl_bg=(25,25,25), text_ctrl_fg=(200,255,200),
+    statusbar_bg=(20,20,20), statusbar_fg=(150,150,150),
+    untitled_text=<span class="st">"nuovo file"</span>
+)
+nota.SetFont(size=14, family=<span class="st">"default"</span>)
+nota.AppendText(<span class="st">"# Benvenuto!\n"</span>)
+nota.run()</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- PAINT -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="paint">
+        <div class="module-header">
+            <span class="module-icon">🎨</span>
+            <div>
+                <div class="module-title">PAINT</div>
+                <div class="module-desc">Programma di disegno con pennello, gomma, secchio, linea, cerchio, rettangolo, color picker e slider larghezza. Salvataggio PNG/JPG.</div>
+            </div>
+        </div>
+
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> PAINT
+
+paint = PAINT(title=<span class="st">"Mio Paint"</span>, size=(2,2), style=<span class="st">"light"</span>)
+paint.run()</code></pre>
+
+        <h3>Metodo <code>Logic()</code></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Default</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>current_tool</code></td><td>"brush"</td><td>Strumento attivo al lancio. Valori: <code>"brush"</code>, <code>"eraser"</code>, <code>"line"</code>, <code>"circle"</code>, <code>"rect"</code>, <code>"bucket"</code></td></tr>
+                <tr><td><code>color_picker_start_color</code></td><td>(0,0,0)</td><td>Colore iniziale del pennello</td></tr>
+                <tr><td><code>slider_start_value</code></td><td>5</td><td>Valore iniziale dello slider larghezza</td></tr>
+                <tr><td><code>slider_from_value</code></td><td>0</td><td>Valore minimo slider</td></tr>
+                <tr><td><code>slider_to_value</code></td><td>100</td><td>Valore massimo slider</td></tr>
+                <tr><td><code>brush_button_command</code></td><td>None</td><td>Callback pulsante Brush</td></tr>
+                <tr><td><code>eraser_button_command</code></td><td>None</td><td>Callback pulsante Eraser</td></tr>
+                <tr><td><code>line_button_command</code></td><td>None</td><td>Callback pulsante Line</td></tr>
+                <tr><td><code>circle_button_command</code></td><td>None</td><td>Callback pulsante Circle</td></tr>
+                <tr><td><code>rect_button_command</code></td><td>None</td><td>Callback pulsante Rectangle</td></tr>
+                <tr><td><code>bucket_button_command</code></td><td>None</td><td>Callback pulsante Bucket</td></tr>
+                <tr><td><code>clear_button_command</code></td><td>None</td><td>Callback pulsante Clear</td></tr>
+                <tr><td><code>save_button_command</code></td><td>None</td><td>Callback pulsante Save (sovrascrive il comportamento di default)</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Metodo <code>Edit()</code> — principali parametri</h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>brush/eraser/bucket/line/circle/rect_button_bg/fg</code></td><td>Colori sfondo/testo di ogni pulsante strumento</td></tr>
+                <tr><td><code>clear_button_bg/fg, save_button_bg/fg</code></td><td>Colori pulsanti Clear e Save</td></tr>
+                <tr><td><code>brush/eraser/…_button_text</code></td><td>Etichette dei pulsanti strumento</td></tr>
+                <tr><td><code>clear_button_text, save_button_text</code></td><td>Etichette Clear/Save</td></tr>
+                <tr><td><code>width_text</code></td><td>Etichetta dello slider larghezza (default "Width")</td></tr>
+                <tr><td><code>canvas_bg</code></td><td>Colore sfondo canvas</td></tr>
+                <tr><td><code>toolbar_panel_bg</code></td><td>Colore sfondo toolbar</td></tr>
+                <tr><td><code>title_save_image</code></td><td>Titolo del dialog di salvataggio</td></tr>
+                <tr><td><code>text_file_png, text_file_jpg</code></td><td>Descrizioni tipo file nel dialog di salvataggio</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Metodi canvas <span class="badge badge-updated">AGGIORNATO</span></h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">GetCurrentColor() → (R,G,B)</div>
+                <div class="method-desc">Restituisce il colore attuale del pennello come tupla RGB.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetCurrentColor(color)</div>
+                <div class="method-desc">Imposta il colore del pennello. Accetta tupla RGB o stringa hex.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetCurrentWidth() → int</div>
+                <div class="method-desc">Restituisce il valore attuale dello slider larghezza.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetCurrentWidth(width)</div>
+                <div class="method-desc">Imposta il valore dello slider larghezza e aggiorna l'etichetta.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">LoadImage(path) → bool</div>
+                <div class="method-desc">Carica un'immagine su canvas (sostituisce il contenuto attuale). Restituisce <code>True</code> se il file esiste.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetSnapshot(path=None) → wx.Bitmap|None</div>
+                <div class="method-desc">Restituisce il canvas come <code>wx.Bitmap</code>. Se <code>path</code> è fornito (con estensione <code>.png</code> o <code>.jpg</code>), salva anche su disco.</div>
+            </div>
+        </div>
+
+        <h3>📘 Esempio</h3>
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> PAINT
+
+paint = PAINT(title=<span class="st">"Disegna"</span>, style=<span class="st">"dark"</span>)
+paint.Logic(current_tool=<span class="st">"brush"</span>, color_picker_start_color=(255,100,100), slider_start_value=8)
+paint.Edit(canvas_bg=(30,30,30), width_text=<span class="st">"Spessore"</span>, title_save_image=<span class="st">"Salva immagine"</span>)
+
+<span class="kw">def</span> <span class="fn">on_save</span>(event):
+    paint.GetSnapshot(<span class="st">"output.png"</span>)
+
+paint.Logic(save_button_command=on_save)
+paint.run()</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- CLOCK -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="clock">
+        <div class="module-header">
+            <span class="module-icon">⏰</span>
+            <div>
+                <div class="module-title">CLOCK</div>
+                <div class="module-desc">Tre pannelli navigabili: Orologio (HH:MM:SS + data), Timer con spinner h/m/s, Cronometro con centesimi.</div>
+            </div>
+        </div>
+
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> CLOCK
+
+clock = CLOCK(title=<span class="st">"Orologio"</span>, size=(2,2), style=<span class="st">"dark"</span>)
+clock.run()</code></pre>
+
+        <h3>Metodo <code>Logic()</code></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>nav_clock_command</code></td><td>Override click tab CLOCK (default: mostra pannello orologio)</td></tr>
+                <tr><td><code>nav_timer_command</code></td><td>Override click tab TIMER</td></tr>
+                <tr><td><code>nav_stopwatch_command</code></td><td>Override click tab STOPWATCH</td></tr>
+                <tr><td><code>timer_start_command</code></td><td>Override pulsante START del timer</td></tr>
+                <tr><td><code>timer_reset_command</code></td><td>Override pulsante RESET del timer</td></tr>
+                <tr><td><code>stopwatch_start_command</code></td><td>Override pulsante START del cronometro</td></tr>
+                <tr><td><code>stopwatch_reset_command</code></td><td>Override pulsante RESET del cronometro</td></tr>
+                <tr><td><code>timer_base_h / timer_base_m / timer_base_s</code></td><td>Valori iniziali degli spinner h/m/s del timer</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Metodo <code>Edit()</code> — principali parametri</h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>title</code></td><td>Titolo finestra</td></tr>
+                <tr><td><code>nav_bg_color, nav_button_bg_color</code></td><td>Barra di navigazione tra i pannelli</td></tr>
+                <tr><td><code>nav_clock_text / nav_timer_text / nav_stopwatch_text</code></td><td>Etichette pulsanti navigazione</td></tr>
+                <tr><td><code>nav_clock_fg_color / nav_timer_fg_color / nav_stopwatch_fg_color</code></td><td>Colori testo dei pulsanti navigazione</td></tr>
+                <tr><td><code>clock_bg_color, clock_time_fg_color, clock_date_fg_color</code></td><td>Colori pannello orologio</td></tr>
+                <tr><td><code>clock_time_text / clock_date_text</code></td><td>Testi iniziali (sostituiti in runtime dalla logica interna)</td></tr>
+                <tr><td><code>timer_bg_color, timer_display_fg_color</code></td><td>Colori pannello timer</td></tr>
+                <tr><td><code>timer_spin_h/m/s_bg/fg_color</code></td><td>Colori spinner ore/minuti/secondi</td></tr>
+                <tr><td><code>timer_lbl_h/m/s_text</code></td><td>Etichette "h", "m", "s"</td></tr>
+                <tr><td><code>timer_btn_start_text / timer_btn_pause_text / timer_btn_reset_text</code></td><td>Etichette pulsanti timer</td></tr>
+                <tr><td><code>stopwatch_bg_color, stopwatch_display_fg_color</code></td><td>Colori pannello cronometro</td></tr>
+                <tr><td><code>stopwatch_btn_start_text / stopwatch_btn_stop_text / stopwatch_btn_reset_text</code></td><td>Etichette pulsanti cronometro</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Metodi di navigazione &amp; getter <span class="badge badge-updated">AGGIORNATO</span></h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">ShowClock()</div>
+                <div class="method-desc">Porta la vista sul pannello Orologio.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">ShowTimer()</div>
+                <div class="method-desc">Porta la vista sul pannello Timer.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">ShowStopwatch()</div>
+                <div class="method-desc">Porta la vista sul pannello Cronometro.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetTime() → str</div>
+                <div class="method-desc">Restituisce l'ora di sistema come <code>"HH:MM:SS"</code>.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetDate() → str</div>
+                <div class="method-desc">Restituisce la data di sistema come stringa formattata maiuscola (es. <code>"THURSDAY, MAY 21, 2026"</code>).</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetElapsed() → str</div>
+                <div class="method-desc">Restituisce il tempo trascorso nel cronometro come <code>"MM:SS.d"</code>.</div>
+            </div>
+        </div>
+
+        <h3>📘 Esempio</h3>
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> CLOCK
+
+clock = CLOCK(title=<span class="st">"⏱ Orologio"</span>, style=<span class="st">"dark"</span>)
+clock.Edit(
+    nav_clock_text=<span class="st">"ORA"</span>,
+    nav_timer_text=<span class="st">"TIMER"</span>,
+    nav_stopwatch_text=<span class="st">"CRONO"</span>,
+    timer_btn_start_text=<span class="st">"Avvia"</span>, timer_btn_pause_text=<span class="st">"Pausa"</span>, timer_btn_reset_text=<span class="st">"Reset"</span>
+)
+clock.Logic(timer_base_m=5)  <span class="cm"># timer parte da 5 minuti</span>
+clock.run()</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- CALENDAR -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="calendar">
+        <div class="module-header">
+            <span class="module-icon">📅</span>
+            <div>
+                <div class="module-title">CALENDAR</div>
+                <div class="module-desc">Calendario interattivo con navigazione mese, selezione giorno, footer con data selezionata e testo info personalizzabile. Completamente internazionalizzabile.</div>
+            </div>
+        </div>
+
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> CALENDAR
+
+cal = CALENDAR(title=<span class="st">"Calendario"</span>, size=(2,2), style=<span class="st">"light"</span>)
+cal.run()</code></pre>
+
+        <h3>Metodo <code>Logic()</code></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>prev_command</code></td><td>Override freccia ← mese precedente. Se restituisce una stringa viene mostrata nel footer info.</td></tr>
+                <tr><td><code>next_command</code></td><td>Override freccia → mese successivo</td></tr>
+                <tr><td><code>today_command</code></td><td>Override pulsante TODAY; riceve <code>date.today()</code></td></tr>
+                <tr><td><code>day_command</code></td><td>Callback click su un giorno; riceve un oggetto <code>datetime.date</code></td></tr>
+                <tr><td><code>month_change_command</code></td><td>Callback cambio mese; riceve <code>(year, month)</code></td></tr>
+                <tr><td><code>week_start_monday</code></td><td>bool — se la settimana parte da lunedì</td></tr>
+                <tr><td><code>show_footer</code></td><td>bool — mostra/nasconde il footer</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Metodo <code>Edit()</code> — principali parametri</h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>title, frame_bg_color, bg_color</code></td><td>Titolo finestra, colori frame e pannello</td></tr>
+                <tr><td><code>title_fg_color</code></td><td>Colore del mese/anno nel titolo</td></tr>
+                <tr><td><code>nav_bg_color, nav_button_bg_color, nav_button_fg_color</code></td><td>Colori barra navigazione</td></tr>
+                <tr><td><code>prev_text / today_text / next_text</code></td><td>Etichette pulsanti navigazione (default: "‹", "TODAY", "›")</td></tr>
+                <tr><td><code>prev/today/next_button_bg/fg_color</code></td><td>Colori individuali per ciascun pulsante nav</td></tr>
+                <tr><td><code>weekday_bg/fg_color</code></td><td>Colori intestazioni giorni settimana</td></tr>
+                <tr><td><code>day_bg/fg_color</code></td><td>Colori giorni normali</td></tr>
+                <tr><td><code>day_today_bg/fg_color</code></td><td>Colori del giorno odierno</td></tr>
+                <tr><td><code>day_selected_bg/fg_color</code></td><td>Colori del giorno selezionato</td></tr>
+                <tr><td><code>day_disabled_bg/fg_color</code></td><td>Colori celle vuote (giorni fuori mese)</td></tr>
+                <tr><td><code>footer_bg/fg_color</code></td><td>Colori footer</td></tr>
+                <tr><td><code>info_text</code></td><td>Testo libero mostrato nel footer</td></tr>
+                <tr><td><code>january_text … december_text</code></td><td>Nomi dei mesi (per internazionalizzazione)</td></tr>
+                <tr><td><code>monday_text … sunday_text</code></td><td>Intestazioni colonne giorni (MON, TUE, …)</td></tr>
+                <tr><td><code>week_start_monday</code></td><td>Ridisegna il calendario con settimana da lunedì o domenica</td></tr>
+                <tr><td><code>show_footer</code></td><td>Mostra/nasconde il footer</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Metodi helper <span class="badge badge-updated">AGGIORNATO</span></h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">get_selected_date() → datetime.date</div>
+                <div class="method-desc">Restituisce la data attualmente selezionata.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">go_to_date(d: datetime.date)</div>
+                <div class="method-desc">Seleziona la data <code>d</code> e naviga il calendario al mese corrispondente.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">NextMonth()</div>
+                <div class="method-desc">Naviga al mese successivo.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">PrevMonth()</div>
+                <div class="method-desc">Naviga al mese precedente.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GoToToday()</div>
+                <div class="method-desc">Seleziona oggi e naviga al mese corrente.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">set_info_text(text)</div>
+                <div class="method-desc">Imposta il testo libero del footer a runtime.</div>
+            </div>
+        </div>
+
+        <h3>📘 Esempio</h3>
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> CALENDAR
+<span class="kw">from</span> datetime <span class="kw">import</span> date
+
+cal = CALENDAR(title=<span class="st">"Agenda"</span>, style=<span class="st">"dark"</span>)
+cal.Edit(
+    january_text=<span class="st">"Gennaio"</span>, february_text=<span class="st">"Febbraio"</span>,
+    monday_text=<span class="st">"Lun"</span>, tuesday_text=<span class="st">"Mar"</span>,
+    wednesday_text=<span class="st">"Mer"</span>, thursday_text=<span class="st">"Gio"</span>,
+    friday_text=<span class="st">"Ven"</span>, saturday_text=<span class="st">"Sab"</span>, sunday_text=<span class="st">"Dom"</span>,
+    today_text=<span class="st">"OGGI"</span>, week_start_monday=<span class="nb">True</span>
+)
+
+<span class="kw">def</span> <span class="fn">giorno_cliccato</span>(d):
+    cal.set_info_text(<span class="st">f"Selezionato: {d.strftime('%d/%m/%Y')}"</span>)
+
+cal.Logic(day_command=giorno_cliccato)
+cal.run()</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- SEARCHER -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="searcher">
+        <div class="module-header">
+            <span class="module-icon">🔍</span>
+            <div>
+                <div class="module-title">SEARCHER <span class="badge badge-new">NEW in 0.1.6</span></div>
+                <div class="module-desc">Ricerca file e cartelle in modo ricorsivo o flat, con filtri per tipo, query sul nome e stato in tempo reale. Thread-safe, annullabile in qualsiasi momento.</div>
+            </div>
+        </div>
+
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> SEARCHER
+
+searcher = SEARCHER(title=<span class="st">"Ricerca File"</span>, size=(3,2), style=<span class="st">"light"</span>)
+searcher.run()</code></pre>
+
+        <h3>Funzionamento di default</h3>
+        <p>Cliccando <strong>Search</strong> viene avviato un thread in background che scansiona la directory indicata (o tutte le unità disco su Windows se vuota). I risultati appaiono in una <code>ListCtrl</code> con colonne <em>Name, Type, Folder, Size, Modified</em>. Il pulsante <strong>Stop</strong> interrompe la ricerca in modo sicuro. <strong>Clear</strong> svuota i risultati. <strong>Browse</strong> apre un dialog per scegliere la directory.</p>
+
+        <h3>Metodo <code>Logic()</code></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>search_command</code></td><td>Callback aggiuntivo all'avvio della ricerca (la ricerca avviene comunque)</td></tr>
+                <tr><td><code>cancel_command</code></td><td>Callback aggiuntivo alla pressione di Stop</td></tr>
+                <tr><td><code>clear_command</code></td><td>Sostituisce il comportamento Clear se fornito</td></tr>
+                <tr><td><code>browse_command</code></td><td>Callback aggiuntivo alla pressione di Browse</td></tr>
+                <tr><td><code>open_command</code></td><td>Sostituisce doppio-click su un risultato (riceve <code>path: str</code>). Default: <code>os.startfile(path)</code></td></tr>
+                <tr><td><code>select_result_command</code></td><td>Callback selezione risultato; riceve <code>(path, name, type)</code></td></tr>
+                <tr><td><code>finish_command</code></td><td>Chiamata al termine della ricerca; riceve <code>count: int</code></td></tr>
+                <tr><td><code>error_command</code></td><td>Chiamata in caso di errore; riceve <code>(message, traceback)</code></td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Metodo <code>Edit()</code></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Default</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>title_text</code></td><td>"File &amp; Folder Search"</td><td>Titolo grande in cima alla finestra</td></tr>
+                <tr><td><code>path_label_text</code></td><td>"Search in"</td><td>Etichetta campo percorso</td></tr>
+                <tr><td><code>query_label_text</code></td><td>"Name contains"</td><td>Etichetta campo query</td></tr>
+                <tr><td><code>type_label_text</code></td><td>"Type"</td><td>Etichetta dropdown tipo</td></tr>
+                <tr><td><code>recursive_label_text</code></td><td>"Recursive search"</td><td>Etichetta checkbox ricorsiva</td></tr>
+                <tr><td><code>btn_search_text / btn_cancel_text / btn_clear_text / btn_browse_text</code></td><td>—</td><td>Etichette pulsanti</td></tr>
+                <tr><td><code>status_text</code></td><td>"Ready"</td><td>Testo iniziale status bar</td></tr>
+                <tr><td><code>panel_bg / panel_fg</code></td><td>—</td><td>Colori sfondo/testo pannello principale</td></tr>
+                <tr><td><code>title_bg / title_fg</code></td><td>—</td><td>Colori etichetta titolo</td></tr>
+                <tr><td><code>search_btn_bg / search_btn_fg</code></td><td>—</td><td>Colori pulsante Search (accent)</td></tr>
+                <tr><td><code>results_bg / results_fg</code></td><td>—</td><td>Colori lista risultati</td></tr>
+                <tr><td><code>status_bg / status_fg</code></td><td>—</td><td>Colori barra di stato</td></tr>
+                <tr><td colspan="3"><em>Tutti gli altri widget supportano parametri <code>_bg</code> / <code>_fg</code> analoghi.</em></td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Metodi di controllo programmatico</h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">SetSearchPath(path="")</div>
+                <div class="method-desc">Imposta il campo percorso di ricerca.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetSearchPath() → str</div>
+                <div class="method-desc">Restituisce il percorso corrente.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetQuery(query="")</div>
+                <div class="method-desc">Imposta la query di ricerca (filtro nome).</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetQuery() → str</div>
+                <div class="method-desc">Restituisce la query corrente.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetSearchType(value="Both")</div>
+                <div class="method-desc">Imposta il tipo di ricerca: <code>"Files"</code>, <code>"Folders"</code> o <code>"Both"</code>.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetSearchType() → str</div>
+                <div class="method-desc">Restituisce il tipo di ricerca selezionato.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetRecursive(value=True)</div>
+                <div class="method-desc">Attiva/disattiva la ricerca ricorsiva.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetRecursive() → bool</div>
+                <div class="method-desc">Restituisce lo stato del checkbox ricorsivo.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetStatus(text="")</div>
+                <div class="method-desc">Imposta il testo della status bar.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetTitleText(text)</div>
+                <div class="method-desc">Cambia il titolo grande in cima.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">ClearResults()</div>
+                <div class="method-desc">Svuota la lista risultati e resetta i contatori.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetResultCount() → int</div>
+                <div class="method-desc">Numero di risultati attualmente nella lista.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetResultPath(index) → str|None</div>
+                <div class="method-desc">Percorso completo del risultato all'indice specificato (0-based).</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetAllResultPaths() → list[str]</div>
+                <div class="method-desc">Lista di tutti i percorsi completi dei risultati.</div>
+            </div>
+        </div>
+
+        <h3>📘 Esempio</h3>
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> SEARCHER
+
+s = SEARCHER(title=<span class="st">"Cerca file Python"</span>, style=<span class="st">"dark"</span>)
+s.Edit(title_text=<span class="st">"🔍 Ricerca File"</span>, btn_search_text=<span class="st">"Cerca"</span>, btn_cancel_text=<span class="st">"Stop"</span>)
+s.SetSearchPath(<span class="st">"C:/Users/me/Documents"</span>)
+s.SetQuery(<span class="st">".py"</span>)
+s.SetSearchType(<span class="st">"Files"</span>)
+s.SetRecursive(<span class="nb">True</span>)
+
+<span class="kw">def</span> <span class="fn">on_finish</span>(count):
+    s.SetStatus(<span class="st">f"Trovati {count} file Python!"</span>)
+
+<span class="kw">def</span> <span class="fn">on_open</span>(path):
+    <span class="kw">import</span> subprocess
+    subprocess.Popen([<span class="st">"code"</span>, path])  <span class="cm"># apri in VS Code</span>
+
+s.Logic(finish_command=on_finish, open_command=on_open)
+s.run()</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- WINDOW -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="window">
+        <div class="module-header">
+            <span class="module-icon">🪟</span>
+            <div>
+                <div class="module-title">WINDOW</div>
+                <div class="module-desc">Tela bianca proporzionale: aggiungi qualsiasi widget con coordinate relative 0.0→1.0. Font, layout e resize sono automatici.</div>
+            </div>
+        </div>
+
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> WINDOW
+
+win = WINDOW(
+    title=<span class="st">"La mia app"</span>,
+    size=(800, 600),      <span class="cm"># pixel assoluti (largh, alt)</span>
+    style=<span class="st">"light"</span>,         <span class="cm"># "light" o "dark"</span>
+    color=(240, 240, 240),
+    icon=<span class="nb">None</span>,
+    maximized=<span class="nb">False</span>,
+    min_size=(400, 300),  <span class="cm"># pixel o float 0→1</span>
+    max_size=(1920, 1080)
+)</code></pre>
+
+        <div class="callout info">Tutte le coordinate <code>relx, rely</code> sono il <strong>centro</strong> del widget (0.0 = bordo sinistro/superiore, 1.0 = bordo destro/inferiore). <code>relw, relh</code> sono larghezza e altezza proporzionali al pannello.</div>
+
+        <h3 id="window-widgets">Widgets disponibili <span class="badge badge-updated">AGGIORNATO</span></h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Metodo</th><th>Tipo</th><th>Principali parametri specifici</th></tr></thead>
+            <tbody>
+                <tr><td><code>add_label()</code></td><td>StaticText</td><td><code>text, align ("left"|"center"|"right"), fg, bg</code></td></tr>
+                <tr><td><code>add_entry()</code></td><td>TextCtrl (1 riga)</td><td><code>value, placeholder, read_only, on_change</code></td></tr>
+                <tr><td><code>add_textbox()</code></td><td>TextCtrl (multilinea)</td><td><code>value, read_only, on_change</code></td></tr>
+                <tr><td><code>add_button()</code></td><td>Button</td><td><code>text, on_click, fg, bg</code></td></tr>
+                <tr><td><code>add_checkbox()</code></td><td>CheckBox</td><td><code>text, value (bool), on_change</code></td></tr>
+                <tr><td><code>add_radio()</code></td><td>RadioButton</td><td><code>text, value (bool), on_change</code></td></tr>
+                <tr><td><code>add_slider()</code></td><td>Slider</td><td><code>value, min_value, max_value, on_change</code></td></tr>
+                <tr><td><code>add_gauge()</code></td><td>Gauge</td><td><code>value, range</code></td></tr>
+                <tr><td><code>add_choice()</code></td><td>Choice (dropdown)</td><td><code>items, selection, on_change</code></td></tr>
+                <tr><td><code>add_listbox()</code></td><td>ListBox</td><td><code>items, selection, on_change</code></td></tr>
+                <tr><td><code>add_listctrl()</code></td><td>ListCtrl (report)</td><td><code>columns, rows, on_select</code></td></tr>
+                <tr><td><code>add_combobox()</code></td><td>ComboBox</td><td><code>items, value, on_change</code> <span class="badge badge-new">NEW</span></td></tr>
+                <tr><td><code>add_spinctrl()</code></td><td>SpinCtrl</td><td><code>value, min_value, max_value, on_change</code> <span class="badge badge-new">NEW</span></td></tr>
+                <tr><td><code>add_color_button()</code></td><td>ColourPickerCtrl</td><td><code>text, value (RGB), on_change</code></td></tr>
+                <tr><td><code>add_canvas()</code></td><td>FGCanvas</td><td><code>bg, pen, width, mode ("free"|"line"|"rect"|"circle"|"erase")</code></td></tr>
+                <tr><td><code>add_statusbar()</code></td><td>FGStatusBar</td><td><code>bg_color, text_color, sep_color, proportions</code></td></tr>
+                <tr><td><code>add_separator()</code></td><td>StaticLine</td><td><code>orientation ("horizontal"|"vertical")</code> <span class="badge badge-new">NEW</span></td></tr>
+                <tr><td><code>add_image()</code></td><td>StaticBitmap</td><td><code>image_path</code> <span class="badge badge-new">NEW</span></td></tr>
+                <tr><td><code>add_menu()</code></td><td>CustomMenuBar</td><td><code>menus (list of (label, CustomMenu)), bg_color, text_color, hover_color, radius</code> <span class="badge badge-new">NEW</span></td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <p>Tutti i metodi <code>add_*</code> accettano i parametri comuni: <code>relx, rely, relw, relh, fg, bg, font_scale, bold, tooltip, visible</code> (dove applicabile). Restituiscono un <code>FGProxy</code> che puoi passare a <code>Modify()</code>.</p>
+
+        <h3>Metodo <code>Modify(widget, **kwargs)</code></h3>
+        <p>Aggiorna uno o più attributi di un widget già creato senza doverlo ricreare. Accetta <code>widget=</code> (il proxy restituito da <code>add_*</code>) oppure <code>index=</code> (posizione 0-based nella lista widget).</p>
+        <pre><code><span class="cm"># Creo un label e poi lo modifico</span>
+lbl = win.add_label(text=<span class="st">"Hello"</span>, relx=<span class="nm">0.5</span>, rely=<span class="nm">0.3</span>)
+win.Modify(lbl, text=<span class="st">"World"</span>, fg=(<span class="nm">255</span>,<span class="nm">0</span>,<span class="nm">0</span>), bold=<span class="nb">True</span>)
+
+<span class="cm"># Oppure tramite FGProxy</span>
+lbl.Modify(text=<span class="st">"Ciao!"</span>, fg=(<span class="nm">0</span>,<span class="nm">200</span>,<span class="nm">0</span>))</code></pre>
+
+        <div class="callout tip">I proxy <code>FGProxy</code> hanno anche scorciatoie: <code>.SetText()</code>, <code>.GetText()</code>, <code>.SetValue()</code>, <code>.SetLabel()</code>, <code>.Show()</code>/<code>.Hide()</code>, <code>.Enable()</code>/<code>.Disable()</code>, <code>.Focus()</code>, <code>.clear()</code>, <code>.get_selection()</code>, <code>.get_selection_text()</code>, <code>.add_row(dati)</code> (per listctrl).</div>
+
+        <h3>Metodi di testo e file</h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">GetText(widget=None, index=None) → str</div>
+                <div class="method-desc">Legge il testo del widget specificato (o del <code>main_textbox</code>/<code>main_entry</code> se nessuno è specificato).</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetText(text, widget=None, index=None) → bool</div>
+                <div class="method-desc">Imposta il testo del widget specificato.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">ClearText(widget=None, index=None)</div>
+                <div class="method-desc">Svuota il testo del widget specificato.</div>
+            </div>
+        </div>
+
+        <h3 id="window-dialog">Dialogs e helper file <span class="badge badge-updated">AGGIORNATO</span></h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">ShowMessageBox(text, title="Message", style=wx.OK|wx.ICON_INFORMATION)</div>
+                <div class="method-desc">Mostra una finestra di dialogo standard.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">ShowInputDialog(message, title="Input", default="") → str|None</div>
+                <div class="method-desc">Mostra un dialog di inserimento testo. Restituisce il testo inserito o <code>None</code> se annullato.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">ShowYesNoDialog(message, title="Confirm") → bool</div>
+                <div class="method-desc">Mostra un dialog Sì/No. Restituisce <code>True</code> se l'utente clicca Sì.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">OpenFileDialog(title, file_type, parent=None) → dict|None</div>
+                <div class="method-desc">Apre un dialog di selezione file. Restituisce <code>{"path", "filename", "content", "encoding"}</code> o <code>None</code> se annullato.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SaveFileDialog(title, file_type, default_name="", parent=None) → dict|None</div>
+                <div class="method-desc">Apre un dialog di salvataggio file. Restituisce <code>{"path", "filename"}</code> o <code>None</code>.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">OpenFolderDialog(title="Select Folder") → str|None</div>
+                <div class="method-desc">Apre un dialog per scegliere una cartella. Restituisce il percorso o <code>None</code>.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">LoadTextFromFile(path) → (content, encoding)</div>
+                <div class="method-desc">Carica un file di testo con auto-rilevamento encoding. Aggiorna <code>main_textbox</code> e <code>current_file</code>.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SaveTextToFile(path, text=None, encoding=None) → bool</div>
+                <div class="method-desc">Salva testo su file. Se <code>text=None</code> usa <code>GetText()</code>. Gestisce automaticamente fallback a UTF-8.</div>
+            </div>
+        </div>
+
+        <h3 id="window-canvas">FGCanvas — canvas di disegno integrato</h3>
+        <p>Il canvas supporta cinque modalità: <code>"free"</code> (disegno libero), <code>"line"</code>, <code>"rect"</code>, <code>"circle"</code>, <code>"erase"</code>. L'anteprima della forma viene disegnata durante il drag. Supporta <strong>tasto sinistro e destro del mouse</strong>.</p>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">canvas.Modify(bg_color=…, pen_color=…, pen_width=…, mode=…, clear=True, snapshot=…)</div>
+                <div class="method-desc">Modifica stile o stato del canvas via proxy <code>FGProxy.Modify()</code>.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">canvas.widget.ClearCanvas()</div>
+                <div class="method-desc">Cancella il contenuto del canvas.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">canvas.widget.GetCanvasSnapshot() → list</div>
+                <div class="method-desc">Restituisce una copia profonda delle forme disegnate (serializzabile).</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">canvas.widget.SetCanvasSnapshot(shapes)</div>
+                <div class="method-desc">Ripristina il canvas da un snapshot precedente.</div>
+            </div>
+        </div>
+
+        <h3 id="window-statusbar">FGStatusBar — barra di stato personalizzabile</h3>
+        <div class="table-wrap">
+        <table>
+            <thead><tr><th>Parametro</th><th>Descrizione</th></tr></thead>
+            <tbody>
+                <tr><td><code>bg_color, text_color, sep_color</code></td><td>Colori della barra e dei separatori</td></tr>
+                <tr><td><code>proportions</code></td><td>Lista di interi proporzionali (negativi = proporzione relativa). Default: <code>[-2,-1,-1,-1]</code></td></tr>
+                <tr><td><code>font_scale</code></td><td>Scala del font rispetto alla dimensione del pannello. Default: <code>0.018</code></td></tr>
+            </tbody>
+        </table>
+        </div>
+        <p>Via <code>Modify()</code>: <code>status0…status3</code> per impostare i 4 slot testuali, oppure <code>status_texts=[...]</code> come lista.</p>
+
+        <h3 id="window-keys">BindKey — scorciatoie da tastiera <span class="badge badge-new">NEW</span></h3>
+        <pre><code><span class="cm"># Collega Ctrl+S a una funzione</span>
+win.BindKey(<span class="st">"Ctrl+S"</span>, salva_file)
+win.BindKey(<span class="st">"F5"</span>, esegui)
+win.BindKey(<span class="st">"Ctrl+Shift+Z"</span>, redo)
+win.BindKey(<span class="st">"Escape"</span>, chiudi_dialog)</code></pre>
+        <p>Tasti speciali supportati: <code>F1–F12</code>, <code>Escape</code>, <code>Enter</code>, <code>Delete</code>, <code>Backspace</code>, <code>Tab</code>, <code>Home</code>, <code>End</code>, <code>PageUp</code>, <code>PageDown</code>, <code>Up/Down/Left/Right</code>, <code>Space</code> e tutti i caratteri ASCII.</p>
+
+        <h3>Gestione finestra <span class="badge badge-new">NEW</span></h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">SetTitle(title)</div>
+                <div class="method-desc">Cambia il titolo della finestra a runtime.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetTitle() → str</div>
+                <div class="method-desc">Restituisce il titolo attuale.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">Center()</div>
+                <div class="method-desc">Centra la finestra sullo schermo.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">Minimize()</div>
+                <div class="method-desc">Minimizza (iconizza) la finestra.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">Maximize()</div>
+                <div class="method-desc">Massimizza la finestra.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">Restore()</div>
+                <div class="method-desc">Ripristina la finestra da massimizzata o minimizzata.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetOpacity(value)</div>
+                <div class="method-desc">Trasparenza finestra. <code>value</code>: <code>0.0</code> (invisibile) → <code>1.0</code> (opaco).</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetIcon(icon_path)</div>
+                <div class="method-desc">Cambia l'icona della finestra a runtime.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">SetCloseHandler(handler)</div>
+                <div class="method-desc">Registra una funzione chiamata alla chiusura. Se restituisce <code>False</code> la chiusura viene annullata (utile per "vuoi salvare?").</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">exit()</div>
+                <div class="method-desc">Chiude la finestra programmaticamente.</div>
+            </div>
+        </div>
+
+        <h3>📘 Esempi WINDOW</h3>
+        <pre><code><span class="kw">from</span> FlashGui <span class="kw">import</span> WINDOW
+
+win = WINDOW(title=<span class="st">"Calcolatrice custom"</span>, size=(<span class="nm">500</span>, <span class="nm">400</span>))
+
+display = win.add_entry(value=<span class="st">""</span>, relx=<span class="nm">0.5</span>, rely=<span class="nm">0.12</span>, relw=<span class="nm">0.9</span>, relh=<span class="nm">0.12</span>, read_only=<span class="nb">True</span>)
+
+<span class="kw">for</span> i, (lbl, rx, ry) <span class="kw">in</span> enumerate([
+    (<span class="st">"7"</span>, <span class="nm">0.2</span>, <span class="nm">0.35</span>), (<span class="st">"8"</span>, <span class="nm">0.4</span>, <span class="nm">0.35</span>), (<span class="st">"9"</span>, <span class="nm">0.6</span>, <span class="nm">0.35</span>),
+    (<span class="st">"4"</span>, <span class="nm">0.2</span>, <span class="nm">0.50</span>), (<span class="st">"5"</span>, <span class="nm">0.4</span>, <span class="nm">0.50</span>), (<span class="st">"6"</span>, <span class="nm">0.6</span>, <span class="nm">0.50</span>),
+]):
+    win.add_button(text=lbl, relx=rx, rely=ry, relw=<span class="nm">0.18</span>, relh=<span class="nm">0.12</span>,
+                   on_click=<span class="kw">lambda</span> l=lbl: display.SetText(display.GetText()+l))
+
+win.run()</code></pre>
+
+        <pre><code><span class="cm"># Esempio con canvas + statusbar + BindKey</span>
+<span class="kw">from</span> FlashGui <span class="kw">import</span> WINDOW
+
+win = WINDOW(title=<span class="st">"Paint mini"</span>, size=(<span class="nm">800</span>, <span class="nm">600</span>), style=<span class="st">"dark"</span>)
+
+cvs = win.add_canvas(bg=(<span class="nm">30</span>,<span class="nm">30</span>,<span class="nm">30</span>), pen=(<span class="nm">255</span>,<span class="nm">255</span>,<span class="nm">255</span>), width=<span class="nm">3</span>, mode=<span class="st">"free"</span>,
+                     relx=<span class="nm">0.5</span>, rely=<span class="nm">0.48</span>, relw=<span class="nm">0.98</span>, relh=<span class="nm">0.9</span>)
+sb  = win.add_statusbar(proportions=[-<span class="nm">1</span>, -<span class="nm">1</span>], relx=<span class="nm">0.5</span>, rely=<span class="nm">1.0</span>, relw=<span class="nm">1.0</span>, relh=<span class="nm">0.05</span>)
+
+sb.Modify(status0=<span class="st">"Modalità: free"</span>, status1=<span class="st">"Ctrl+L = linea | Ctrl+R = rettangolo"</span>)
+
+win.BindKey(<span class="st">"Ctrl+L"</span>, <span class="kw">lambda</span>: cvs.Modify(mode=<span class="st">"line"</span>))
+win.BindKey(<span class="st">"Ctrl+R"</span>, <span class="kw">lambda</span>: cvs.Modify(mode=<span class="st">"rect"</span>))
+win.BindKey(<span class="st">"Ctrl+Delete"</span>, <span class="kw">lambda</span>: cvs.Modify(clear=<span class="nb">True</span>))
+
+win.run()</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- API COMUNI -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="common-api">
+        <h2>API Comuni a tutti i moduli <span class="badge badge-updated">AGGIORNATO</span></h2>
+        <p>Le API seguenti sono disponibili su <strong>tutti i moduli</strong>: <code>CALCULATOR</code>, <code>NOTEPAD</code>, <code>PAINT</code>, <code>CLOCK</code>, <code>CALENDAR</code>, <code>SEARCHER</code>, <code>WINDOW</code>.</p>
+
+        <h3 id="timers">Timer</h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">AddTimer(delay_ms, func, name=None) → wx.Timer</div>
+                <div class="method-desc">Avvia un timer <strong>one-shot</strong>: chiama <code>func()</code> una sola volta dopo <code>delay_ms</code> millisecondi. Se fornito, <code>name</code> permette di identificare il timer per cancellarlo con <code>DelTimer</code>. Restituisce il timer.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">AddRepeatTimer(interval_ms, func, name=None) → wx.Timer</div>
+                <div class="method-desc">Avvia un timer <strong>ripetitivo</strong>: chiama <code>func()</code> ogni <code>interval_ms</code> millisecondi finché non viene fermato con <code>DelTimer</code>.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">DelTimer(timer_or_name)</div>
+                <div class="method-desc">Ferma e rimuove un timer. Accetta il nome stringa (se fornito in fase di creazione) oppure il riferimento all'oggetto timer.</div>
+            </div>
+        </div>
+
+        <pre><code><span class="cm"># Esempio: aggiorno un label ogni secondo</span>
+<span class="kw">import</span> time
+lbl = win.add_label(relx=<span class="nm">0.5</span>, rely=<span class="nm">0.5</span>)
+
+win.AddRepeatTimer(<span class="nm">1000</span>, <span class="kw">lambda</span>: lbl.SetText(time.strftime(<span class="st">"%H:%M:%S"</span>)), name=<span class="st">"clock"</span>)
+
+<span class="cm"># Per fermarlo dopo 10 secondi:</span>
+win.AddTimer(<span class="nm">10000</span>, <span class="kw">lambda</span>: win.DelTimer(<span class="st">"clock"</span>))</code></pre>
+
+        <h3 id="clipboard">Clipboard</h3>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">CopyToClipboard(text)</div>
+                <div class="method-desc">Copia <code>text</code> negli appunti di sistema. In CALCULATOR e NOTEPAD il parametro è opzionale: se omesso copia il valore del display / la selezione.</div>
+            </div>
+            <div class="method-item">
+                <div class="method-sig">GetClipboardText() → str</div>
+                <div class="method-desc">Restituisce il testo attualmente negli appunti di sistema. Restituisce stringa vuota se non è disponibile testo.</div>
+            </div>
+        </div>
+
+        <h3 id="http">HTTP asincrono</h3>
+        <p>Ogni modulo include un metodo per inviare richieste HTTP in un thread di background, senza bloccare la UI.</p>
+        <div class="method-list">
+            <div class="method-item">
+                <div class="method-sig">SendRequest(url, method="GET", data=None, headers=None, callback=None, use_json=False)</div>
+                <div class="method-desc">
+                    Invia una richiesta HTTP in background.<br>
+                    • <code>method</code>: <code>"GET"</code>, <code>"POST"</code>, <code>"PUT"</code>, <code>"DELETE"</code>, ecc.<br>
+                    • <code>data</code>: dizionario dei dati da inviare nel body.<br>
+                    • <code>headers</code>: dizionario di header aggiuntivi.<br>
+                    • <code>use_json</code>: se <code>True</code>, serializza <code>data</code> come JSON e imposta <code>Content-Type: application/json</code>.<br>
+                    • <code>callback(response_text, error_or_None)</code>: funzione chiamata sul thread principale al completamento.
+                </div>
+            </div>
+        </div>
+
+        <pre><code><span class="cm"># Esempio: chiamata API REST da WINDOW</span>
+<span class="kw">def</span> <span class="fn">on_response</span>(resp, err):
+    <span class="kw">if</span> err:
+        win.ShowMessageBox(<span class="st">f"Errore: {err}"</span>)
+    <span class="kw">else</span>:
+        lbl.SetText(resp)
+
+win.SendRequest(
+    url=<span class="st">"https://api.example.com/data"</span>,
+    method=<span class="st">"POST"</span>,
+    data={<span class="st">"key"</span>: <span class="st">"valore"</span>},
+    use_json=<span class="nb">True</span>,
+    callback=on_response
+)</code></pre>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════ -->
+    <!-- FILOSOFIA -->
+    <!-- ══════════════════════════════════════════════════ -->
+    <section id="logic">
+        <h2>Filosofia: Logic() vs Edit()</h2>
+        <div class="callout tip">
+            <strong>Edit()</strong> gestisce l'aspetto visivo: colori, testi, etichette.<br>
+            <strong>Logic()</strong> gestisce il comportamento: quali funzioni vengono chiamate agli eventi.
+        </div>
+        <p>Questa separazione netta permette di:</p>
+        <ul style="list-style: disc; padding-left: 1.5rem; color: #c9d1d9; margin-bottom: 1rem;">
+            <li>Tradurre completamente l'interfaccia chiamando solo <code>Edit()</code> con le stringhe localizzate.</li>
+            <li>Iniettare la logica applicativa senza toccare la UI, mantenendo il codice pulito.</li>
+            <li>Ridefinire solo i comportamenti che interessano: se non passi un parametro a <code>Logic()</code>, il comportamento default rimane attivo.</li>
         </ul>
+    </section>
 
-        <h3>📘 Esempio Pratico Completo con WINDOW</h3>
-        <div class="example-box">
-            <div class="example-header">custom_dashboard.py</div>
-            <pre><code>from FlashGui import WINDOW
+    <!-- FOOTER -->
+    <div class="footer">
+        FlashGui 0.1.6 · Copyright © 2026 Robert Opris · Standard License<br>
+        Documentazione completa — tutti i comandi e parametri sono qui.<br>
+        <a href="https://pypi.org/project/FlashGui/" target="_blank" style="color:var(--accent)">PyPI</a>
+    </div>
 
-def saluta():
-    nome = app.GetWidgetValue(input_id)
-    app.SetWidgetValue(label_id, f"Ciao, {nome}! Benvenuto in FlashGui.")
-
-app = WINDOW(title="Pannello Personalizzato", size=(2,1.8))
-
-# Posizionamento ad assi frazionari (0.0 -> 1.0)
-app.AddText("Inserisci il tuo nome completo:", pos=(0.1, 0.1), size=(0.8, 0.08))
-input_id = app.AddInput(pos=(0.1, 0.2), size=(0.8, 0.1), placeholder="Scrivi qui...")
-
-btn_id = app.AddButton("Genera Saluto", pos=(0.3, 0.4), size=(0.4, 0.12), command=saluta)
-label_id = app.AddText("", pos=(0.1, 0.6), size=(0.8, 0.1))
-
-app.SetWidgetColor(btn_id, bg_color=(26, 107, 201), fg_color=(255, 255, 255))
-app.run()</code></pre>
-        </div>
-
-        <h2 id="common">🔄 Filosofia Comune: .run() · .Edit() · .Logic()</h2>
-        <p>Tutti i moduli nativi presenti nella suite software FlashGui ereditano la medesima struttura logica di interazione sequenziale, divisa rigorosamente in tre fasi:</p>
-
-        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; line-height: 2; color:#3d3830;">
-            <li><strong>Inizializzazione Configurazione:</strong> Definizione dei vincoli fisici e del titolo nel costruttore principale.</li>
-            <li><strong>Fase <code>.Edit()</code> (Aspetto):</strong> Configurazione opzionale dello stile visivo, palette di colori e traduzioni dei componenti testuali.</li>
-            <li><strong>Fase <code>.Logic()</code> (Comportamento):</strong> Aggancio delle funzioni callback scritte in Python puro agli eventi di interfaccia dell'applicazione.</li>
-            <li><strong>Esecuzione <code>.run()</code>:</strong> Apertura della finestra e avvio del ciclo principale di gestione degli eventi (Main Event Loop). Questo metodo è bloccante.</li>
-        </ol>
-
-        <h2 id="timer-common">⏱️ Gestione dei Timer Asincroni</h2>
-        <p>Tutti i componenti mettono a disposizione il metodo di istanza <code>AddTimer(ms, command)</code>. Questo genera un timer asincrono non bloccante che esegue la funzione passata come parametro dopo l'intervallo di tempo indicato (espresso in millisecondi).</p>
-        <div class="note">
-            Poiché i callback dei timer vengono eseguiti all'interno del thread principale della GUI gestito da wxPython, è possibile modificare in totale sicurezza lo stato e i testi di qualsiasi widget senza incorrere in crash di thread-safety.
-        </div>
-
-        <footer>
-            FlashGui 0.1.6 · Documentazione Distribuita sotto Licenza MIT · Sviluppato su wxPython Phoenix.<br>
-            <a href="https://pypi.org/project/FlashGui/" target="_blank">Repository Ufficiale PyPI</a>
-        </footer>
-
-    </main>
+</main>
 </div>
+
+<script>
+// Evidenzia la voce sidebar in base alla sezione visibile
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+            const id = e.target.id;
+            const link = document.querySelector(`.sidebar nav a[href="#${id}"]`);
+            if (link) link.classList.add('active');
+        }
+    });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+document.querySelectorAll('section[id], h2[id], h3[id]').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
